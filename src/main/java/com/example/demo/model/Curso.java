@@ -33,7 +33,7 @@ public class Curso {
     @Column(name = "fin_curso", nullable = false)
     private Date finCurso;
 
-    @Column(name = "inicio_curso", nullable = false)
+    @Column(name = "progreso", nullable = false)
     private int progreso;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)

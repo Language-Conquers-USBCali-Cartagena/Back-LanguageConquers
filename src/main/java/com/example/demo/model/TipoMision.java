@@ -18,7 +18,7 @@ public class TipoMision {
     @Column(name = "id_tipo_mision", nullable = false)
     private Long idTipoMision;
 
-    @Column(name = "usuario_creador", nullable = false, length = 200)
+    @Column(name = "descripcion", nullable = false, length = 200)
     private String descripcion;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)

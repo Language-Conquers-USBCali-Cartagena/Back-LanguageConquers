@@ -29,11 +29,11 @@ public class ArticulosAdquiridos {
     private Date fechaModificacion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "id_estudiante", nullable = false)
+    @JoinColumn(name = "id_estudiante", nullable = false)
     private Estudiante estudiante;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "id_articulo", nullable = false)
+    @JoinColumn(name = "id_articulo", nullable = false)
     private Articulos articulos;
 
 

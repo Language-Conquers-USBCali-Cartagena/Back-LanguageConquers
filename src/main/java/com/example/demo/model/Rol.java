@@ -18,7 +18,7 @@ public class Rol {
     @Column(name = "id_rol", nullable = false)
     private Long idRol;
 
-    @Column(name = "usuario_creador", nullable = false, length = 50)
+    @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)

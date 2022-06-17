@@ -18,7 +18,7 @@ public class Semestre {
     @Column(name = "id_semestre", nullable = false)
     private Long idSemestre;
 
-    @Column(name = "usuario_creador", nullable = false, length = 50)
+    @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)
