@@ -6,7 +6,6 @@ import com.example.demo.model.Sms;
 import com.example.demo.model.dto.SmsDTO;
 import com.example.demo.service.MailSenderService;
 import com.sendgrid.Response;
-import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -68,7 +67,7 @@ public class TwilioController {
        }
     }
 
-    @Operation(summary = "Este metodo prueba")
+    /*@Operation(summary = "Este metodo prueba")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Envio Exitoso",
                     content = { @Content(mediaType = "application/json",
@@ -77,14 +76,14 @@ public class TwilioController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Correo no encontrado",
                     content = @Content) })
-    @GetMapping("/prueba")
-    public ResponseEntity<String> ejemplo(@RequestBody Json correoList){
+    @GetMapping("/prueba")*/
+    /*public ResponseEntity<String> ejemplo(@RequestBody Json correoList){
 //        for (Correo correo: correoList) {
 //            System.out.println(correo.getBody());
 //        }
         return new ResponseEntity<>("funciona", HttpStatus.OK);
     }
-
+*/
 
 
 }

@@ -1,7 +1,11 @@
 package com.example.demo.model.dto;
 
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.io.Serializable;
+@Getter
+@Setter
 public class SmsDTO implements Serializable {
 
 
@@ -9,20 +13,4 @@ public class SmsDTO implements Serializable {
     String number;
     String message;
 
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }

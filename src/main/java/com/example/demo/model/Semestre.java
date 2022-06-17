@@ -1,7 +1,15 @@
 package com.example.demo.model;
 
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "semestre")
 public class Semestre {
@@ -10,11 +18,21 @@ public class Semestre {
     @Column(name = "id_semestre", nullable = false)
     private Long idSemestre;
 
-    public Long getIdSemestre() {
-        return idSemestre;
-    }
+    @Column(name = "usuario_creador", nullable = false, length = 50)
+    private String nombre;
 
-    public void setIdSemestre(Long idSemestre) {
-        this.idSemestre = idSemestre;
-    }
+    @Column(name = "usuario_creador", nullable = false, length = 50)
+    private String usuarioCreador;
+
+    @Column(name = "usuario_modificador", length = 50)
+    private String usuarioModificador;
+
+    @Column(name = "fecha_creacion", nullable = false)
+    private Date fechaCreacion;
+
+    @Column(name = "fecha_modificación")
+    private Date fechaModificacion;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "semestre")
+    List<Estudiante> estudiantes = new ArrayList<>();
 }

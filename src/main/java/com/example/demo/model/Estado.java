@@ -51,4 +51,7 @@ public class Estado {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "estado")
     List<Estudiante> estudiantes = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "estado")
+    List<RetoEstudiante> retoEstudiantes = new ArrayList<>();
+
 }

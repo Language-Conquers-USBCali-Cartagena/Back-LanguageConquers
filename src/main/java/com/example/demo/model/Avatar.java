@@ -36,6 +36,6 @@ public class Avatar {
     @Column(name = "fecha_modificación")
     private Date fechaModificacion;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "estudiante")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "avatar")
     List<Estudiante> estudianteList = new ArrayList<>();
 }

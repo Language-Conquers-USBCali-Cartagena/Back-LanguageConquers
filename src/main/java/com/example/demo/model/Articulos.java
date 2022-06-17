@@ -57,7 +57,5 @@ public class Articulos {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulos")
     List<ArticulosAdquiridos> articulosAdquiridosList = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulosList")
-    List<Categoria> categorias = new ArrayList<>();
 
 }

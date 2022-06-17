@@ -19,10 +19,10 @@ public class Monedas {
     private Long idMoneda;
 
     @Column(name = "cantidad", nullable = false)
-   private int cantidad;
+    private int cantidad;
 
     @Column(name = "img_monedas", nullable = false, length = 80)
-   private String imgMonedas;
+    private String imgMonedas;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)
     private String usuarioCreador;

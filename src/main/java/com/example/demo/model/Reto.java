@@ -19,7 +19,7 @@ public class Reto {
     private Long idReto;
 
     @Column(name = "nombre_reto", nullable = false, length = 50)
-    private String nombreaReto;
+    private String nombreReto;
 
     @Column(name = "descripcion", nullable = false, length = 300)
     private String descripcion;
@@ -72,4 +72,6 @@ public class Reto {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reto")
     List<OrdenRetoIDE> ordenRetoIDES = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reto")
+    List<Rol> rols = new ArrayList<>();
 }
