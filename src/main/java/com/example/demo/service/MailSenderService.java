@@ -34,17 +34,17 @@ public class MailSenderService {
     public void sendsms(SmsDTO smsrequest) {
         Sms sms = mapeoSMS(smsrequest);
         System.out.println(sms.getMessage());
-        Twilio.init("ACbdfeee118c112ff1b4050f33f8f6fa6e","5af952b738e747134201be372aa0ab1d");
+        Twilio.init("ACe72ae580697ef640b622789571ece4b0","f88dd390ca7c9cbbad45578e6f187f0e");
         Message message=Message.creator(
                 new PhoneNumber(sms.getNumber()),
-                new PhoneNumber("+18507504768"),
+                new PhoneNumber("+18607914906"),
                 sms.getMessage()).create();
         //return message.getStatus().toString();
     }
 
     public Response envioCorreo(Correo email){
 
-        Mail mail = new Mail(new Email("languageconquersusb22@gmail.com"), email.getSubject(),
+        Mail mail = new Mail(new Email("languageconquers22@gmail.com"), email.getSubject(),
                 new Email(email.getTo()), new Content("text/plain", email.getBody()));
         mail.setReplyTo(new Email("angelamaria731@hotmail.com"));
         Request request = new Request();

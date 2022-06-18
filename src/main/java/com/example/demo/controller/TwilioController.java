@@ -45,6 +45,7 @@ public class TwilioController {
             return new ResponseEntity<Object>("OK", HttpStatus.OK);
 
         } catch (Exception e) {
+            System.err.println(e);
             return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
