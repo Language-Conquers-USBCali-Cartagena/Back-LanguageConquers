@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,12 +14,15 @@ import java.util.List;
 @Entity
 @Table(name = "estudiante")
 public class Estudiante {
+
+
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuarios_seq")
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuarios")
-    //@SequenceGenerator(name = "usuarios", sequenceName = "id_usuarioSeq", allocationSize = 1)
+    //@GenericGenerator(name = "usuarios_seq", strategy = "aurozen.assign.aurozenassign.StringPrefixedSequenceIdGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuarios_seq")
+    @SequenceGenerator(name = "usuarios_seq", sequenceName = "usuarios_seq", allocationSize = 1, initialValue = 1)
     @Column(name = "id_estudiante", nullable = false)
     private Long idEstudiante;
-
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
 

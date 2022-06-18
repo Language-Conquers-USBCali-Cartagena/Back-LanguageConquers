@@ -13,12 +13,12 @@ import java.util.List;
 @Entity
 @Table(name = "profesor")
 public class Profesor {
+
     @Id
+    @SequenceGenerator(name = "usuarios_seq", sequenceName = "usuarios_seq", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuarios_seq")
-    @SequenceGenerator(name = "usuarios_seq", sequenceName = "usuarios_seq", allocationSize = 1)
     @Column(name = "id_profesor", nullable = false)
     private Long idProfesor;
-
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
 
