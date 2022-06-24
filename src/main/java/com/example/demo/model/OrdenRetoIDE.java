@@ -28,16 +28,15 @@ public class OrdenRetoIDE {
     @Column(name = "fecha_creacion", nullable = false)
     private Date fechaCreacion;
 
+    @Column(name = "padre")
+    private Long padre;
+
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_reto", nullable = false)
     private Reto reto;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "padre")
-    private OrdenRetoIDE ordenRetoIDE;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_palabras_reservadas", nullable = false)
