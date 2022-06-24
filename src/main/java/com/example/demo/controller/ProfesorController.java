@@ -21,7 +21,7 @@ public class ProfesorController {
     @Autowired
     private ProfesorMapper profesorMapper;
 
-    @Operation(summary = "Este metodo permite crear un profesor")
+    @Operation(summary = "Este metodo permite crear un profesor e")
     @PostMapping("/registrarProfesor")
     public ResponseEntity<String> registrar(@RequestBody ProfesorDTO profesorDTO){
         try {
