@@ -6,8 +6,11 @@ import com.example.demo.model.dto.AvatarDTO;
 
 import java.util.List;
 
-public interface AvatarService extends CRUD<Avatar>{
+public interface AvatarService{
 
 
-
+    Avatar registrar(Avatar avatar) throws Exception;
+    String actualizar(AvatarDTO avatarDTO) throws Exception;
+    void eliminar(Long idAvatar) throws Exception;
+    List<Avatar> listar();
 }

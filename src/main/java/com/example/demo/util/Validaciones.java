@@ -2,6 +2,8 @@ package com.example.demo.util;
 
 import org.apache.commons.io.FilenameUtils;
 
+import java.util.Date;
+
 public class Validaciones {
 
     public static boolean isStringLenght(String palabra, int longitud) {
@@ -25,5 +27,9 @@ public class Validaciones {
         }else{
             return isValid = false;
         }
+    }
+
+    public static int tiempoEntreFechas(Date fecha1, Date fecha2){
+        return fecha2.getMonth() - fecha1.getMonth();
     }
 }

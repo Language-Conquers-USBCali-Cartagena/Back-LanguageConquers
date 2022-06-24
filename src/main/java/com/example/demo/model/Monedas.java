@@ -33,7 +33,7 @@ public class Monedas {
     @Column(name = "fecha_creacion", nullable = false)
     private Date fechaCreacion;
 
-    @Column(name = "fecha_modificación")
+    @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "monedas")

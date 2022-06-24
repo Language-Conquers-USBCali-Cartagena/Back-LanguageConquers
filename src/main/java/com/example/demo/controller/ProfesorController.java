@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.mapper.ProfesorMapper;
 import com.example.demo.model.dto.ProfesorDTO;
 import com.example.demo.service.ProfesorService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class ProfesorController {
     @Autowired
     private ProfesorMapper profesorMapper;
 
+    @Operation(summary = "Este metodo permite crear un profesor")
     @PostMapping("/registrarProfesor")
     public ResponseEntity<String> registrar(@RequestBody ProfesorDTO profesorDTO){
         try {

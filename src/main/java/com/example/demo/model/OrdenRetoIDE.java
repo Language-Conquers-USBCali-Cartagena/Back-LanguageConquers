@@ -28,7 +28,7 @@ public class OrdenRetoIDE {
     @Column(name = "fecha_creacion", nullable = false)
     private Date fechaCreacion;
 
-    @Column(name = "fecha_modificación")
+    @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,7 +36,7 @@ public class OrdenRetoIDE {
     private Reto reto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_reto_pr_1", nullable = false)
+    @JoinColumn(name = "padre")
     private OrdenRetoIDE ordenRetoIDE;
 
     @ManyToOne(fetch = FetchType.LAZY)

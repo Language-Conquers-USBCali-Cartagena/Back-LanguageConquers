@@ -1,6 +1,7 @@
 package com.example.demo.service.serviceImpl;
 
 import com.example.demo.dao.AvatarDAO;
+import com.example.demo.dao.EstudianteDAO;
 import com.example.demo.model.Avatar;
 import com.example.demo.model.dto.AvatarDTO;
 import com.example.demo.service.AvatarService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Scope("singleton")
@@ -17,6 +19,9 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Autowired
     private AvatarDAO avatarDAO;
+
+    @Autowired
+    private EstudianteDAO estudianteDAO;
 
 
     @Override
@@ -37,69 +42,76 @@ public class AvatarServiceImpl implements AvatarService {
                 || Validaciones.isStringLenght(avatar.getUsuarioCreador(),50)){
             throw new Exception("Se debe ingresar un usuario creador del avatar valido");
         }
-
-        //TODO: Falta hacer validacion para la fecha
-
         if(avatar.getFechaCreacion() == null
-                || avatar.getFechaCreacion().equals("")
-                || Validaciones.isStringLenght(avatar.getUsuarioCreador(),50)){
+                || avatar.getFechaCreacion().equals("")){
             throw new Exception("Se debe ingresar una fecha valida");
+        }
+        Date fechaActual = new Date();
+        if(avatar.getFechaCreacion().compareTo(fechaActual)>0){
+            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
 
         avatar.setNombreAvatar(avatar.getNombreAvatar());
         avatar.setImgAvatar(avatar.getImgAvatar());
         avatar.setUsuarioCreador(avatar.getUsuarioCreador());
-        avatar.setUsuarioModificador(avatar.getUsuarioModificador());
-        avatar.setFechaModificacion(avatar.getFechaModificacion());
-        return null;
+        avatar.setFechaCreacion(avatar.getFechaCreacion());
+        return avatarDAO.save(avatar);
     }
 
+    //TODO:NO ESTA FUNCIONANDO BIEN EL ACTUALIZAR AVATAR
     @Override
-    public Avatar actualizar(Avatar avatarDTO) throws Exception {
-        Avatar avatar = null;
-        if(avatarDTO.getIdAvatar() == null ){
+    public String actualizar(AvatarDTO avatarDTO) throws Exception {
+        Avatar avatar =  null;
+        if(avatarDTO.getIdAvatar() == null|| avatarDTO.getIdAvatar().equals("")){
             throw new Exception("Debe ingresar el id del avatar que desea actualizar");
         }
         if(!avatarDAO.existsById(avatarDTO.getIdAvatar())){
             throw new Exception("No existe el avatar con ese Id");
         }
-        if(!Validaciones.validExtensionImg(avatar.getImgAvatar())){
-            throw new Exception("Debe ingresar una extension valida para la imagen");
+        if(avatarDTO.getImgAvatar() == null ||
+                avatarDTO.getImgAvatar().trim().equals("") ||
+                Validaciones.isStringLenght(avatarDTO.getImgAvatar(), 80)){
+            throw new Exception("Se debe ingresar una direccion de la imagen valida");
         }
         if(avatarDTO.getNombreAvatar() == null ||
                 avatarDTO.getNombreAvatar().trim().equals("") ||
                 Validaciones.isStringLenght(avatarDTO.getNombreAvatar(), 50)){
             throw new Exception("Se debe ingresar un nombre del avatar valido");
         }
-        if(avatarDTO.getUsuarioCreador() == null
-                || avatarDTO.getUsuarioCreador().trim().equals("")
-                || Validaciones.isStringLenght(avatarDTO.getUsuarioCreador(),50)){
-            throw new Exception("Se debe ingresar un usuario creador del avatar valido");
+        if(avatarDTO.getUsuarioModificador() == null
+                || avatarDTO.getUsuarioModificador().trim().equals("")
+                || Validaciones.isStringLenght(avatarDTO.getUsuarioModificador(),50)){
+            throw new Exception("Se debe ingresar un usuario modificador del avatar valido");
         }
-
-        //TODO: Falta hacer validacion para la fecha
-
-        if(avatarDTO.getFechaCreacion() == null
-                || avatarDTO.getFechaCreacion().equals("")
-                || Validaciones.isStringLenght(avatarDTO.getUsuarioCreador(),50)){
+        if(avatarDTO.getFechaModificacion() == null
+                || avatarDTO.getFechaModificacion().equals("")){
             throw new Exception("Se debe ingresar una fecha valida");
         }
-
+        Date fechaActual = new Date();
+        if(avatarDTO.getFechaModificacion().compareTo(fechaActual)>0){
+            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
+        }
+        avatar = avatarDAO.findById(avatarDTO.getIdAvatar()).get();
         avatar.setImgAvatar(avatarDTO.getImgAvatar());
         avatar.setNombreAvatar(avatarDTO.getNombreAvatar());
         avatar.setUsuarioModificador(avatarDTO.getUsuarioModificador());
         avatar.setFechaModificacion(avatarDTO.getFechaModificacion());
-        return avatarDAO.save(avatar);
+        avatarDAO.save(avatar);
+        return "Se actualizo el avatar";
     }
 
     @Override
-    public void eliminar(Long id) {
-
-    }
-
-    @Override
-    public Avatar listarPorId(Long id) {
-        return null;
+    public void eliminar(Long idAvatar) throws Exception {
+        if(idAvatar == null){
+            throw new Exception("El id del avatar es obligatorio");
+        }
+        if(avatarDAO.existsById(idAvatar) == false){
+            throw new Exception("No se encontro el avatar con ese id");
+        }
+        if(!estudianteDAO.findByIdAvatar(idAvatar).isEmpty()){
+            throw new Exception("No se puede eliminar el avatar porque esta siendo uilizado por un estudiante");
+        }
+        avatarDAO.deleteById(idAvatar);
     }
 
     @Override

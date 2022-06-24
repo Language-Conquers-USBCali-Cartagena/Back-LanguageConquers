@@ -45,7 +45,7 @@ public class Curso {
     @Column(name = "fecha_creacion", nullable = false)
     private Date fechaCreacion;
 
-    @Column(name = "fecha_modificación")
+    @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
 
     @ManyToOne(fetch = FetchType.LAZY)
