@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface GrupoService {
 
-    Grupo registrar(Grupo grupo)throws Exception;
-    Grupo actualizar(GrupoDTO grupoDTO) throws Exception;
+    String registrar(Grupo grupo)throws Exception;
+    String actualizar(GrupoDTO grupoDTO) throws Exception;
     void eliminar (Long idGrupo)throws Exception;
-    List<Grupo>listar();
+    List<Grupo>listar() throws Exception;
 }

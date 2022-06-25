@@ -25,30 +25,38 @@ public class SemestreController {
     @Operation(summary = "Este metodo permite listar los semestres")
     @GetMapping
     public ResponseEntity<List<SemestreDTO>> listar(){
-        List<Semestre> semestreList = semestreService.listar();
-        List<SemestreDTO> semestreDTOList = semestreMapper.toDTOList(semestreList);
-        return ResponseEntity.ok().body(semestreDTOList);
-    }
-
-    @Operation(summary = "Este metodo permite crear un semestre")
-    @PostMapping("/guardarSemestre")
-    public ResponseEntity<String> save(@RequestBody Semestre semestre){
-        try {
-            return new ResponseEntity(semestreService.registrar(semestre), HttpStatus.CREATED);
+        try{
+            List<Semestre> semestreList = semestreService.listar();
+            List<SemestreDTO> semestreDTOList = semestreMapper.toDTOList(semestreList);
+            return new ResponseEntity<>(semestreDTOList, HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
             return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar un semestre")
+    @Operation(summary = "Este metodo permite crear un semestre" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @PostMapping("/guardarSemestre")
+    public ResponseEntity<String> save(@RequestBody SemestreDTO semestreDTO){
+        try {
+            Semestre semestre = semestreMapper.toEntity(semestreDTO);
+            return new ResponseEntity<>(semestreService.registrar(semestre), HttpStatus.CREATED);
+        }catch (Exception e){
+            String mensaje = e.getMessage();
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite actualizar un semestre" +"\n"+
+            ", No se debe de ingresar el usuario creador y la fecha creación")
     @PutMapping("/actualizarSemestre")
-    public ResponseEntity<Semestre> modificar(@RequestBody SemestreDTO semestreDTO){
+    public ResponseEntity<String> modificar(@RequestBody SemestreDTO semestreDTO){
         try{
             return new ResponseEntity<>(semestreService.actualizar(semestreDTO), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -60,7 +68,7 @@ public class SemestreController {
             return ResponseEntity.ok("Se eliminó satisfactoriamente");
         } catch (Exception e) {
             String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 

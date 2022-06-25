@@ -28,32 +28,35 @@ public class RolController {
         try{
             List<Rol> rolList = rolService.listar();
             List<RolDTO> rolDTOS = rolMapper.toDTOList(rolList);
-            return new ResponseEntity(rolDTOS, HttpStatus.OK);
+            return new ResponseEntity<>(rolDTOS, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
     }
 
-    @Operation(summary = "Este metodo permite crear un rol")
+    @Operation(summary = "Este metodo permite crear un rol" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación")
     @PostMapping("/guardarRol")
-    public ResponseEntity<String> save(@RequestBody Rol rol){
+    public ResponseEntity<String> save(@RequestBody RolDTO rolDTO){
         try {
-            return new ResponseEntity(rolService.registrar(rol), HttpStatus.CREATED);
+            Rol rol = rolMapper.toEntity(rolDTO);
+            return new ResponseEntity<>(rolService.registrar(rol), HttpStatus.CREATED);
         }catch (Exception e){
             String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar un rol")
+    @Operation(summary = "Este metodo permite actualizar un rol" +
+            ", No se debe de ingresar el usuario creador y la fecha creación")
     @PutMapping("/actualizarRol")
-    public ResponseEntity<Rol> modificar(@RequestBody RolDTO rolDTO){
+    public ResponseEntity<String> modificar(@RequestBody RolDTO rolDTO){
         try{
             return new ResponseEntity<>(rolService.actualizar(rolDTO), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -65,7 +68,7 @@ public class RolController {
             return ResponseEntity.ok("Se eliminó satisfactoriamente");
         } catch (Exception e) {
             String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 

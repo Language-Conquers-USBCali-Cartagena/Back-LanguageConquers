@@ -24,7 +24,7 @@ public class GrupoServiceImpl implements GrupoService {
     private RetoEstudianteDAO retoEstudianteDAO;
 
     @Override
-    public Grupo registrar(Grupo grupo) throws Exception {
+    public String registrar(Grupo grupo) throws Exception {
         if(grupo.getNombre()==null || grupo.getNombre().trim().equals("")){
             throw new Exception("Debe ingresar el nombre del grupo");
         }
@@ -37,21 +37,19 @@ public class GrupoServiceImpl implements GrupoService {
         if(Validaciones.isStringLenght(grupo.getUsuarioCreador(),50)){
             throw new Exception("El nombre del usuario creador no debe contener más de 50 caracteres");
         }
-        if(grupo.getFechaCreacion()==null || grupo.getFechaCreacion().equals("")){
+        if(grupo.getFechaCreacion()==null || grupo.getFechaCreacion().toString().equals("")){
             throw new Exception("Debe ingresar una fecha de creación");
         }
         Date fechaActual = new Date();
         if(grupo.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No se puede ingresar una fecha que aun no ha sucedido");
         }
-        grupo.setNombre(grupo.getNombre());
-        grupo.setUsuarioCreador(grupo.getUsuarioCreador());
-        grupo.setFechaCreacion(grupo.getFechaCreacion());
-        return grupoDAO.save(grupo);
+        grupoDAO.save(grupo);
+        return "Se registro el grupo satisfactoriamente";
     }
 
     @Override
-    public Grupo actualizar(GrupoDTO grupoDTO) throws Exception {
+    public String actualizar(GrupoDTO grupoDTO) throws Exception {
         Grupo grupo = null;
         if(grupoDTO.getNombre()==null || grupoDTO.getNombre().trim().equals("")){
             throw new Exception("Debe ingresar el nombre del grupo");
@@ -65,18 +63,19 @@ public class GrupoServiceImpl implements GrupoService {
         if(Validaciones.isStringLenght(grupoDTO.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario modificador no debe contener más de 50 caracteres");
         }
-        if(grupoDTO.getFechaModificacion()==null || grupoDTO.getFechaModificacion().equals("")){
+        if(grupoDTO.getFechaModificacion()==null || grupoDTO.getFechaModificacion().toString().equals("")){
             throw new Exception("Debe ingresar una fecha de modificación");
         }
         Date fechaActual = new Date();
         if(grupoDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No se puede ingresar una fecha que aun no ha sucedido");
         }
-        grupo = grupoDAO.findById(grupoDTO.getIdGrupo()).get();
+        grupo = grupoDAO.findById(grupoDTO.getIdGrupo()).orElse(null);
         grupo.setNombre(grupoDTO.getNombre());
         grupo.setUsuarioModificador(grupoDTO.getUsuarioModificador());
         grupo.setFechaModificacion(grupoDTO.getFechaModificacion());
-        return grupoDAO.save(grupo);
+        grupoDAO.save(grupo);
+        return "Se actualizo el grupo satisfactoriamente";
     }
 
     @Override
@@ -84,7 +83,7 @@ public class GrupoServiceImpl implements GrupoService {
         if(idGrupo == null){
             throw new Exception("El Id del grupo es obligatorio");
         }
-        if(grupoDAO.existsById(idGrupo)==false){
+        if(!grupoDAO.existsById(idGrupo)){
             throw new Exception("No se encontro un grupo con ese Id");
         }
         if(!retoEstudianteDAO.findByIdGrupo(idGrupo).isEmpty()){

@@ -25,7 +25,7 @@ public class AvatarServiceImpl implements AvatarService {
 
 
     @Override
-    public Avatar registrar(Avatar avatar) throws Exception {
+    public String registrar(Avatar avatar) throws Exception {
 
         if(avatar.getImgAvatar() == null ||
                 avatar.getImgAvatar().trim().equals("") ||
@@ -43,26 +43,21 @@ public class AvatarServiceImpl implements AvatarService {
             throw new Exception("Se debe ingresar un usuario creador del avatar valido");
         }
         if(avatar.getFechaCreacion() == null
-                || avatar.getFechaCreacion().equals("")){
+                || avatar.getFechaCreacion().toString().equals("")){
             throw new Exception("Se debe ingresar una fecha valida");
         }
         Date fechaActual = new Date();
         if(avatar.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-
-        avatar.setNombreAvatar(avatar.getNombreAvatar());
-        avatar.setImgAvatar(avatar.getImgAvatar());
-        avatar.setUsuarioCreador(avatar.getUsuarioCreador());
-        avatar.setFechaCreacion(avatar.getFechaCreacion());
-        return avatarDAO.save(avatar);
+        avatarDAO.save(avatar);
+        return "Se Registro el avatar";
     }
 
-    //TODO:NO ESTA FUNCIONANDO BIEN EL ACTUALIZAR AVATAR
     @Override
     public String actualizar(AvatarDTO avatarDTO) throws Exception {
         Avatar avatar =  null;
-        if(avatarDTO.getIdAvatar() == null|| avatarDTO.getIdAvatar().equals("")){
+        if(avatarDTO.getIdAvatar() == null){
             throw new Exception("Debe ingresar el id del avatar que desea actualizar");
         }
         if(!avatarDAO.existsById(avatarDTO.getIdAvatar())){
@@ -84,14 +79,14 @@ public class AvatarServiceImpl implements AvatarService {
             throw new Exception("Se debe ingresar un usuario modificador del avatar valido");
         }
         if(avatarDTO.getFechaModificacion() == null
-                || avatarDTO.getFechaModificacion().equals("")){
+                || avatarDTO.getFechaModificacion().toString().equals("")){
             throw new Exception("Se debe ingresar una fecha valida");
         }
         Date fechaActual = new Date();
         if(avatarDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        avatar = avatarDAO.findById(avatarDTO.getIdAvatar()).get();
+        avatar = avatarDAO.findById(avatarDTO.getIdAvatar()).orElse(null);
         avatar.setImgAvatar(avatarDTO.getImgAvatar());
         avatar.setNombreAvatar(avatarDTO.getNombreAvatar());
         avatar.setUsuarioModificador(avatarDTO.getUsuarioModificador());
@@ -105,7 +100,7 @@ public class AvatarServiceImpl implements AvatarService {
         if(idAvatar == null){
             throw new Exception("El id del avatar es obligatorio");
         }
-        if(avatarDAO.existsById(idAvatar) == false){
+        if(!avatarDAO.existsById(idAvatar)){
             throw new Exception("No se encontro el avatar con ese id");
         }
         if(!estudianteDAO.findByIdAvatar(idAvatar).isEmpty()){

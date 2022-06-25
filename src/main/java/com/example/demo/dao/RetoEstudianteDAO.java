@@ -17,4 +17,7 @@ public interface RetoEstudianteDAO extends JpaRepository<RetoEstudiante,Long> {
 
     @Query(value = "select * from reto_estudiante where id_rol = ?1", nativeQuery = true)
     List<RetoEstudiante> findByIdRol(Long idRol) throws Exception;
+
+    @Query(value = "select * from reto_estudiante where id_estudiante = ?1", nativeQuery = true)
+    List<RetoEstudiante> findByIdEstudiante(Long idEstudiante) throws Exception;
 }

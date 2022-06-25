@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface RolService {
 
-    Rol registrar(Rol rol) throws Exception;
-    Rol actualizar(RolDTO rolDTO) throws Exception;
+    String registrar(Rol rol) throws Exception;
+    String actualizar(RolDTO rolDTO) throws Exception;
     void eliminar(Long idRol) throws Exception;
     List<Rol>listar() throws Exception;
 }

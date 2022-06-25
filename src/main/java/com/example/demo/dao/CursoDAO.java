@@ -11,4 +11,7 @@ public interface CursoDAO extends JpaRepository<Curso,Long> {
 
     @Query(value = "select * from curso where id_estado = ?1", nativeQuery = true)
     List<Curso> findByIdEstado(Long idEstado) throws Exception;
+
+    @Query(value = "select * from curso where id_profesor = ?1", nativeQuery = true)
+    List<Curso> findByIdProfesor(Long idProfesor) throws Exception;
 }

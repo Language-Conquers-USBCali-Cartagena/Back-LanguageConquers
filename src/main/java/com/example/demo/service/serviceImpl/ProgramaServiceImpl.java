@@ -25,7 +25,7 @@ public class ProgramaServiceImpl implements ProgramaService {
 
 
     @Override
-    public Programa registrar(Programa programa) throws Exception {
+    public String registrar(Programa programa) throws Exception {
         if(programa.getNombre() == null || programa.getNombre().trim().equals("")){
             throw new Exception("Se debe ingresar un nombre del programa");
         }
@@ -38,23 +38,21 @@ public class ProgramaServiceImpl implements ProgramaService {
         if(Validaciones.isStringLenght(programa.getUsuarioCreador(),50)){
             throw new Exception("Debe ingresar un usuario creador no superior a 50 caracteres");
         }
-        if(programa.getFechaCreacion() == null || programa.getFechaCreacion().equals("")){
+        if(programa.getFechaCreacion() == null || programa.getFechaCreacion().toString().equals("")){
             throw new Exception("Se debe ingresar una fecha de creación");
         }
         Date fechaActual = new Date();
         if(programa.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        programa.setNombre(programa.getNombre());
-        programa.setUsuarioCreador(programa.getUsuarioCreador());
-        programa.setFechaCreacion(programa.getFechaCreacion());
-        return programaDAO.save(programa);
+        programaDAO.save(programa);
+        return "Se registro el programa satisfactoriamente";
     }
 
     @Override
-    public Programa actualizar(ProgramaDTO programaDTO) throws Exception {
+    public String actualizar(ProgramaDTO programaDTO) throws Exception {
         Programa programa = null;
-        if(programaDTO.getIdPrograma()==null || programaDTO.getIdPrograma().equals("")){
+        if(programaDTO.getIdPrograma() == null){
             throw new Exception("Debe ingresar el Id del programa que desea actualizar");
         }
         if(!programaDAO.existsById(programaDTO.getIdPrograma())){
@@ -72,18 +70,19 @@ public class ProgramaServiceImpl implements ProgramaService {
         if(Validaciones.isStringLenght(programaDTO.getUsuarioModificador(),50)){
             throw new Exception("Debe ingresar un usuario modificador no superior a 50 caracteres");
         }
-        if(programaDTO.getFechaModificacion() == null || programaDTO.getFechaModificacion().equals("")){
+        if(programaDTO.getFechaModificacion() == null || programaDTO.getFechaModificacion().toString().equals("")){
             throw new Exception("Se debe ingresar una fecha de modificacion");
         }
         Date fechaActual = new Date();
         if(programaDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        programa = programaDAO.findById(programaDTO.getIdPrograma()).get();
+        programa = programaDAO.findById(programaDTO.getIdPrograma()).orElse(null);
         programa.setNombre(programaDTO.getNombre());
         programa.setUsuarioModificador(programaDTO.getUsuarioModificador());
         programa.setFechaModificacion(programaDTO.getFechaModificacion());
-        return programaDAO.save(programa);
+        programaDAO.save(programa);
+        return "Se actualizo el programa satisfactoriamente";
     }
 
     @Override
@@ -91,7 +90,7 @@ public class ProgramaServiceImpl implements ProgramaService {
         if(idPrograma == null){
             throw new Exception("Debe ingresar el Id del programa");
         }
-        if(programaDAO.existsById(idPrograma) ==  false){
+        if(!programaDAO.existsById(idPrograma)){
             throw new Exception("No se encontro el programa con ese Id");
         }
         if(!estudianteDAO.findByIdPrograma(idPrograma).isEmpty()){

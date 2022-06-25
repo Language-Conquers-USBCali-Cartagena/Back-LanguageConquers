@@ -14,6 +14,9 @@ public interface RolMapper {
     RolMapper INSTANCE = Mappers.getMapper(RolMapper.class);
 
 
+
+
+    @Mapping(target = "reto.idReto", source = "idReto")
     Rol toEntity(RolDTO rolDTO);
     @Mapping(source = "reto.idReto", target = "idReto")
     RolDTO toDTO(Rol rol);

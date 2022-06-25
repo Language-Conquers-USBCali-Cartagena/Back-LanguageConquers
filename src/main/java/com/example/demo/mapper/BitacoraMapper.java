@@ -11,7 +11,6 @@ import java.util.List;
 public interface BitacoraMapper {
 
     BitacoraMapper INSTANCE = Mappers.getMapper(BitacoraMapper.class);
-
     Bitacora toEntity(BitacoraDTO bitacoraDTO);
     BitacoraDTO toDTO(Bitacora bitacora);
     List<BitacoraDTO> toDTOList(List<Bitacora> bitacoraList);

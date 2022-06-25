@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface GeneroService {
 
-    Genero registrar(Genero genero) throws Exception;
-    Genero actualizar(GeneroDTO generoDTO) throws Exception;
+    String registrar(Genero genero) throws Exception;
+    String actualizar(GeneroDTO generoDTO) throws Exception;
     void eliminar(Long idGenero) throws Exception;
-    List<Genero> listar();
+    List<Genero> listar()throws Exception;
 }
