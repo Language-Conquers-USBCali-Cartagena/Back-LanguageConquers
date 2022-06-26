@@ -25,30 +25,38 @@ public class GeneroController {
     @Operation(summary = "Este metodo permite listar los generos")
     @GetMapping
     public ResponseEntity<List<GeneroDTO>> listar(){
-        List<Genero> generoList = generoService.listar();
-        List<GeneroDTO> generoDTOS = generoMapper.ToDTOList(generoList);
-        return ResponseEntity.ok().body(generoDTOS);
-    }
+        try{
 
-    @Operation(summary = "Este metodo permite crear un genero")
-    @PostMapping("/guardarGenero")
-    public ResponseEntity<String> save(@RequestBody Genero genero){
-        try {
-            return new ResponseEntity(generoService.registrar(genero), HttpStatus.CREATED);
+            List<Genero> generoList = generoService.listar();
+            List<GeneroDTO> generoDTOS = generoMapper.ToDTOList(generoList);
+            return new ResponseEntity<>(generoDTOS, HttpStatus.OK);
         }catch (Exception e){
-            String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar un genero")
+    @Operation(summary = "Este metodo permite crear un genero" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @PostMapping("/guardarGenero")
+    public ResponseEntity<String> save(@RequestBody GeneroDTO generoDTO){
+        try {
+            Genero genero = generoMapper.toEntity(generoDTO);
+            return new ResponseEntity<>(generoService.registrar(genero), HttpStatus.CREATED);
+        }catch (Exception e){
+            String mensaje = e.getMessage();
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite actualizar un genero" +
+            ", No se debe de ingresar el usuario creador y la fecha creación")
     @PutMapping("/actualizarGenero")
-    public ResponseEntity<Genero> modificar(@RequestBody GeneroDTO generoDTO){
+    public ResponseEntity<String> modificar(@RequestBody GeneroDTO generoDTO){
         try{
             return new ResponseEntity<>(generoService.actualizar(generoDTO), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -60,7 +68,7 @@ public class GeneroController {
             return ResponseEntity.ok("Se eliminó satisfactoriamente");
         } catch (Exception e) {
             String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 

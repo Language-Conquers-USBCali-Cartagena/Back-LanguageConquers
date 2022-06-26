@@ -9,8 +9,8 @@ import java.util.List;
 public interface AvatarService{
 
 
-    Avatar registrar(Avatar avatar) throws Exception;
+    String registrar(Avatar avatar) throws Exception;
     String actualizar(AvatarDTO avatarDTO) throws Exception;
-    void eliminar(Long idAvatar) throws Exception;
-    List<Avatar> listar();
+     void eliminar(Long idAvatar) throws Exception;
+    List<Avatar> listar() throws Exception;
 }

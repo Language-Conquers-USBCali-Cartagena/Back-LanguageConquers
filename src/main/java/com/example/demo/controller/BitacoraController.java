@@ -26,30 +26,38 @@ public class BitacoraController {
     @Operation(summary = "Este metodo permite listar el registro de acceso de los usuarios a la plataforma")
     @GetMapping
     public ResponseEntity<List<BitacoraDTO>> listar(){
-        List<Bitacora> bitacoraList = bitacoraService.listar();
-        List<BitacoraDTO> bitacoraDTOS = bitacoraMapper.toDTOList(bitacoraList);
-        return ResponseEntity.ok().body(bitacoraDTOS);
-    }
+        try{
 
-    @Operation(summary = "Este metodo permite guardar el registro de acceso del usuario a la plataforma")
-    @PostMapping("/guardarBitacora")
-    public ResponseEntity<String> save(@RequestBody Bitacora bitacora){
-        try {
-            return new ResponseEntity(bitacoraService.registrar(bitacora), HttpStatus.CREATED);
+            List<Bitacora> bitacoraList = bitacoraService.listar();
+            List<BitacoraDTO> bitacoraDTOS = bitacoraMapper.toDTOList(bitacoraList);
+            return new ResponseEntity<>(bitacoraDTOS, HttpStatus.OK);
         }catch (Exception e){
-            String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar el registro de acceso del usuario a la plataforma")
+    @Operation(summary = "Este metodo permite guardar el registro de acceso del usuario a la plataforma" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @PostMapping("/guardarBitacora")
+    public ResponseEntity<String> save(@RequestBody BitacoraDTO bitacoraDTO){
+        try {
+            Bitacora bitacora = bitacoraMapper.toEntity(bitacoraDTO);
+            return new ResponseEntity<>(bitacoraService.registrar(bitacora), HttpStatus.CREATED);
+        }catch (Exception e){
+            String mensaje = e.getMessage();
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite actualizar el registro de acceso del usuario a la plataforma" +
+            ", No se debe de ingresar el usuario creador y la fecha creación")
     @PutMapping("/actualizarBitacora")
-    public ResponseEntity<Bitacora> modificar(@RequestBody BitacoraDTO bitacoraDTO){
+    public ResponseEntity<String> modificar(@RequestBody BitacoraDTO bitacoraDTO){
         try{
             return new ResponseEntity<>(bitacoraService.actualizar(bitacoraDTO), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -61,7 +69,7 @@ public class BitacoraController {
             return ResponseEntity.ok("Se eliminó satisfactoriamente");
         } catch (Exception e) {
             String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 

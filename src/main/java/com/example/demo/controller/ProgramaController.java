@@ -25,30 +25,37 @@ public class ProgramaController {
     @Operation(summary = "Este metodo permite listar los programas registrados")
     @GetMapping
     public ResponseEntity<List<ProgramaDTO>> listar(){
-        List<Programa> programaList = programaService.listar();
-        List<ProgramaDTO> programaDTOS = programaMapper.toDTOList(programaList);
-        return ResponseEntity.ok().body(programaDTOS);
-    }
-
-    @Operation(summary = "Este metodo permite crear un programa")
-    @PostMapping("/guardarPrograma")
-    public ResponseEntity<String> save(@RequestBody Programa programa){
-        try {
-            return new ResponseEntity(programaService.registrar(programa), HttpStatus.CREATED);
+        try{
+            List<Programa> programaList = programaService.listar();
+            List<ProgramaDTO> programaDTOS = programaMapper.toDTOList(programaList);
+            return ResponseEntity.ok().body(programaDTOS);
         }catch (Exception e){
-            String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar un programa")
+    @Operation(summary = "Este metodo permite crear un programa" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @PostMapping("/guardarPrograma")
+    public ResponseEntity<String> save(@RequestBody ProgramaDTO programaDTO){
+        try {
+            Programa programa = programaMapper.toEntity(programaDTO);
+            return new ResponseEntity<>(programaService.registrar(programa), HttpStatus.CREATED);
+        }catch (Exception e){
+            String mensaje = e.getMessage();
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite actualizar un programa" +
+            ", No se debe de ingresar el usuario creador y la fecha creación")
     @PutMapping("/actualizarPrograma")
-    public ResponseEntity<Programa> modificar(@RequestBody ProgramaDTO programaDTO){
+    public ResponseEntity<String> modificar(@RequestBody ProgramaDTO programaDTO){
         try{
             return new ResponseEntity<>(programaService.actualizar(programaDTO), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -60,7 +67,7 @@ public class ProgramaController {
             return ResponseEntity.ok("Se eliminó satisfactoriamente");
         } catch (Exception e) {
             String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 

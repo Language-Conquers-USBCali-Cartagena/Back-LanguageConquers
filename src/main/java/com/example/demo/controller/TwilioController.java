@@ -64,23 +64,6 @@ public class TwilioController {
        }
     }
 
-    /*@Operation(summary = "Este metodo prueba")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Envio Exitoso",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Correo.class)) }),
-            @ApiResponse(responseCode = "400", description = "Envio Invalido",
-                    content = @Content),
-            @ApiResponse(responseCode = "404", description = "Correo no encontrado",
-                    content = @Content) })
-    @GetMapping("/prueba")*/
-    /*public ResponseEntity<String> ejemplo(@RequestBody Json correoList){
-//        for (Correo correo: correoList) {
-//            System.out.println(correo.getBody());
-//        }
-        return new ResponseEntity<>("funciona", HttpStatus.OK);
-    }
-*/
 
 
 }

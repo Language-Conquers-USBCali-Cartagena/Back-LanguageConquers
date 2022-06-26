@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface BitacoraService {
 
-    Bitacora registrar(Bitacora bitacora) throws Exception;
-    Bitacora actualizar(BitacoraDTO bitacoraDTO) throws Exception;
+    String registrar(Bitacora bitacora) throws Exception;
+    String actualizar(BitacoraDTO bitacoraDTO) throws Exception;
     void eliminar (Long idBitacora) throws Exception;
-    List<Bitacora> listar();
+    List<Bitacora> listar()throws Exception;
 }

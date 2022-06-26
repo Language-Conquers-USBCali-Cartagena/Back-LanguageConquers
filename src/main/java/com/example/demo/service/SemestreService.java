@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface SemestreService {
 
-    Semestre registrar (Semestre semestre) throws Exception;
-    Semestre actualizar (SemestreDTO semestreDTO)throws Exception;
+    String registrar (Semestre semestreDTO) throws Exception;
+    String actualizar (SemestreDTO semestreDTO)throws Exception;
     void eliminar(Long idSemestre) throws Exception;
-    List<Semestre> listar();
+    List<Semestre> listar()throws Exception;
 }

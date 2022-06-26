@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -26,6 +27,19 @@ public class Credenciales {
 
     @Column(name = "plataforma", nullable = false, length = 80)
     private String plataforma;
+
+    @Column(name = "usuario_creador", nullable = false, length = 50)
+    private String usuarioCreador;
+
+    @Column(name = "usuario_modificador", length = 50)
+    private String usuarioModificador;
+
+    @Column(name = "fecha_creacion", nullable = false)
+    private Date fechaCreacion;
+
+    @Column(name = "fecha_modificacion")
+    private Date fechaModificacion;
+
 
 
 
