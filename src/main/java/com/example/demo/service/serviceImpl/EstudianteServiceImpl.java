@@ -2,6 +2,7 @@ package com.example.demo.service.serviceImpl;
 
 
 import com.example.demo.dao.*;
+import com.example.demo.mapper.EstudianteMapper;
 import com.example.demo.model.Estudiante;
 import com.example.demo.model.dto.EstudianteDTO;
 import com.example.demo.service.EstudianteService;
@@ -18,40 +19,87 @@ import java.util.List;
 public class EstudianteServiceImpl implements EstudianteService {
     @Autowired
     private EstudianteDAO estudianteDAO;
-
     @Autowired
     private SemestreDAO semestreDAO;
-
     @Autowired
     private GeneroDAO generoDAO;
-
     @Autowired
     private AvatarDAO avatarDAO;
-
     @Autowired
     private EstadoDAO estadoDAO;
-
     @Autowired
     private ProgramaDAO programaDAO;
-
     @Autowired
     private RetoEstudianteDAO retoEstudianteDAO;
-
     @Autowired
     private ArticulosAdquiridosDAO articulosAdquiridosDAO;
-
     @Autowired
     private CursoEstudianteDAO cursoEstudianteDAO;
-
     @Autowired
     private MisionEstudianteDAO misionEstudianteDAO;
-
     @Autowired
     private ComentarioDAO comentarioDAO;
-
-
     @Override
     public String crearEstudiante(Estudiante estudiante) throws Exception {
+        validacionesCrear(estudiante);
+        estudianteDAO.save(estudiante);
+        return "Se creo exitosamente al estudiante";
+    }
+
+    @Override
+    public String actualizar(EstudianteDTO estudianteDTO) throws Exception {
+        Estudiante estudiante = null;
+        validacionesActualizar(estudianteDTO);
+        estudiante = estudianteDAO.findById(estudianteDTO.getIdEstudiante()).orElse(null);
+        estudiante.setNombre(estudianteDTO.getNombre());
+        estudiante.setApellido(estudianteDTO.getApellido());
+        estudiante.setNickName(estudianteDTO.getNickName());
+        estudiante.setPuntaje(estudianteDTO.getPuntaje());
+        estudiante.setCorreo(estudianteDTO.getCorreo());
+        estudiante.setSemestre(semestreDAO.findById(estudianteDTO.getIdSemestre()).orElse(null));
+        estudiante.setGenero(generoDAO.findById(estudianteDTO.getIdGenero()).orElse(null));
+        estudiante.setAvatar(avatarDAO.findById(estudianteDTO.getIdAvatar()).orElse(null));
+        estudiante.setEstado(estadoDAO.findById(estudianteDTO.getIdEstado()).orElse(null));
+        estudiante.setFechaNacimiento(estudianteDTO.getFechaNacimiento());
+        estudiante.setPrograma(programaDAO.findById(estudianteDTO.getIdPrograma()).orElse(null));
+        estudiante.setUsuarioModificador(estudianteDTO.getUsuarioModificador());
+        estudiante.setFechaModificacion(estudianteDTO.getFechaModificacion());
+        estudianteDAO.save(estudiante);
+        return "Se actualizo exitosamente al estudiante";
+    }
+
+    @Override
+    public void eliminar(Long idEstudiante) throws Exception {
+        if(idEstudiante == null){
+            throw new Exception("El id del estudiante es obligatorio");
+        }
+        if(!estudianteDAO.existsById(idEstudiante)){
+            throw new Exception("No se encontro un estudiante con ese Id");
+        }
+        if(!retoEstudianteDAO.findByIdEstudiante(idEstudiante).isEmpty()){
+            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un reto estudiante");
+        }
+        if(!articulosAdquiridosDAO.findByIdEstudiante(idEstudiante).isEmpty()){
+            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un articulo adquirido");
+        }
+        if(!cursoEstudianteDAO.findByIdEstudiante(idEstudiante).isEmpty()){
+            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un curso estudiante");
+        }
+        if(!misionEstudianteDAO.findByIdEstudiante(idEstudiante).isEmpty()){
+            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un mision estudiante");
+        }
+        if(!comentarioDAO.findByIdEstudiante(idEstudiante).isEmpty()){
+            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un comentario");
+        }
+        estudianteDAO.deleteById(idEstudiante);
+    }
+
+    @Override
+    public List<Estudiante> listar() throws Exception {
+        return estudianteDAO.findAll();
+    }
+
+    private void validacionesCrear(Estudiante estudiante) throws Exception {
         if(estudiante.getAvatar().getIdAvatar() == null){
             throw new Exception("Debe ingresar un id avatar");
         }
@@ -143,13 +191,8 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudiante.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        estudianteDAO.save(estudiante);
-        return "Se creo exitosamente al estudiante";
     }
-
-    @Override
-    public String actualizar(EstudianteDTO estudianteDTO) throws Exception {
-        Estudiante estudiante = null;
+    private void validacionesActualizar(EstudianteDTO estudianteDTO) throws Exception {
         if(estudianteDTO.getIdEstudiante() == null){
             throw new Exception("Debe ingresar el id del estudiante que desea actualizar");
         }
@@ -262,54 +305,5 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudianteDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        estudiante = estudianteDAO.findById(estudianteDTO.getIdEstudiante()).orElse(null);
-        estudiante.setNombre(estudianteDTO.getNombre());
-        estudiante.setApellido(estudianteDTO.getApellido());
-        estudiante.setNickName(estudianteDTO.getNickName());
-        estudiante.setPuntaje(estudianteDTO.getPuntaje());
-        estudiante.setCorreo(estudianteDTO.getCorreo());
-        estudiante.setSemestre(semestreDAO.findById(estudianteDTO.getIdSemestre()).get());
-        estudiante.setGenero(generoDAO.findById(estudianteDTO.getIdGenero()).get());
-        estudiante.setAvatar(avatarDAO.findById(estudianteDTO.getIdAvatar()).get());
-        estudiante.setEstado(estadoDAO.findById(estudianteDTO.getIdEstado()).get());
-        estudiante.setFechaNacimiento(estudianteDTO.getFechaNacimiento());
-        estudiante.setPrograma(programaDAO.findById(estudianteDTO.getIdPrograma()).get());
-        estudiante.setUsuarioModificador(estudianteDTO.getUsuarioModificador());
-        estudiante.setFechaModificacion(estudianteDTO.getFechaModificacion());
-        estudianteDAO.save(estudiante);
-        return "Se actualizo exitosamente al estudiante";
     }
-
-    @Override
-    public void eliminar(Long idEstudiante) throws Exception {
-        if(idEstudiante == null){
-            throw new Exception("El id del estudiante es obligatorio");
-        }
-        if(!estudianteDAO.existsById(idEstudiante)){
-            throw new Exception("No se encontro un estudiante con ese Id");
-        }
-        if(!retoEstudianteDAO.findByIdEstudiante(idEstudiante).isEmpty()){
-            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un reto estudiante");
-        }
-        if(!articulosAdquiridosDAO.findByIdEstudiante(idEstudiante).isEmpty()){
-            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un articulo adquirido");
-        }
-        if(!cursoEstudianteDAO.findByIdEstudiante(idEstudiante).isEmpty()){
-            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un curso estudiante");
-        }
-        if(!misionEstudianteDAO.findByIdEstudiante(idEstudiante).isEmpty()){
-            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un mision estudiante");
-        }
-        if(!comentarioDAO.findByIdEstudiante(idEstudiante).isEmpty()){
-            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un comentario");
-        }
-        estudianteDAO.deleteById(idEstudiante);
-    }
-
-    @Override
-    public List<Estudiante> listar() throws Exception {
-        return estudianteDAO.findAll();
-    }
-
-
 }

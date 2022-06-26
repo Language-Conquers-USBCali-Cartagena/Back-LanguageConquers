@@ -16,15 +16,46 @@ import java.util.List;
 @Scope("singleton")
 @Service
 public class SemestreServiceImpl implements SemestreService {
-
     @Autowired
     private SemestreDAO semestreDAO;
-
     @Autowired
     private EstudianteDAO estudianteDAO;
 
     @Override
     public String registrar(Semestre semestre) throws Exception {
+        validacionesCrear(semestre);
+        semestreDAO.save(semestre);
+        return "Se creo el semestre satisfactoriamente";
+    }
+    @Override
+    public String actualizar(SemestreDTO semestreDTO) throws Exception {
+        Semestre semestre = null;
+        validacionesActualizar(semestreDTO);
+        semestre = semestreDAO.findById(semestreDTO.getIdSemestre()).orElse(null);
+        semestre.setNombre(semestreDTO.getNombre());
+        semestre.setUsuarioModificador(semestreDTO.getUsuarioModificador());
+        semestre.setFechaModificacion(semestreDTO.getFechaModificacion());
+        semestreDAO.save(semestre);
+        return "Se actualizo el semestre satisfactoriamente";
+    }
+    @Override
+    public void eliminar(Long idSemestre) throws Exception {
+        if(idSemestre == null){
+            throw new Exception("El Id del semestre es obligatorio");
+        }
+        if(!semestreDAO.existsById(idSemestre)){
+            throw new Exception("No se encontro el semestre con ese Id");
+        }
+        if(!estudianteDAO.findByIdSemestre(idSemestre).isEmpty()){
+            throw new Exception("No se puede eliminar el semestre porque esta asignado a un estudiante");
+        }
+        semestreDAO.deleteById(idSemestre);
+    }
+    @Override
+    public List<Semestre> listar() {
+        return semestreDAO.findAll();
+    }
+    private void validacionesCrear(Semestre semestre)throws Exception{
         if(semestre.getNombre() == null || semestre.getNombre().trim().equals("")){
             throw new Exception("Se debe ingresar el nombre del semestre");
         }
@@ -45,13 +76,8 @@ public class SemestreServiceImpl implements SemestreService {
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
 
-        semestreDAO.save(semestre);
-        return "Se creo el semestre satisfactoriamente";
     }
-
-    @Override
-    public String actualizar(SemestreDTO semestreDTO) throws Exception {
-        Semestre semestre = null;
+    private void validacionesActualizar(SemestreDTO semestreDTO)throws Exception{
         if(semestreDTO.getIdSemestre() == null){
             throw new Exception("Debe ingresar un Id del semestre que desea actualizar");
         }
@@ -77,30 +103,5 @@ public class SemestreServiceImpl implements SemestreService {
         if(semestreDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        semestre = semestreDAO.findById(semestreDTO.getIdSemestre()).orElse(null);
-        semestre.setNombre(semestreDTO.getNombre());
-        semestre.setUsuarioModificador(semestreDTO.getUsuarioModificador());
-        semestre.setFechaModificacion(semestreDTO.getFechaModificacion());
-        semestreDAO.save(semestre);
-        return "Se actualizo el semestre satisfactoriamente";
-    }
-
-    @Override
-    public void eliminar(Long idSemestre) throws Exception {
-        if(idSemestre == null){
-            throw new Exception("El Id del semestre es obligatorio");
-        }
-        if(!semestreDAO.existsById(idSemestre)){
-            throw new Exception("No se encontro el semestre con ese Id");
-        }
-        if(!estudianteDAO.findByIdSemestre(idSemestre).isEmpty()){
-            throw new Exception("No se puede eliminar el semestre porque esta asignado a un estudiante");
-        }
-        semestreDAO.deleteById(idSemestre);
-    }
-
-    @Override
-    public List<Semestre> listar() {
-        return semestreDAO.findAll();
     }
 }

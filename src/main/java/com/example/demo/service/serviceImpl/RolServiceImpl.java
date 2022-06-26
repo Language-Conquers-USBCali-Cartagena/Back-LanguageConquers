@@ -28,6 +28,44 @@ public class RolServiceImpl implements RolService {
     private RetoDAO retoDAO;
     @Override
     public String registrar(Rol rol) throws Exception {
+        validacionesCrear(rol);
+        rolDAO.save(rol);
+        return "Se creo el rol satisfactoriamente";
+
+    }
+    @Override
+    public String actualizar(RolDTO rolDTO) throws Exception {
+        Rol rol = null;
+        validacionesActualizar(rolDTO);
+        rol = rolDAO.findById(rolDTO.getIdRol()).orElse(null);
+        rol.setNombre(rolDTO.getNombre());
+        rol.setReto(retoDAO.findById(rolDTO.getIdReto()).orElse(null));
+        rol.setUsuarioModificador(rolDTO.getUsuarioModificador());
+        rol.setFechaModificacion(rolDTO.getFechaModificacion());
+        rolDAO.save(rol);
+        return "Se actualizo el rol satisfactoriamente";
+    }
+
+    @Override
+    public void eliminar(Long idRol) throws Exception {
+        if(idRol == null){
+            throw new Exception("El id del rol es obligatorio");
+        }
+        if(!rolDAO.existsById(idRol)){
+            throw new Exception("No se encontro el avatar con ese id");
+        }
+        if(!retoEstudianteDAO.findByIdRol(idRol).isEmpty()){
+            throw new Exception("No se puede eliminar el rol porque esta asignado en un reto estudiante");
+        }
+        rolDAO.deleteById(idRol);
+    }
+
+    @Override
+    public List<Rol> listar() throws Exception {
+        return rolDAO.findAll();
+    }
+
+    private void validacionesCrear(Rol rol)throws Exception{
         if(rol.getNombre()==null || rol.getNombre().trim().equals("")){
             throw new Exception("Se debe ingresar el nombre del rol");
         }
@@ -53,14 +91,8 @@ public class RolServiceImpl implements RolService {
         if(rol.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No se puede ingresar una fecha que aun no ha sucedido");
         }
-        rolDAO.save(rol);
-        return "Se creo el rol satisfactoriamente";
-
     }
-
-    @Override
-    public String actualizar(RolDTO rolDTO) throws Exception {
-        Rol rol = null;
+    private void validacionesActualizar(RolDTO rolDTO)throws Exception{
         if(rolDTO.getIdRol() == null){
             throw new Exception("Debe ingresar el Id del rol que desea modificar");
         }
@@ -92,31 +124,5 @@ public class RolServiceImpl implements RolService {
         if(rolDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No se puede ingresar una fecha que aun no ha sucedido");
         }
-        rol = rolDAO.findById(rolDTO.getIdRol()).orElse(null);
-        rol.setNombre(rolDTO.getNombre());
-        rol.setReto(retoDAO.findById(rolDTO.getIdReto()).orElse(null));
-        rol.setUsuarioModificador(rolDTO.getUsuarioModificador());
-        rol.setFechaModificacion(rolDTO.getFechaModificacion());
-        rolDAO.save(rol);
-        return "Se actualizo el rol satisfactoriamente";
-    }
-
-    @Override
-    public void eliminar(Long idRol) throws Exception {
-        if(idRol == null){
-            throw new Exception("El id del rol es obligatorio");
-        }
-        if(!rolDAO.existsById(idRol)){
-            throw new Exception("No se encontro el avatar con ese id");
-        }
-        if(!retoEstudianteDAO.findByIdRol(idRol).isEmpty()){
-            throw new Exception("No se puede eliminar el rol porque esta asignado en un reto estudiante");
-        }
-        rolDAO.deleteById(idRol);
-    }
-
-    @Override
-    public List<Rol> listar() throws Exception {
-        return rolDAO.findAll();
     }
 }

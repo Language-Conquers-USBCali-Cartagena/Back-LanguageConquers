@@ -29,6 +29,41 @@ public class BitacoraServiceImpl implements BitacoraService {
 
     @Override
     public String registrar(Bitacora bitacora) throws Exception {
+        validacionesCrear(bitacora);
+        bitacoraDAO.save(bitacora);
+        return "Se realizo el registro de la bitacora";
+    }
+
+    @Override
+    public String actualizar(BitacoraDTO bitacoraDTO) throws Exception {
+        Bitacora bitacora = null;
+        validacionesActualizar(bitacoraDTO);
+        bitacora = bitacoraDAO.findById(bitacoraDTO.getIdBitacora()).orElse(null);
+        bitacora.setFechaIngreso(bitacoraDTO.getFechaIngreso());
+        bitacora.setFechaSalida(bitacoraDTO.getFechaSalida());
+        bitacora.setIdUsuario(bitacoraDTO.getIdUsuario());
+        bitacora.setUsuarioModificador(bitacoraDTO.getUsuarioModificador());
+        bitacora.setFechaModificacion(bitacoraDTO.getFechaModificacion());
+        bitacoraDAO.save(bitacora);
+        return "Se actualizo la Bitacora";
+    }
+
+    @Override
+    public void eliminar(Long idBitacora) throws Exception {
+        if(idBitacora == null){
+            throw new Exception("El Id del registro en la bitacora es obligatorio");
+        }
+        if(!bitacoraDAO.existsById(idBitacora)){
+            throw new Exception("No se encontro ningun registro en la bitacora con ese Id");
+        }
+        bitacoraDAO.deleteById(idBitacora);
+    }
+
+    @Override
+    public List<Bitacora> listar() {
+        return bitacoraDAO.findAll();
+    }
+    private void validacionesCrear(Bitacora bitacora) throws Exception{
         if(bitacora.getFechaIngreso() == null || bitacora.getFechaIngreso().toString().equals("")){
             throw new Exception("Se debe ingresar una fecha de ingreso valida");
         }
@@ -55,13 +90,8 @@ public class BitacoraServiceImpl implements BitacoraService {
         if(bitacora.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        bitacoraDAO.save(bitacora);
-        return "Se realizo el registro de la bitacora";
     }
-
-    @Override
-    public String actualizar(BitacoraDTO bitacoraDTO) throws Exception {
-        Bitacora bitacora = null;
+    private void validacionesActualizar(BitacoraDTO bitacoraDTO)throws Exception{
         if(bitacoraDTO.getIdBitacora() == null){
             throw new Exception("Debe ingresar el Id del registro que desea modificar");
         }
@@ -90,29 +120,5 @@ public class BitacoraServiceImpl implements BitacoraService {
         if(bitacoraDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        bitacora = bitacoraDAO.findById(bitacoraDTO.getIdBitacora()).orElse(null);
-        bitacora.setFechaIngreso(bitacoraDTO.getFechaIngreso());
-        bitacora.setFechaSalida(bitacoraDTO.getFechaSalida());
-        bitacora.setIdUsuario(bitacoraDTO.getIdUsuario());
-        bitacora.setUsuarioModificador(bitacoraDTO.getUsuarioModificador());
-        bitacora.setFechaModificacion(bitacoraDTO.getFechaModificacion());
-        bitacoraDAO.save(bitacora);
-        return "Se actualizo la Bitacora";
-    }
-
-    @Override
-    public void eliminar(Long idBitacora) throws Exception {
-        if(idBitacora == null){
-            throw new Exception("El Id del registro en la bitacora es obligatorio");
-        }
-        if(!bitacoraDAO.existsById(idBitacora)){
-            throw new Exception("No se encontro ningun registro en la bitacora con ese Id");
-        }
-        bitacoraDAO.deleteById(idBitacora);
-    }
-
-    @Override
-    public List<Bitacora> listar() {
-        return bitacoraDAO.findAll();
     }
 }

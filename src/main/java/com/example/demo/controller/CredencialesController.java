@@ -2,9 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.mapper.CredencialesMapper;
 import com.example.demo.model.Credenciales;
-import com.example.demo.model.Estudiante;
 import com.example.demo.model.dto.CredencialesDTO;
-import com.example.demo.model.dto.EstudianteDTO;
 import com.example.demo.service.CredencialesService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -20,16 +20,12 @@ import java.util.List;
 public class ProfesorServiceImpl implements ProfesorService {
     @Autowired
     private ProfesorDAO profesorDAO;
-
     @Autowired
     private GeneroDAO generoDAO;
-
     @Autowired
     private ComentarioDAO comentarioDAO;
-
     @Autowired
     private CursoDAO cursoDAO;
-
     @Override
     public String registarProfesor(Profesor profesor) throws Exception {
         validacionesCrear(profesor);

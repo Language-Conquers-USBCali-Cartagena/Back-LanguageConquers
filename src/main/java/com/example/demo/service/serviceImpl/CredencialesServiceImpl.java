@@ -22,6 +22,42 @@ public class CredencialesServiceImpl implements CredencialesService {
 
     @Override
     public String crear(Credenciales credenciales) throws Exception {
+        validacionesCrear(credenciales);
+        credencialesDAO.save(credenciales);
+        return "Se agrego la credencial";
+    }
+
+    @Override
+    public String actualizar(CredencialesDTO credencialesDTO) throws Exception {
+        Credenciales credenciales = null;
+        validacionesActualizar(credencialesDTO);
+        credenciales = credencialesDAO.findById(credencialesDTO.getIdCredencial()).orElse(null);
+        credenciales.setCuenta(credencialesDTO.getCuenta());
+        credenciales.setPassword(credencialesDTO.getPassword());
+        credenciales.setUrl(credencialesDTO.getUrl());
+        credenciales.setPlataforma(credencialesDTO.getPlataforma());
+        credenciales.setUsuarioModificador(credencialesDTO.getUsuarioModificador());
+        credenciales.setFechaModificacion(credencialesDTO.getFechaModificacion());
+        credencialesDAO.save(credenciales);
+        return "Se actualizo la credencial";
+    }
+
+    @Override
+    public void eliminar(Long idCredencial) throws Exception {
+        if(idCredencial ==null){
+            throw new Exception("Se debe ingresar el id de la credencial que desea eliminar");
+        }
+        if(!credencialesDAO.existsById(idCredencial)){
+            throw new Exception("No se encontro la credencial con ese Id");
+        }
+        credencialesDAO.deleteById(idCredencial);
+    }
+
+    @Override
+    public List<Credenciales> listar() throws Exception {
+        return credencialesDAO.findAll();
+    }
+    private void validacionesCrear(Credenciales credenciales)throws Exception{
         if(credenciales.getCuenta() == null || credenciales.getCuenta().equals("")){
             throw new Exception("Debe ingresar el nombre o correo asociado a la cuenta");
         }
@@ -62,13 +98,8 @@ public class CredencialesServiceImpl implements CredencialesService {
         if(credenciales.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        credencialesDAO.save(credenciales);
-        return "Se agrego la credencial";
     }
-
-    @Override
-    public String actualizar(CredencialesDTO credencialesDTO) throws Exception {
-        Credenciales credenciales = null;
+    private void validacionesActualizar(CredencialesDTO credencialesDTO) throws Exception{
         if(credencialesDTO.getIdCredencial()==null){
             throw new Exception("Debe ingresar el id de la credencial para actualizarla");
         }
@@ -115,31 +146,6 @@ public class CredencialesServiceImpl implements CredencialesService {
         if(credencialesDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        credenciales = credencialesDAO.findById(credencialesDTO.getIdCredencial()).orElse(null);
-        credenciales.setCuenta(credencialesDTO.getCuenta());
-        credenciales.setPassword(credencialesDTO.getPassword());
-        credenciales.setUrl(credencialesDTO.getUrl());
-        credenciales.setPlataforma(credencialesDTO.getPlataforma());
-        credenciales.setUsuarioModificador(credencialesDTO.getUsuarioModificador());
-        credenciales.setFechaModificacion(credencialesDTO.getFechaModificacion());
-        credencialesDAO.save(credenciales);
-        return "Se actualizo la credencial";
-    }
-
-    @Override
-    public void eliminar(Long idCredencial) throws Exception {
-        if(idCredencial ==null){
-            throw new Exception("Se debe ingresar el id de la credencial que desea eliminar");
-        }
-        if(!credencialesDAO.existsById(idCredencial)){
-            throw new Exception("No se encontro la credencial con ese Id");
-        }
-        credencialesDAO.deleteById(idCredencial);
-    }
-
-    @Override
-    public List<Credenciales> listar() throws Exception {
-        return credencialesDAO.findAll();
     }
 
 }

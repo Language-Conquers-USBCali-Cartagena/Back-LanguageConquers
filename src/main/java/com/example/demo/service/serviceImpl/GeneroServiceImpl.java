@@ -29,26 +29,7 @@ public class GeneroServiceImpl implements GeneroService {
 
     @Override
     public String registrar(Genero genero) throws Exception {
-
-        if(genero.getGenero() == null || genero.getGenero().trim().equals("")){
-            throw new Exception("Debe ingresar un nombre de genero");
-        }
-        if(Validaciones.isStringLenght(genero.getGenero(),50)){
-            throw new Exception("El nombre del genero es muy largo");
-        }
-        if(genero.getUsuarioCreador() == null
-                || genero.getUsuarioCreador().trim().equals("")
-                || Validaciones.isStringLenght(genero.getUsuarioCreador(),50)){
-            throw new Exception("Se debe ingresar un usuario creador del genero valido");
-        }
-        if(genero.getFechaCreacion() == null
-                || genero.getFechaCreacion().toString().equals("")){
-            throw new Exception("Se debe ingresar una fecha valida");
-        }
-        Date fechaActual = new Date();
-        if(genero.getFechaCreacion().compareTo(fechaActual)>0){
-            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
-        }
+       validacionesCrear(genero);
         generoDAO.save(genero);
         return "Se creo el genero exitosamente";
     }
@@ -56,31 +37,7 @@ public class GeneroServiceImpl implements GeneroService {
     @Override
     public String actualizar(GeneroDTO generoDTO) throws Exception {
         Genero genero = null;
-        if(generoDTO.getIdGenero() == null){
-            throw new Exception("Debe ingresar el id del genero que desea actualizar");
-        }
-        if(!generoDAO.existsById(generoDTO.getIdGenero())){
-            throw new Exception("No existe el genero con ese Id");
-        }
-        if(generoDTO.getGenero() == null || generoDTO.getGenero().trim().equals("")){
-            throw new Exception("Debe ingresar un nombre de genero");
-        }
-        if(Validaciones.isStringLenght(generoDTO.getGenero(),50)){
-            throw new Exception("El nombre del genero es muy largo");
-        }
-        if(generoDTO.getUsuarioModificador() == null
-                || generoDTO.getUsuarioModificador().trim().equals("")
-                || Validaciones.isStringLenght(generoDTO.getUsuarioModificador(),50)){
-            throw new Exception("Se debe ingresar un usuario modificador del genero valido");
-        }
-        if(generoDTO.getFechaModificacion() == null
-                || generoDTO.getFechaModificacion().toString().equals("")){
-            throw new Exception("Se debe ingresar una fecha valida");
-        }
-        Date fechaActual = new Date();
-        if(generoDTO.getFechaModificacion().compareTo(fechaActual)>0){
-            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
-        }
+        validacionesActualizar(generoDTO);
         genero = generoDAO.findById(generoDTO.getIdGenero()).orElse(null);
         genero.setGenero(generoDTO.getGenero());
         genero.setUsuarioModificador(generoDTO.getUsuarioModificador());
@@ -109,5 +66,53 @@ public class GeneroServiceImpl implements GeneroService {
     @Override
     public List<Genero> listar() {
         return generoDAO.findAll();
+    }
+    private void validacionesCrear(Genero genero)throws Exception{
+        if(genero.getGenero() == null || genero.getGenero().trim().equals("")){
+            throw new Exception("Debe ingresar un nombre de genero");
+        }
+        if(Validaciones.isStringLenght(genero.getGenero(),50)){
+            throw new Exception("El nombre del genero es muy largo");
+        }
+        if(genero.getUsuarioCreador() == null
+                || genero.getUsuarioCreador().trim().equals("")
+                || Validaciones.isStringLenght(genero.getUsuarioCreador(),50)){
+            throw new Exception("Se debe ingresar un usuario creador del genero valido");
+        }
+        if(genero.getFechaCreacion() == null
+                || genero.getFechaCreacion().toString().equals("")){
+            throw new Exception("Se debe ingresar una fecha valida");
+        }
+        Date fechaActual = new Date();
+        if(genero.getFechaCreacion().compareTo(fechaActual)>0){
+            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
+        }
+    }
+    private void validacionesActualizar(GeneroDTO generoDTO)throws Exception{
+        if(generoDTO.getIdGenero() == null){
+            throw new Exception("Debe ingresar el id del genero que desea actualizar");
+        }
+        if(!generoDAO.existsById(generoDTO.getIdGenero())){
+            throw new Exception("No existe el genero con ese Id");
+        }
+        if(generoDTO.getGenero() == null || generoDTO.getGenero().trim().equals("")){
+            throw new Exception("Debe ingresar un nombre de genero");
+        }
+        if(Validaciones.isStringLenght(generoDTO.getGenero(),50)){
+            throw new Exception("El nombre del genero es muy largo");
+        }
+        if(generoDTO.getUsuarioModificador() == null
+                || generoDTO.getUsuarioModificador().trim().equals("")
+                || Validaciones.isStringLenght(generoDTO.getUsuarioModificador(),50)){
+            throw new Exception("Se debe ingresar un usuario modificador del genero valido");
+        }
+        if(generoDTO.getFechaModificacion() == null
+                || generoDTO.getFechaModificacion().toString().equals("")){
+            throw new Exception("Se debe ingresar una fecha valida");
+        }
+        Date fechaActual = new Date();
+        if(generoDTO.getFechaModificacion().compareTo(fechaActual)>0){
+            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
+        }
     }
 }

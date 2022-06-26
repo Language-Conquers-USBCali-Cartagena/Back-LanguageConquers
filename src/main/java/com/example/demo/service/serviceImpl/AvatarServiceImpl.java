@@ -26,7 +26,43 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public String registrar(Avatar avatar) throws Exception {
+        validacionesCrear(avatar);
+        avatarDAO.save(avatar);
+        return "Se Registro el avatar";
+    }
 
+    @Override
+    public String actualizar(AvatarDTO avatarDTO) throws Exception {
+        Avatar avatar =  null;
+        validacionesActualizar(avatarDTO);
+        avatar = avatarDAO.findById(avatarDTO.getIdAvatar()).orElse(null);
+        avatar.setImgAvatar(avatarDTO.getImgAvatar());
+        avatar.setNombreAvatar(avatarDTO.getNombreAvatar());
+        avatar.setUsuarioModificador(avatarDTO.getUsuarioModificador());
+        avatar.setFechaModificacion(avatarDTO.getFechaModificacion());
+        avatarDAO.save(avatar);
+        return "Se actualizo el avatar";
+    }
+
+    @Override
+    public void eliminar(Long idAvatar) throws Exception {
+        if(idAvatar == null){
+            throw new Exception("El id del avatar es obligatorio");
+        }
+        if(!avatarDAO.existsById(idAvatar)){
+            throw new Exception("No se encontro el avatar con ese id");
+        }
+        if(!estudianteDAO.findByIdAvatar(idAvatar).isEmpty()){
+            throw new Exception("No se puede eliminar el avatar porque esta siendo uilizado por un estudiante");
+        }
+        avatarDAO.deleteById(idAvatar);
+    }
+
+    @Override
+    public List<Avatar> listar() {
+        return avatarDAO.findAll();
+    }
+    private void validacionesCrear(Avatar avatar) throws Exception {
         if(avatar.getImgAvatar() == null ||
                 avatar.getImgAvatar().trim().equals("") ||
                 Validaciones.isStringLenght(avatar.getImgAvatar(), 80)){
@@ -50,13 +86,8 @@ public class AvatarServiceImpl implements AvatarService {
         if(avatar.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        avatarDAO.save(avatar);
-        return "Se Registro el avatar";
     }
-
-    @Override
-    public String actualizar(AvatarDTO avatarDTO) throws Exception {
-        Avatar avatar =  null;
+    private void validacionesActualizar(AvatarDTO avatarDTO) throws Exception{
         if(avatarDTO.getIdAvatar() == null){
             throw new Exception("Debe ingresar el id del avatar que desea actualizar");
         }
@@ -86,31 +117,5 @@ public class AvatarServiceImpl implements AvatarService {
         if(avatarDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
-        avatar = avatarDAO.findById(avatarDTO.getIdAvatar()).orElse(null);
-        avatar.setImgAvatar(avatarDTO.getImgAvatar());
-        avatar.setNombreAvatar(avatarDTO.getNombreAvatar());
-        avatar.setUsuarioModificador(avatarDTO.getUsuarioModificador());
-        avatar.setFechaModificacion(avatarDTO.getFechaModificacion());
-        avatarDAO.save(avatar);
-        return "Se actualizo el avatar";
-    }
-
-    @Override
-    public void eliminar(Long idAvatar) throws Exception {
-        if(idAvatar == null){
-            throw new Exception("El id del avatar es obligatorio");
-        }
-        if(!avatarDAO.existsById(idAvatar)){
-            throw new Exception("No se encontro el avatar con ese id");
-        }
-        if(!estudianteDAO.findByIdAvatar(idAvatar).isEmpty()){
-            throw new Exception("No se puede eliminar el avatar porque esta siendo uilizado por un estudiante");
-        }
-        avatarDAO.deleteById(idAvatar);
-    }
-
-    @Override
-    public List<Avatar> listar() {
-        return avatarDAO.findAll();
     }
 }
