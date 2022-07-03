@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Estudiante;
 import com.example.demo.model.Semestre;
 import com.example.demo.model.dto.SemestreDTO;
 
@@ -11,4 +12,6 @@ public interface SemestreService {
     String actualizar (SemestreDTO semestreDTO)throws Exception;
     void eliminar(Long idSemestre) throws Exception;
     List<Semestre> listar()throws Exception;
+
+
 }

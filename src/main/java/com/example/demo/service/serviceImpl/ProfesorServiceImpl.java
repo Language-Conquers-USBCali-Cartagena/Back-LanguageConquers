@@ -70,6 +70,14 @@ public class ProfesorServiceImpl implements ProfesorService {
         return profesorDAO.findAll();
     }
 
+    @Override
+    public Boolean existePorCorreo(String correo) throws Exception {
+        if(!Validaciones.formatoCorreoValido(correo)){
+            throw new Exception("El formato del correo no es valido");
+        }
+        return profesorDAO.existsByCorreo(correo);
+    }
+
     private void validacionesCrear(Profesor profesor) throws Exception {
         if(profesor.getGenero().getIdGenero()==null){
             throw new Exception("Debe ingresar el id un genero");

@@ -12,4 +12,5 @@ public interface ProfesorDAO extends JpaRepository<Profesor,Long> {
     @Query(value = "select * from profesor where id_genero = ?1", nativeQuery = true)
     List<Profesor> findByIdGenero(Long idGenero) throws Exception;
 
+    Boolean existsByCorreo(String correo) throws Exception;
 }

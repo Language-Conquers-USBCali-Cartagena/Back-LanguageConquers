@@ -2,6 +2,7 @@ package com.example.demo.service.serviceImpl;
 
 import com.example.demo.dao.EstudianteDAO;
 import com.example.demo.dao.SemestreDAO;
+import com.example.demo.model.Estudiante;
 import com.example.demo.model.Semestre;
 import com.example.demo.model.dto.SemestreDTO;
 import com.example.demo.service.SemestreService;
@@ -55,6 +56,7 @@ public class SemestreServiceImpl implements SemestreService {
     public List<Semestre> listar() {
         return semestreDAO.findAll();
     }
+
     private void validacionesCrear(Semestre semestre)throws Exception{
         if(semestre.getNombre() == null || semestre.getNombre().trim().equals("")){
             throw new Exception("Se debe ingresar el nombre del semestre");

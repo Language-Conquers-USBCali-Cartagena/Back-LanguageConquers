@@ -22,4 +22,6 @@ public interface EstudianteDAO extends JpaRepository<Estudiante,Long> {
 
     @Query(value = "select * from estudiante where id_semestre = ?1", nativeQuery = true)
     List<Estudiante> findByIdSemestre(Long idSemestre) throws Exception;
+
+    Boolean existsByCorreo(String correo) throws Exception;
 }

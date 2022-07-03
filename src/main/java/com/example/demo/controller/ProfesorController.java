@@ -70,4 +70,15 @@ public class ProfesorController {
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Operation(summary = "Este metodo permite saber si el correo del profesor existe en la bd")
+    @GetMapping("/existePorCorreo")
+    public ResponseEntity<Boolean> existePorCorreo(@RequestParam String correo){
+        try {
+
+            return new ResponseEntity<>(profesorService.existePorCorreo(correo), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
