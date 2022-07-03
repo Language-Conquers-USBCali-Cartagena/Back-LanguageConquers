@@ -47,11 +47,17 @@ public class OrdenRetoIDEServiceImpl implements OrdenRetoIDEService {
             }
 
             if((ordenRetoCorrecto.getIdPalabraReservada() != ordenRetoIntento.getIdPalabraReservada() ||
-                    ordenRetoCorrecto.getPadre() != ordenRetoIntento.getPadre()) && ordenRetoIntento.getOrden() != 0 ){
+                    ordenRetoCorrecto.getPadre() != ordenRetoIntento.getPadre() || ordenRetoCorrecto.getOrden() != ordenRetoIntento.getOrden())
+                    && ordenRetoIntento.getOrden() != 0 ){
                 error.add(ordenRetoIntento);
             }
         }
-
+        for (OrdenRetoIDEDTO ordenRetoIDEDTO: ordenCorretoOrdenado) {
+            System.out.println(ordenRetoIDEDTO.getOrden());
+            System.out.println(ordenRetoIDEDTO.getPadre());
+            System.out.println(ordenRetoIDEDTO.getIdPalabraReservada());
+            System.out.println("-------------------------------------");
+        }
         return error;
     }
 }

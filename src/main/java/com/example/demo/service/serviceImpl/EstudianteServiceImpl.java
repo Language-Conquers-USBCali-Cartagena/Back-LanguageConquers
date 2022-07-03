@@ -98,6 +98,15 @@ public class EstudianteServiceImpl implements EstudianteService {
     public List<Estudiante> listar() throws Exception {
         return estudianteDAO.findAll();
     }
+    @Override
+    public Boolean existePorCorreo(String correo) throws Exception {
+
+        if(!Validaciones.formatoCorreoValido(correo)){
+            throw new Exception("El formato del correo no es valido");
+        }
+        return estudianteDAO.existsByCorreo(correo);
+
+    }
 
     private void validacionesCrear(Estudiante estudiante) throws Exception {
         if(estudiante.getAvatar().getIdAvatar() == null){

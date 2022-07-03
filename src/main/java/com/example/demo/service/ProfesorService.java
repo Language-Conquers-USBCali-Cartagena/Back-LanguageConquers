@@ -11,4 +11,6 @@ public interface ProfesorService {
     void eliminar(Long idProfesor)throws Exception;
 
     List<Profesor>listar() throws Exception;
+
+    Boolean existePorCorreo(String correo) throws Exception;
 }
