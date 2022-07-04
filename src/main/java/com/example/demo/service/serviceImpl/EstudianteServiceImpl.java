@@ -29,6 +29,10 @@ public class EstudianteServiceImpl implements EstudianteService {
     private EstadoDAO estadoDAO;
     @Autowired
     private ProgramaDAO programaDAO;
+
+    @Autowired
+    private ProfesorDAO profesorDAO;
+
     @Autowired
     private RetoEstudianteDAO retoEstudianteDAO;
     @Autowired
@@ -200,6 +204,10 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudiante.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
+        if(profesorDAO.existsByCorreo(estudiante.getCorreo()) || estudianteDAO.existsByCorreo(estudiante.getCorreo())){
+            throw new Exception("El correo ya existe en la base de datos");
+        }
+
     }
     private void validacionesActualizar(EstudianteDTO estudianteDTO) throws Exception {
         if(estudianteDTO.getIdEstudiante() == null){
@@ -314,5 +322,6 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudianteDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
         }
+
     }
 }

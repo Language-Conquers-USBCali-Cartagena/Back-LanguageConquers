@@ -1,9 +1,6 @@
 package com.example.demo.service.serviceImpl;
 
-import com.example.demo.dao.ComentarioDAO;
-import com.example.demo.dao.CursoDAO;
-import com.example.demo.dao.GeneroDAO;
-import com.example.demo.dao.ProfesorDAO;
+import com.example.demo.dao.*;
 import com.example.demo.model.Profesor;
 import com.example.demo.model.dto.ProfesorDTO;
 import com.example.demo.service.ProfesorService;
@@ -26,6 +23,9 @@ public class ProfesorServiceImpl implements ProfesorService {
     private ComentarioDAO comentarioDAO;
     @Autowired
     private CursoDAO cursoDAO;
+
+    @Autowired
+    private EstudianteDAO estudianteDAO;
     @Override
     public String registarProfesor(Profesor profesor) throws Exception {
         validacionesCrear(profesor);
@@ -128,6 +128,9 @@ public class ProfesorServiceImpl implements ProfesorService {
         if(profesor.getFechaCreacion().compareTo(fechaActual)>0){
             throw  new Exception("No se puede ingresar una fecha que aun no ha sucedido");
         }
+        if(estudianteDAO.existsByCorreo(profesor.getCorreo()) || profesorDAO.existsByCorreo(profesor.getCorreo())){
+            throw new Exception("El correo ya existe en la base de datos");
+        }
 
     }
     private void validacionesActualizar(ProfesorDTO profesorDTO) throws Exception{
@@ -183,5 +186,6 @@ public class ProfesorServiceImpl implements ProfesorService {
         if(profesorDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw  new Exception("No se puede ingresar una fecha que aun no ha sucedido");
         }
+
     }
 }
