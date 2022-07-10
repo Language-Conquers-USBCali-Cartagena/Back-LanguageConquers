@@ -24,4 +24,6 @@ public interface EstudianteDAO extends JpaRepository<Estudiante,Long> {
     List<Estudiante> findByIdSemestre(Long idSemestre) throws Exception;
 
     Boolean existsByCorreo(String correo) throws Exception;
+
+    Estudiante findByCorreo(String correo) throws Exception;
 }

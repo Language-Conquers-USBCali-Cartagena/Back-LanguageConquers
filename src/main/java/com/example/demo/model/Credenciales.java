@@ -16,16 +16,16 @@ public class Credenciales {
     @Column(name = "id_credencial", nullable = false)
     private Long idCredencial;
 
-    @Column(name = "cuenta", nullable = false, length = 80)
+    @Column(name = "cuenta", length = 80)
     private String cuenta;
 
-    @Column(name = "password", nullable = false, length = 80)
+    @Column(name = "password", length = 80)
     private String password;
 
-    @Column(name = "url", nullable = false, length = 150)
+    @Column(name = "url", length = 150)
     private String url;
 
-    @Column(name = "plataforma", nullable = false, length = 80)
+    @Column(name = "plataforma", length = 80)
     private String plataforma;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)

@@ -85,5 +85,16 @@ public class EstudianteController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @Operation(summary = "Este metodo permite traer un estudiante por correo")
+    @GetMapping("/porCorrero")
+    public ResponseEntity<EstudianteDTO> encontrarPorCorreo(@RequestParam String correo){
+        try {
+
+            EstudianteDTO estudianteDTO =  estudianteMapper.toDTO(estudianteService.findByCorreo(correo));
+            return new ResponseEntity<>(estudianteDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

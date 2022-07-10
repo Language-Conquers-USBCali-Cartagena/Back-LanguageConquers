@@ -112,6 +112,14 @@ public class EstudianteServiceImpl implements EstudianteService {
 
     }
 
+    @Override
+    public Estudiante findByCorreo(String correo) throws Exception {
+        if(!Validaciones.formatoCorreoValido(correo)){
+            throw new Exception("El formato del correo no es valido");
+        }
+        return estudianteDAO.findByCorreo(correo);
+    }
+
     private void validacionesCrear(Estudiante estudiante) throws Exception {
         if(estudiante.getAvatar().getIdAvatar() == null){
             throw new Exception("Debe ingresar un id avatar");

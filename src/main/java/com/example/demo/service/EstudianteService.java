@@ -10,6 +10,6 @@ public interface EstudianteService {
     String actualizar(EstudianteDTO estudianteDTO) throws Exception;
     void eliminar(Long idEstudiante) throws Exception;
     List<Estudiante> listar()throws Exception;
-
     Boolean existePorCorreo (String correo) throws Exception;
+    Estudiante findByCorreo (String correo) throws Exception;
 }
