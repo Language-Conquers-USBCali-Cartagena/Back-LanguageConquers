@@ -11,4 +11,6 @@ public interface RetoDAO extends JpaRepository<Reto,Long> {
 
     @Query(value = "select * from reto where id_estado = ?1", nativeQuery = true)
     List<Reto> findByIdEstado(Long idEstado) throws Exception;
+
+
 }
