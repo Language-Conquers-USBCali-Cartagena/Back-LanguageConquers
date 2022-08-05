@@ -13,4 +13,6 @@ public interface ProfesorDAO extends JpaRepository<Profesor,Long> {
     List<Profesor> findByIdGenero(Long idGenero) throws Exception;
 
     Boolean existsByCorreo(String correo) throws Exception;
+
+    Profesor findByCorreo(String correo) throws Exception;
 }

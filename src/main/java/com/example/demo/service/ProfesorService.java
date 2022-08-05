@@ -13,4 +13,6 @@ public interface ProfesorService {
     List<Profesor>listar() throws Exception;
 
     Boolean existePorCorreo(String correo) throws Exception;
+
+    Profesor findByCorreo(String correo) throws Exception;
 }

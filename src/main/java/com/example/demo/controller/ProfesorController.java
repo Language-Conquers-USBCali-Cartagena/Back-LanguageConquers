@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.ProfesorDAO;
 import com.example.demo.mapper.ProfesorMapper;
 import com.example.demo.model.Profesor;
 import com.example.demo.model.dto.ProfesorDTO;
@@ -77,6 +78,17 @@ public class ProfesorController {
         try {
 
             return new ResponseEntity<>(profesorService.existePorCorreo(correo), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite obtener un profesor por su correo")
+    @GetMapping("/porCorreo")
+    public ResponseEntity<ProfesorDTO> encontrarPorCorreo(@RequestParam String correo){
+        try {
+            ProfesorDTO profesorDTO = profesorMapper.toDTO(profesorService.findByCorreo(correo));
+            return new ResponseEntity<>(profesorDTO, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
