@@ -6,9 +6,12 @@ import com.example.demo.dao.ProfesorDAO;
 import com.example.demo.model.Curso;
 import com.example.demo.model.dto.CursoDTO;
 import com.example.demo.service.CursoService;
+import com.example.demo.util.Validaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Scope("singleton")
 @Service
@@ -26,6 +29,13 @@ public class CursoServiceImpl implements CursoService {
         validaciones(curso);
         cursoDAO.save(curso);
         return "Se creo existosamente el curso";
+    }
+
+    @Override
+    public List<Curso> findByCorreoEstudiante(String correoEstudiante) throws Exception {
+        Validaciones.formatoCorreoValido(correoEstudiante);
+        return cursoDAO.findByCorreoEstudiante(correoEstudiante);
+
     }
 
     public void validaciones(Curso curso) throws Exception{
