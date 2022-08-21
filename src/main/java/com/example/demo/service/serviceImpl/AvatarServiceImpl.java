@@ -8,6 +8,8 @@ import com.example.demo.service.AvatarService;
 import com.example.demo.util.Validaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -62,6 +64,17 @@ public class AvatarServiceImpl implements AvatarService {
     public List<Avatar> listar() {
         return avatarDAO.findAll();
     }
+
+    @Override
+    public Page<Avatar> findAllPage(Pageable pageable) throws Exception {
+        Page<Avatar> avatarList = avatarDAO.findAll(pageable);
+        if(avatarDAO.findAll().isEmpty()){
+            throw new Exception("No hay ningun avatar para mostrar");
+        }
+
+        return avatarList;
+    }
+
     private void validacionesCrear(Avatar avatar) throws Exception {
         if(avatar.getImgAvatar() == null ||
                 avatar.getImgAvatar().trim().equals("") ||

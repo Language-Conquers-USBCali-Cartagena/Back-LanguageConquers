@@ -5,6 +5,7 @@ import com.example.demo.model.dto.AvatarDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
 
 
 import java.util.List;
@@ -21,4 +22,5 @@ public interface AvatarMapper {
     AvatarDTO toDTO(Avatar avatar);
     List<AvatarDTO> ToDTOList(List<Avatar> listAvatar);
 
+    List<AvatarDTO> ToDTOList(Page<Avatar> listAvatar);
 }

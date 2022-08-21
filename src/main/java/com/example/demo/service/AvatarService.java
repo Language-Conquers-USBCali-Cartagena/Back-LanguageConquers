@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.model.Avatar;
 import com.example.demo.model.dto.AvatarDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 import java.util.List;
@@ -13,4 +15,6 @@ public interface AvatarService{
     String actualizar(AvatarDTO avatarDTO) throws Exception;
      void eliminar(Long idAvatar) throws Exception;
     List<Avatar> listar() throws Exception;
+
+    Page<Avatar> findAllPage(Pageable pageable) throws Exception;
 }

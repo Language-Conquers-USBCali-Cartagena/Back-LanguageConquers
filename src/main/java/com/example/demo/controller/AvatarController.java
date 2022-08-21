@@ -6,6 +6,9 @@ import com.example.demo.model.dto.AvatarDTO;
 import com.example.demo.service.AvatarService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,7 +65,7 @@ public class AvatarController {
 
     @Operation(summary = "Este metodo permite eliminar los avatares")
     @DeleteMapping("/eliminarAvatar")
-    public ResponseEntity<?> eliminarAvatar(@RequestParam Long id){
+    public ResponseEntity<String> eliminarAvatar(@RequestParam Long id){
         try {
             avatarService.eliminar(id);
             return ResponseEntity.ok("Se eliminó satisfactoriamente");
@@ -72,6 +75,17 @@ public class AvatarController {
         }
     }
 
+    @Operation(summary = "Este metodo permite listar los avatares de manera paginada")
+    @GetMapping("/paginado")
+    public ResponseEntity<List<AvatarDTO>> avataresPaginado(@RequestParam Integer page){
+        try {
+            Pageable pageable = PageRequest.of(page ,3);
+            Page<Avatar> avatarPage = avatarService.findAllPage(pageable);
+            return new ResponseEntity<>(avatarMapper.ToDTOList(avatarPage), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
 }
