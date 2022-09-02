@@ -30,6 +30,17 @@ public class CursoController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @Operation(summary = "Este metodo permite listar todos los cursos")
+    @GetMapping
+    public ResponseEntity<List<CursoDTO>> listaCursos(){
+        try{
+            List<Curso> cursos = cursoService.findAll();
+            List<CursoDTO> cursoDTOS = cursoMapper.toDTOList(cursos);
+            return new ResponseEntity<>(cursoDTOS, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
     @Operation(summary = "Este metodo perimite listar los cursos por correo estudiante")
     @GetMapping("/porCorreoEstudiante")
     public ResponseEntity<List<CursoDTO>> listarCursosPorCorreoEstudiante(@RequestParam String correoEstudiante){

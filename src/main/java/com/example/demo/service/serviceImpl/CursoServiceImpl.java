@@ -38,6 +38,11 @@ public class CursoServiceImpl implements CursoService {
 
     }
 
+    @Override
+    public List<Curso> findAll() throws Exception {
+        return cursoDAO.findAll();
+    }
+
     public void validaciones(Curso curso) throws Exception{
         if(!estadoDAO.existsById(curso.getEstado().getIdEstado())){
             throw new Exception("El estado que ingreso no es valido");

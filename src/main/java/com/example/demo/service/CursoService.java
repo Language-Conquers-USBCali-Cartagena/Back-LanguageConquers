@@ -10,4 +10,6 @@ public interface CursoService {
     String crearCurso(Curso curso) throws Exception;
 
     List<Curso> findByCorreoEstudiante (String correoEstudiante) throws Exception;
+
+    List<Curso> findAll() throws Exception;
 }

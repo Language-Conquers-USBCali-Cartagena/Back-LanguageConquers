@@ -1,9 +1,47 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.mapper.PalabrasReservadasMapper;
+import com.example.demo.model.PalabrasReservadas;
+import com.example.demo.model.dto.PalabrasReservadasDTO;
+import com.example.demo.service.PalabrasReservadasService;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/palabrasReservadas")
 public class PalabrasReservadasController {
+
+    @Autowired
+    PalabrasReservadasService palabrasReservadasService;
+
+    @Autowired
+    PalabrasReservadasMapper palabrasReservadasMapper;
+
+
+    @Operation(summary = "Este metodo permite listar todas las palabras reservadas")
+    @GetMapping
+    public ResponseEntity<List<PalabrasReservadasDTO>> listarPalabrasReservadas(){
+        try{
+            List<PalabrasReservadasDTO> palabrasReservadasDTOS = palabrasReservadasMapper.toDTOList(palabrasReservadasService.findAll());
+            return new ResponseEntity<>(palabrasReservadasDTOS, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite crear una palabra reservada")
+    @PostMapping
+    public ResponseEntity<String> crearPalabraReservada(@RequestBody PalabrasReservadasDTO palabrasReservadasDTO){
+        try{
+            String mensaje = palabrasReservadasService.crearPalabraResevada(palabrasReservadasMapper.toEntity(palabrasReservadasDTO));
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

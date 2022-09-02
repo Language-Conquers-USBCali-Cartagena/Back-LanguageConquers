@@ -14,6 +14,9 @@ public interface OrdenRetoIDEMapper {
 
     OrdenRetoIDEMapper INSTANCE = Mappers.getMapper(OrdenRetoIDEMapper.class);
 
+
+    @Mapping(source = "idPalabraReservada", target = "palabrasReservadas.idPalabraReservada")
+    @Mapping(source = "idReto", target = "reto.idReto")
     OrdenRetoIDE toEntity(OrdenRetoIDEDTO ordenRetoIDEDTO);
     @Mapping(source = "palabrasReservadas.idPalabraReservada", target = "idPalabraReservada")
     OrdenRetoIDEDTO toDTO(OrdenRetoIDE ordenRetoIDE);

@@ -1,6 +1,8 @@
 package com.example.demo.service.serviceImpl;
 
 import com.example.demo.dao.OrdenRetoIDEDAO;
+import com.example.demo.dao.PalabrasReservadasDAO;
+import com.example.demo.dao.RetoDAO;
 import com.example.demo.mapper.OrdenRetoIDEMapper;
 import com.example.demo.model.OrdenRetoIDE;
 import com.example.demo.model.dto.OrdenRetoIDEDTO;
@@ -23,6 +25,11 @@ public class OrdenRetoIDEServiceImpl implements OrdenRetoIDEService {
 
     @Autowired
     private OrdenRetoIDEMapper ordenRetoIDEMapper;
+
+    @Autowired
+    PalabrasReservadasDAO palabrasReservadasDAO;
+    @Autowired
+    RetoDAO retoDAO;
     @Override
     public List<OrdenRetoIDEDTO> VerificarOrden(List<OrdenRetoIDEDTO> intento, Long idReto) throws Exception {
 
@@ -47,17 +54,61 @@ public class OrdenRetoIDEServiceImpl implements OrdenRetoIDEService {
             }
 
             if((ordenRetoCorrecto.getIdPalabraReservada() != ordenRetoIntento.getIdPalabraReservada() ||
-                    ordenRetoCorrecto.getPadre() != ordenRetoIntento.getPadre() || ordenRetoCorrecto.getOrden() != ordenRetoIntento.getOrden())
+                     ordenRetoCorrecto.getOrden() != ordenRetoIntento.getOrden())
                     && ordenRetoIntento.getOrden() != 0 ){
                 error.add(ordenRetoIntento);
             }
         }
         for (OrdenRetoIDEDTO ordenRetoIDEDTO: ordenCorretoOrdenado) {
             System.out.println(ordenRetoIDEDTO.getOrden());
-            System.out.println(ordenRetoIDEDTO.getPadre());
             System.out.println(ordenRetoIDEDTO.getIdPalabraReservada());
             System.out.println("-------------------------------------");
         }
         return error;
     }
+
+    @Override
+    public List<OrdenRetoIDE> findAll() throws Exception {
+        return ordenRetoIDEDAO.findAll();
+    }
+
+    @Override
+    public String crarOrdenRet(OrdenRetoIDE ordenRetoIDE) throws Exception {
+
+//        validaciones(ordenRetoIDE);
+        System.out.println("Id Orden: " + ordenRetoIDE.getIdOrdenRetoIDE());
+        System.out.println("REto" + ordenRetoIDE.getReto().getIdReto());
+        System.out.println("Orden" + ordenRetoIDE.getOrden());
+        System.out.println(ordenRetoIDE.getFechaCreacion());
+        System.out.println(ordenRetoIDE.getFechaModificacion());
+        System.out.println("Palabra Reservada: " + ordenRetoIDE.getPalabrasReservadas());
+        System.out.println(ordenRetoIDE.getUsuarioCreador());
+        System.out.println(ordenRetoIDE.getUsuarioModificador());
+
+        ordenRetoIDEDAO.save(ordenRetoIDE);
+        return "Se creo correctamente el orden reto ide";
+
+    }
+
+    @Override
+    public List<OrdenRetoIDE> findByIdReto(Long idREto) throws Exception {
+        if(!retoDAO.existsById(idREto)){
+            throw new Exception("El id reto no existe");
+        }
+        return ordenRetoIDEDAO.encontrarPorIdReto(idREto);
+    }
+
+    void validaciones (OrdenRetoIDE ordenRetoIDE) throws Exception{
+        if(ordenRetoIDE.getOrden() == 0){
+            throw new Exception("Debe ingresar un orden");
+        }
+        if(retoDAO.existsById(ordenRetoIDE.getReto().getIdReto())){
+            throw new Exception("El id reto no existe  " + ordenRetoIDE.getReto().getIdReto());
+        }
+        if(palabrasReservadasDAO.existsById(ordenRetoIDE.getPalabrasReservadas().getIdPalabraReservada())){
+            throw new Exception("El id reto no existe");
+        }
+
+    }
+
 }

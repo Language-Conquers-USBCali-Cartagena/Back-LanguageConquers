@@ -28,9 +28,6 @@ public class OrdenRetoIDE {
     @Column(name = "fecha_creacion", nullable = false)
     private Date fechaCreacion;
 
-    @Column(name = "padre")
-    private Long padre;
-
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
 

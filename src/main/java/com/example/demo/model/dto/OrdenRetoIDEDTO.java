@@ -20,7 +20,6 @@ public class OrdenRetoIDEDTO implements Serializable {
     private Date fechaCreacion;
     private Date fechaModificacion;
     private Long idReto;
-    private Long padre;
     private Long idPalabraReservada;
 
 }
