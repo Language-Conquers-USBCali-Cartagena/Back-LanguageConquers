@@ -8,20 +8,18 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class MisionDTO implements Serializable {
+public class LogroDTO implements Serializable {
 
 
-    private static final long serialVersionUID = -3269524906068751757L;
+    private static final long serialVersionUID = -4974437160909794547L;
 
-    private Long idMision;
+    private Long idLogro;
     private String nombre;
     private String imagen;
+    private String descripcion;
+    private String categoria;
     private String usuarioCreador;
     private String usuarioModificador;
     private Date fechaCreacion;
     private Date fechaModificacion;
-    private Long idNivelMision;
-    private Long idCurso;
-    private Long idTipoMision;
-    private Long idMonedas;
 }

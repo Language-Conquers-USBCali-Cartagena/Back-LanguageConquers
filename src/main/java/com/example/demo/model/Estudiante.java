@@ -88,4 +88,7 @@ public class Estudiante {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "estudiante")
     List<RetoEstudiante> retoEstudiantes = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "estudiante")
+    List<LogroEstudiante> logroEstudiantes = new ArrayList<>();
+
 }
