@@ -209,9 +209,9 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudiante.getFechaCreacion()==null || estudiante.getFechaCreacion().toString().equals("")){
             throw new Exception("Debe ingresar una fecha de creación");
         }
-        if(estudiante.getFechaCreacion().compareTo(fechaActual)>0){
-            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
-        }
+//        if(estudiante.getFechaCreacion().compareTo(fechaActual)>=0){
+//            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
+//        }
         if(profesorDAO.existsByCorreo(estudiante.getCorreo()) || estudianteDAO.existsByCorreo(estudiante.getCorreo())){
             throw new Exception("El correo ya existe en la base de datos");
         }
