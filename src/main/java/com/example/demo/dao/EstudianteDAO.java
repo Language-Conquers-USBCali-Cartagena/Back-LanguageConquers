@@ -26,4 +26,7 @@ public interface EstudianteDAO extends JpaRepository<Estudiante,Long> {
     Boolean existsByCorreo(String correo) throws Exception;
 
     Estudiante findByCorreo(String correo) throws Exception;
+
+    @Query(value = "SELECT * FROM estudiante ORDER BY puntaje DESC", nativeQuery = true)
+    List<Estudiante> rankingEstudiantes () throws Exception;
 }

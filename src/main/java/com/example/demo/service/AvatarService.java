@@ -13,7 +13,7 @@ public interface AvatarService{
 
     String registrar(Avatar avatar) throws Exception;
     String actualizar(AvatarDTO avatarDTO) throws Exception;
-     void eliminar(Long idAvatar) throws Exception;
+    String eliminar(Long idAvatar) throws Exception;
     List<Avatar> listar() throws Exception;
 
     Page<Avatar> findAllPage(Pageable pageable) throws Exception;

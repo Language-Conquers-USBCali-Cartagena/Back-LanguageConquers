@@ -30,7 +30,7 @@ public class AvatarController {
     public ResponseEntity<List<AvatarDTO>> listar() throws Exception {
         try{
             List<Avatar> avatarList = avatarService.listar();
-            List<AvatarDTO> avatarDTOS = avatarMapper.ToDTOList(avatarList);
+            List<AvatarDTO> avatarDTOS = avatarMapper.toDTOList(avatarList);
             return new ResponseEntity<>(avatarDTOS, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -67,8 +67,8 @@ public class AvatarController {
     @DeleteMapping("/eliminarAvatar")
     public ResponseEntity<String> eliminarAvatar(@RequestParam Long id){
         try {
-            avatarService.eliminar(id);
-            return ResponseEntity.ok("Se eliminó satisfactoriamente");
+            String mensaje = avatarService.eliminar(id);
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
@@ -81,7 +81,7 @@ public class AvatarController {
         try {
             Pageable pageable = PageRequest.of(page ,3);
             Page<Avatar> avatarPage = avatarService.findAllPage(pageable);
-            return new ResponseEntity<>(avatarMapper.ToDTOList(avatarPage), HttpStatus.OK);
+            return new ResponseEntity<>(avatarMapper.toDTOList(avatarPage), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

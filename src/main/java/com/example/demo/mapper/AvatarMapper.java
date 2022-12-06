@@ -20,7 +20,7 @@ public interface AvatarMapper {
 
     Avatar toEntity(AvatarDTO avatarDTO);
     AvatarDTO toDTO(Avatar avatar);
-    List<AvatarDTO> ToDTOList(List<Avatar> listAvatar);
+    List<AvatarDTO> toDTOList(List<Avatar> listAvatar);
 
-    List<AvatarDTO> ToDTOList(Page<Avatar> listAvatar);
+    List<AvatarDTO> toDTOList(Page<Avatar> listAvatar);
 }

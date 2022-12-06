@@ -47,7 +47,7 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     @Override
-    public void eliminar(Long idAvatar) throws Exception {
+    public String eliminar(Long idAvatar) throws Exception {
         if(idAvatar == null){
             throw new Exception("El id del avatar es obligatorio");
         }
@@ -58,6 +58,7 @@ public class AvatarServiceImpl implements AvatarService {
             throw new Exception("No se puede eliminar el avatar porque esta siendo uilizado por un estudiante");
         }
         avatarDAO.deleteById(idAvatar);
+        return "El avatar fue eliminado exitosamente";
     }
 
     @Override

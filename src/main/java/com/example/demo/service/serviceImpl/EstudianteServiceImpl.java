@@ -120,6 +120,15 @@ public class EstudianteServiceImpl implements EstudianteService {
         return estudianteDAO.findByCorreo(correo);
     }
 
+    @Override
+    public List<Estudiante> rankingEstudiante() throws Exception {
+        List<Estudiante> estudiantes = estudianteDAO.rankingEstudiantes();
+        if(estudiantes.isEmpty()){
+            throw new Exception("No hay estudiantes");
+        }
+        return estudiantes;
+    }
+
     private void validacionesCrear(Estudiante estudiante) throws Exception {
         if(estudiante.getAvatar().getIdAvatar() == null){
             throw new Exception("Debe ingresar un id avatar");

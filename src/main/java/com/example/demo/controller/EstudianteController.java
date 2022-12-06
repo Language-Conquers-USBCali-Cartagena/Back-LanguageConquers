@@ -96,5 +96,16 @@ public class EstudianteController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @Operation(summary = "Este metodo permite listar el ranking de los estudiantes")
+    @GetMapping("/rankingEstudiante")
+    public ResponseEntity<List<EstudianteDTO>> rankingEstudiantes(){
+        try{
+            List<Estudiante> estudiantes = estudianteService.rankingEstudiante();
+            List<EstudianteDTO> estudianteDTOList = estudianteMapper.toDTOList(estudiantes);
+            return new ResponseEntity<>(estudianteDTOList, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

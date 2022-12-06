@@ -12,4 +12,6 @@ public interface EstudianteService {
     List<Estudiante> listar()throws Exception;
     Boolean existePorCorreo (String correo) throws Exception;
     Estudiante findByCorreo (String correo) throws Exception;
+
+    List<Estudiante> rankingEstudiante() throws Exception;
 }
