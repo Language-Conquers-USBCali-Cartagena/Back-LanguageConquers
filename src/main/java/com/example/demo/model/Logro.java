@@ -30,7 +30,7 @@ public class Logro {
     private String descripcion;
 
     @Column(name = "categoria", nullable = false)
-    private String categoria;
+    private String categoria;//se debe quitar este atributo
 
     @Column(name = "usuario_creador", nullable = false, length = 50)
     private String usuarioCreador;
