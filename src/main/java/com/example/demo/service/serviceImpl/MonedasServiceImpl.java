@@ -12,7 +12,7 @@ import java.util.List;
 @Scope("singleton")
 @Service
 public class MonedasServiceImpl implements MonedasService {
-
+    //TODO: TERMINAR DE CREAR LOS SERVICIOS BASICOS COMO EDITAR Y ELIMINAR
     @Autowired
     MonedasDAO monedasDAO;
 

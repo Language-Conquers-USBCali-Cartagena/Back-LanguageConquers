@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public class RetoServiceImpl implements RetoService {
 
+    //TODO: TERMINAR DE CREAR LOS SERVICIOS BASICOS COMO EDITAR Y ELIMINAR
     @Autowired
     RetoDAO retoDAO;
 

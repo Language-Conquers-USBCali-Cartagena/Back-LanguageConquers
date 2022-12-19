@@ -11,6 +11,7 @@ import java.util.Date;
 @Entity
 @Table(name = "comentario")
 public class Comentario {
+    //TODO:QUITAR TODO LO REFERENTE A COMENTARIO
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_comentario", nullable = false)

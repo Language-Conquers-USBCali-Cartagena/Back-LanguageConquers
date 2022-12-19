@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 @Scope("singleton")
 @Service
 public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosService {
+    //TODO: REALIZAR ESTOS SERVICIOS, EL DE LISTAR NORMAL
 }

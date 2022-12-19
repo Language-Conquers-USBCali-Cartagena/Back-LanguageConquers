@@ -13,6 +13,8 @@ import java.util.List;
 @Entity
 @Table(name = "categoria")
 public class Categoria {
+
+    //TODO: QUITAR TODO LO REFERENTE A CATEGORIA, LOS ARTICULOS YA NO ESTARAN CLASIFICADOS POR CATEGORIAS
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria", nullable = false)

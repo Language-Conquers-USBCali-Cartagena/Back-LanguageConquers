@@ -15,6 +15,7 @@ import java.util.List;
 @Scope("singleton")
 @Service
 public class LogroEstudianteServiceImpl implements LogroEstudianteService {
+    //TODO:REALIZAR SERVICIO PARA OBTENER LOS LOGROS QUE HA DESBLOQUEADO EL ESTUDIANTE Y LOS QUE LE FALTAN POR DESBLOQUEAR
 
     @Autowired
     LogroEstudianteDAO logroEstudianteDAO;
