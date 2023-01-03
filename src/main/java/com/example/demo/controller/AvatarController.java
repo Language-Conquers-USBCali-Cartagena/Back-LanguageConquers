@@ -38,7 +38,7 @@ public class AvatarController {
     }
 
     @Operation(summary = "Este metodo permite buscar por id un avatar")
-    @GetMapping
+    @GetMapping("/porId")
     public ResponseEntity<AvatarDTO> avatarPorId (@RequestParam Long idAvatar){
         try{
             AvatarDTO avatarDTO = avatarMapper.toDTO(avatarService.findById(idAvatar));
