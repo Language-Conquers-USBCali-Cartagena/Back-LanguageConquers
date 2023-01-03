@@ -67,6 +67,19 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     @Override
+    public Avatar findById(Long idAvatar) throws Exception {
+    //validamos el numero de identificacion
+        if(idAvatar == null) {
+             throw new Exception("Debe ingresar el id de un avatar");
+        }
+        if(!avatarDAO.existsById(idAvatar)) {
+          throw new Exception ("El avatar con id: "+idAvatar+ " no existe");
+        }
+        return avatarDAO.findById(idAvatar).get();
+
+    }
+
+    @Override
     public Page<Avatar> findAllPage(Pageable pageable) throws Exception {
         Page<Avatar> avatarList = avatarDAO.findAll(pageable);
         if(avatarDAO.findAll().isEmpty()){

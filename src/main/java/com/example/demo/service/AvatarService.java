@@ -15,6 +15,7 @@ public interface AvatarService{
     String actualizar(AvatarDTO avatarDTO) throws Exception;
     String eliminar(Long idAvatar) throws Exception;
     List<Avatar> listar() throws Exception;
+    Avatar findById(Long idAvatar) throws Exception;
 
     Page<Avatar> findAllPage(Pageable pageable) throws Exception;
 }
