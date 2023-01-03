@@ -27,23 +27,22 @@ public class AvatarController {
 
     @Operation(summary = "Este metodo permite listar los avatares")
     @GetMapping
-    public ResponseEntity<List<AvatarDTO>> listar() throws Exception {
+    public ResponseEntity<List<AvatarDTO>> listar(){
         try{
-            List<Avatar> avatarList = avatarService.listar();
+            List<Avatar> avatarList = avatarService.findAll();
             List<AvatarDTO> avatarDTOS = avatarMapper.toDTOList(avatarList);
             return new ResponseEntity<>(avatarDTOS, HttpStatus.OK);
         }catch (Exception e){
-            String mensaje = e.getMessage();
-            return new ResponseEntity(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @Operation(summary = "Este metodo permite buscar por id un avatar")
     @GetMapping
-    public ResponseEntity<Avatar> buscarAvatarPorId (@PathVariable("idAvatar")Long idAvatar){
+    public ResponseEntity<AvatarDTO> avatarPorId (@RequestParam Long idAvatar){
         try{
-            Avatar avatar = avatarService.findById(idAvatar);
-            return new ResponseEntity<>(avatar, HttpStatus.OK);
+            AvatarDTO avatarDTO = avatarMapper.toDTO(avatarService.findById(idAvatar));
+            return new ResponseEntity<>(avatarDTO, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

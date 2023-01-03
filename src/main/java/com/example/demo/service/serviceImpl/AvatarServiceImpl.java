@@ -62,7 +62,7 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     @Override
-    public List<Avatar> listar() {
+    public List<Avatar> findAll() {
         return avatarDAO.findAll();
     }
 
