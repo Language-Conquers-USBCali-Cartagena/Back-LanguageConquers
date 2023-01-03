@@ -40,12 +40,12 @@ public class AvatarController {
 
     @Operation(summary = "Este metodo permite buscar por id un avatar")
     @GetMapping
-    public ResponseEntity<?> buscarAvatarPorId (@PathVariable("idAvatar")Long idAvatar){
+    public ResponseEntity<Avatar> buscarAvatarPorId (@PathVariable("idAvatar")Long idAvatar){
         try{
             Avatar avatar = avatarService.findById(idAvatar);
             return new ResponseEntity<>(avatar, HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
