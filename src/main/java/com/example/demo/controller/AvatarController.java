@@ -75,8 +75,8 @@ public class AvatarController {
     }
 
     @Operation(summary = "Este metodo permite eliminar los avatares")
-    @DeleteMapping("/eliminarAvatar")
-    public ResponseEntity<String> eliminarAvatar(@RequestParam Long id){
+    @DeleteMapping("/eliminarAvatar/{id}")
+    public ResponseEntity<String> eliminarAvatar(@PathVariable("id") Long id){
         try {
             String mensaje = avatarService.eliminar(id);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
