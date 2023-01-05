@@ -39,10 +39,45 @@ public class TipoMisionController {
     public ResponseEntity<String> crearTipoMision(@RequestBody TipoMisionDTO tipoMisionDTO){
         try{
             TipoMision tipoMision = tipoMisionMapper.toEntity(tipoMisionDTO);
-            String mensaje = tipoMisionService.crearTipoMision(tipoMision);
+            String mensaje = tipoMisionService.registrar(tipoMision);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite actualizar un tipoMision" +
+            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @PutMapping("/actualizarTipoMision")
+    public ResponseEntity<String> modificar(@RequestBody TipoMisionDTO tipoMisionDTO){
+        try{
+            return new ResponseEntity<>(tipoMisionService.actualizar(tipoMisionDTO), HttpStatus.OK);
+        }catch (Exception e){
+            String mensaje = e.getMessage();
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite eliminar un tipoMision")
+    @DeleteMapping("/eliminarTipoMision/{id}")
+    public ResponseEntity<String> eliminarTipoMision(@PathVariable("id") Long idTipoMision){
+        try {
+            String mensaje = tipoMisionService.eliminar(idTipoMision);
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+        } catch (Exception e) {
+            String mensaje = e.getMessage();
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite buscar por id un tipoMision")
+    @GetMapping("/porId/{id}")
+    public ResponseEntity<TipoMisionDTO> tipoMisionPorId (@PathVariable("id") Long idTipoMision){
+        try{
+            TipoMisionDTO tipoMisionDTO = tipoMisionMapper.toDTO(tipoMisionService.findById(idTipoMision));
+            return new ResponseEntity<>(tipoMisionDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

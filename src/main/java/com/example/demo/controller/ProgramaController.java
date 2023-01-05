@@ -61,13 +61,24 @@ public class ProgramaController {
 
     @Operation(summary = "Este metodo permite eliminar un programa")
     @DeleteMapping("/eliminarPrograma")
-    public ResponseEntity<?> eliminarPrograma(@RequestParam Long idPrograma){
+    public ResponseEntity<String> eliminarPrograma(@RequestParam Long idPrograma){
         try {
             programaService.eliminar(idPrograma);
             return ResponseEntity.ok("Se eliminó satisfactoriamente");
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite buscar por id un programa")
+    @GetMapping("/porId/{id}")
+    public ResponseEntity<ProgramaDTO> programaPorId (@PathVariable("id") Long idPrograma){
+        try{
+            ProgramaDTO programaDTO = programaMapper.toDTO(programaService.findById(idPrograma));
+            return new ResponseEntity<>(programaDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

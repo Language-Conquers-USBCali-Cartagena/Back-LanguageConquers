@@ -26,7 +26,7 @@ public class ArticulosController {
     public ResponseEntity<String> crearArticulo(@RequestBody ArticulosDTO articulosDTO){
         try{
             Articulos articulos = articulosMapper.toEntity(articulosDTO);
-            String mensaje = articulosService.save(articulos);
+            String mensaje = articulosService.registrar(articulos);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -36,8 +36,7 @@ public class ArticulosController {
     @PutMapping
     public ResponseEntity<String> actualizarArticulo(@RequestBody ArticulosDTO articulosDTO){
         try{
-            Articulos articulos = articulosMapper.toEntity(articulosDTO);
-            String mensaje = articulosService.update(articulos);
+            String mensaje = articulosService.actualizar(articulosDTO);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -45,9 +44,9 @@ public class ArticulosController {
     }
     @Operation(summary = "Este metodo permite eliminar un articuli")
     @DeleteMapping
-    public ResponseEntity<String> eliminarArticulo(@RequestParam Long idarticulio){
+    public ResponseEntity<String> eliminarArticulo(@RequestParam Long idArticulio){
         try{
-            String mensaje = articulosService.delete(idarticulio);
+            String mensaje = articulosService.eliminar(idArticulio);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -59,6 +58,17 @@ public class ArticulosController {
         try{
             List<ArticulosDTO> articulosDTOS = articulosMapper.toDTOList(articulosService.findAll());
             return new ResponseEntity<>(articulosDTOS, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite buscar por id un articulo")
+    @GetMapping("/porId/{id}")
+    public ResponseEntity<ArticulosDTO> articuloPorId (@PathVariable("id") Long idArticulo){
+        try{
+            ArticulosDTO articulosDTO = articulosMapper.toDTO(articulosService.findById(idArticulo));
+            return new ResponseEntity<>(articulosDTO, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

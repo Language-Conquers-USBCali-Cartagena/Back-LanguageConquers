@@ -2,7 +2,6 @@ package com.example.demo.service.serviceImpl;
 
 
 import com.example.demo.dao.*;
-import com.example.demo.mapper.EstudianteMapper;
 import com.example.demo.model.Estudiante;
 import com.example.demo.model.dto.EstudianteDTO;
 import com.example.demo.service.EstudianteService;
@@ -73,7 +72,7 @@ public class EstudianteServiceImpl implements EstudianteService {
     }
 
     @Override
-    public void eliminar(Long idEstudiante) throws Exception {
+    public String eliminar(Long idEstudiante) throws Exception {
         if(idEstudiante == null){
             throw new Exception("El id del estudiante es obligatorio");
         }
@@ -96,6 +95,7 @@ public class EstudianteServiceImpl implements EstudianteService {
             throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un comentario");
         }
         estudianteDAO.deleteById(idEstudiante);
+        return "Se elimino exitosamente el estudiante";
     }
 
     @Override
@@ -118,6 +118,17 @@ public class EstudianteServiceImpl implements EstudianteService {
             throw new Exception("El formato del correo no es valido");
         }
         return estudianteDAO.findByCorreo(correo);
+    }
+
+    @Override
+    public Estudiante findById(Long idEstudiante) throws Exception {
+        if(idEstudiante ==null){
+            throw new Exception("Debe ingresar el id de un estudiante");
+        }
+        if(!estudianteDAO.existsById(idEstudiante)){
+            throw new Exception("El estudiante con id: " + idEstudiante +" no existe");
+        }
+        return estudianteDAO.findById(idEstudiante).get();
     }
 
     @Override

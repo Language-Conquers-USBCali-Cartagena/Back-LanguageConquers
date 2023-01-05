@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Logro;
+import com.example.demo.model.dto.LogroDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,9 +14,10 @@ public interface LogroService {
 
     Page<Logro> pageLogros(Pageable pageable) throws Exception;
 
-    String save(Logro logro) throws Exception;
+    String registrar(Logro logro) throws Exception;
 
-    String delete(Long idLogro) throws Exception;
+    String eliminar(Long idLogro) throws Exception;
 
-    String update (Logro logro) throws Exception;
+    String actualizar (LogroDTO logroDTO) throws Exception;
+    Logro findById(Long idLogro) throws Exception;
 }

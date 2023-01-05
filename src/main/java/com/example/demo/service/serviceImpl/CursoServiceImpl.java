@@ -4,8 +4,12 @@ import com.example.demo.dao.CursoDAO;
 import com.example.demo.dao.EstadoDAO;
 import com.example.demo.dao.ProfesorDAO;
 import com.example.demo.model.Curso;
+import com.example.demo.model.Estado;
+import com.example.demo.model.Profesor;
 import com.example.demo.model.dto.CursoDTO;
 import com.example.demo.service.CursoService;
+import com.example.demo.service.EstadoService;
+import com.example.demo.service.ProfesorService;
 import com.example.demo.util.Validaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -16,6 +20,8 @@ import java.util.List;
 @Scope("singleton")
 @Service
 public class CursoServiceImpl implements CursoService {
+
+    //TODO: faltan validaciones y metodos del crud
     @Autowired
     CursoDAO cursoDAO;
 
@@ -24,12 +30,53 @@ public class CursoServiceImpl implements CursoService {
 
     @Autowired
     ProfesorDAO profesorDAO;
+
+    @Autowired
+    EstadoService estadoService;
+
+    @Autowired
+    ProfesorService profesorService;
     @Override
-    public String crearCurso(Curso curso) throws Exception {
+    public String registrar(Curso curso) throws Exception {
         validaciones(curso);
         cursoDAO.save(curso);
         return "Se creo existosamente el curso";
     }
+
+    @Override
+    public String actualizar(CursoDTO cursoDTO) throws Exception {
+        Curso curso = null;
+        Estado idEstado = null;
+        Profesor idProfesor = null;
+        //Todo: Faltan validaciones
+        curso = cursoDAO.findById(cursoDTO.getIdCurso()).orElse(null);
+        curso.setNombre(cursoDTO.getNombre());
+        curso.setPassword(cursoDTO.getPassword());
+        curso.setCantidadEstudiantes(cursoDTO.getCantidadEstudiantes());
+        curso.setInicioCurso(cursoDTO.getInicioCurso());
+        curso.setFinCurso(cursoDTO.getFinCurso());
+        curso.setProgreso(cursoDTO.getProgreso());
+        idProfesor = profesorService.findById(cursoDTO.getIdProfesor());
+        curso.setProfesor(idProfesor);
+        idEstado = estadoService.findById(cursoDTO.getIdEstado());
+        curso.setEstado(idEstado);
+        cursoDAO.save(curso);
+        return "Se actualizo el curso";
+    }
+
+    @Override
+    public String eliminar(Long idCurso) throws Exception {
+        if(idCurso == null){
+            throw new Exception("Se debe de ingresar el id del curso");
+        }
+        if (!cursoDAO.existsById(idCurso)){
+            throw new Exception("El curso con id: " + idCurso + " no existe");
+        }
+        //Todo: Faltan las validaciones de reto, mision y cursoEstudiante
+        cursoDAO.deleteById(idCurso);
+        return "Se elimino exitosamente el curso";
+    }
+
 
     @Override
     public List<Curso> findByCorreoEstudiante(String correoEstudiante) throws Exception {
@@ -41,6 +88,17 @@ public class CursoServiceImpl implements CursoService {
     @Override
     public List<Curso> findAll() throws Exception {
         return cursoDAO.findAll();
+    }
+
+    @Override
+    public Curso findById(Long idCurso) throws Exception {
+        if(idCurso == null){
+            throw new Exception("Debe ingresar el id de un curso");
+        }
+        if(!cursoDAO.existsById(idCurso)){
+            throw new Exception("El curso con id: " + idCurso + " no existe");
+        }
+        return cursoDAO.findById(idCurso).get();
     }
 
     public void validaciones(Curso curso) throws Exception{

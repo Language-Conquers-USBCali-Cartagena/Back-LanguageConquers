@@ -14,6 +14,8 @@ import java.util.List;
 @Scope("singleton")
 @Service
 public class CursoEstudianteServiceImpl implements CursoEstudianteService {
+
+    //Todo: falta metodos del crud y sus validaciones
     @Autowired
     CursoEstudianteDAO cursoEstudianteDAO;
 

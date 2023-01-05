@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dao.ProfesorDAO;
 import com.example.demo.mapper.ProfesorMapper;
 import com.example.demo.model.Profesor;
+import com.example.demo.model.dto.AvatarDTO;
 import com.example.demo.model.dto.ProfesorDTO;
 import com.example.demo.service.ProfesorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,8 +62,8 @@ public class ProfesorController {
     }
 
     @Operation(summary = "Este metodo permite eliminar un profesor")
-    @DeleteMapping("/eliminarProfesor")
-    public ResponseEntity<?> eliminarProfesor(@RequestParam Long idProfesor){
+    @DeleteMapping("/eliminarProfesor/{id}")
+    public ResponseEntity<String> eliminarProfesor(@PathVariable("id") Long idProfesor){
         try {
             profesorService.eliminar(idProfesor);
             return ResponseEntity.ok("Se eliminó satisfactoriamente");
@@ -88,6 +89,17 @@ public class ProfesorController {
     public ResponseEntity<ProfesorDTO> encontrarPorCorreo(@RequestParam String correo){
         try {
             ProfesorDTO profesorDTO = profesorMapper.toDTO(profesorService.findByCorreo(correo));
+            return new ResponseEntity<>(profesorDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite buscar por id un profesor")
+    @GetMapping("/porId/{id}")
+    public ResponseEntity<ProfesorDTO> profesorPorId (@PathVariable("id") Long idProfesor){
+        try{
+            ProfesorDTO profesorDTO = profesorMapper.toDTO(profesorService.findById(idProfesor));
             return new ResponseEntity<>(profesorDTO, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);

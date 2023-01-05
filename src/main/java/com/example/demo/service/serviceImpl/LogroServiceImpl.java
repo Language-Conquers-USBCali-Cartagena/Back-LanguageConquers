@@ -2,6 +2,7 @@ package com.example.demo.service.serviceImpl;
 
 import com.example.demo.dao.LogroDAO;
 import com.example.demo.model.Logro;
+import com.example.demo.model.dto.LogroDTO;
 import com.example.demo.service.LogroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -37,29 +38,54 @@ public class LogroServiceImpl implements LogroService {
     }
 
     @Override
-    public String save(Logro logro) throws Exception {
+    public String registrar(Logro logro) throws Exception {
         validaciones(logro);
         logroDAO.save(logro);
         return "Se guardo exitosamente el logro";
     }
 
     @Override
-    public String delete(Long idLogro) throws Exception {
+    public String eliminar(Long idLogro) throws Exception {
+        if(idLogro == null){
+            throw new Exception("Se debe ingresar el id del logro");
+        }
         if(!logroDAO.existsById(idLogro)){
-            throw new Exception("El id logro no existe en la bd");
+            throw new Exception("El id logro no existe");
         }
         logroDAO.deleteById(idLogro);
         return "El logro se elimino exitosamente";
     }
 
     @Override
-    public String update(Logro logro) throws Exception {
-        validaciones(logro);
+    public String actualizar(LogroDTO logroDTO) throws Exception {
+        Logro logro = null;
+        //Todo: Faltan validaciones
+        logro = logroDAO.findById(logroDTO.getIdLogro()).orElse(null);
+        logro.setNombre(logroDTO.getNombre());
+        logro.setImagen(logroDTO.getImagen());
+        logro.setDescripcion(logroDTO.getDescripcion());
+        logro.setCategoria(logroDTO.getCategoria());//revisar si se quita
+        logro.setUsuarioCreador(logroDTO.getUsuarioCreador());
+        logro.setFechaCreacion(logroDTO.getFechaCreacion());
+        logro.setUsuarioModificador(logroDTO.getUsuarioModificador());
         logroDAO.save(logro);
-        return "Se actualizo correctamente el logeo";
+        return "Se actualizo correctamente el logo";
     }
 
+    @Override
+    public Logro findById(Long idLogro) throws Exception {
+        if(idLogro == null){
+            throw new Exception("Se debe ingresar el id del logro");
+        }
+        if(!logroDAO.existsById(idLogro)){
+            throw new Exception("El id logro no existe");
+        }
+        return logroDAO.findById(idLogro).get();
+    }
+
+
     private void validaciones(Logro logro) throws Exception {
+        //Todo: revisar este metodo
         if(logro.getCategoria().equals(null)){
             throw new Exception("Debe ingresar una categoria");
         }

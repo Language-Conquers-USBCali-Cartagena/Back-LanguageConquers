@@ -49,7 +49,7 @@ public class BitacoraServiceImpl implements BitacoraService {
     }
 
     @Override
-    public void eliminar(Long idBitacora) throws Exception {
+    public String eliminar(Long idBitacora) throws Exception {
         if(idBitacora == null){
             throw new Exception("El Id del registro en la bitacora es obligatorio");
         }
@@ -57,6 +57,7 @@ public class BitacoraServiceImpl implements BitacoraService {
             throw new Exception("No se encontro ningun registro en la bitacora con ese Id");
         }
         bitacoraDAO.deleteById(idBitacora);
+        return "Se elimino exitosamente la bitacora";
     }
 
     @Override

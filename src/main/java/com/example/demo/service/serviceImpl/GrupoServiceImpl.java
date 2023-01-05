@@ -43,7 +43,7 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @Override
-    public void eliminar(Long idGrupo) throws Exception {
+    public String eliminar(Long idGrupo) throws Exception {
         if(idGrupo == null){
             throw new Exception("El Id del grupo es obligatorio");
         }
@@ -54,6 +54,7 @@ public class GrupoServiceImpl implements GrupoService {
             throw new Exception("No se puede eliminar el grupo ya que esta asignado aun reto estudiante");
         }
         grupoDAO.deleteById(idGrupo);
+        return "Se elimino exitosamente el grupo";
     }
 
     @Override

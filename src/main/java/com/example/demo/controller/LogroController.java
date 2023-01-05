@@ -53,7 +53,7 @@ public class LogroController {
     public ResponseEntity<String> crearLogro(@RequestBody LogroDTO logroDTO){
         try{
             Logro logro = logroMapper.toEntity(logroDTO);
-            String mensaje = logroService.save(logro);
+            String mensaje = logroService.registrar(logro);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -63,8 +63,7 @@ public class LogroController {
     @PutMapping
     public ResponseEntity<String> actualizarLogro(@RequestBody LogroDTO logroDTO){
         try{
-            Logro logro = logroMapper.toEntity(logroDTO);
-            String mensaje = logroService.update(logro);
+            String mensaje = logroService.actualizar(logroDTO);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
         }catch (Exception e){
             return  new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -73,10 +72,21 @@ public class LogroController {
     @Operation(summary = "Este metodo permite eliminar un logro")
     public ResponseEntity<String> eliminarLogro(@RequestParam Long idLogro){
         try{
-            String mensaje = logroService.delete(idLogro);
+            String mensaje = logroService.eliminar(idLogro);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite buscar por id un logro")
+    @GetMapping("/porId/{id}")
+    public ResponseEntity<LogroDTO> logroPorId (@PathVariable("id") Long idLogro){
+        try{
+            LogroDTO logroDTO = logroMapper.toDTO(logroService.findById(idLogro));
+            return new ResponseEntity<>(logroDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

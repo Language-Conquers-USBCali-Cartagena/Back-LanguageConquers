@@ -47,8 +47,6 @@ public class OrdenRetoIDEController {
     @PostMapping
     public ResponseEntity<String> crearOrdenRetoIDE(@RequestBody OrdenRetoIDEDTO ordenRetoIDEDTO){
         try{
-
-
             String mensaje = ordenRetoIDEService.crarOrdenRet(ordenRetoIDEMapper.toEntity(ordenRetoIDEDTO));
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
         }catch (Exception e){

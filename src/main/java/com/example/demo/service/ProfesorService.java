@@ -8,11 +8,9 @@ import java.util.List;
 public interface ProfesorService {
     String registarProfesor(Profesor profesor) throws Exception;
     String actualizar(ProfesorDTO profesorDTO)throws Exception;
-    void eliminar(Long idProfesor)throws Exception;
-
+    String eliminar(Long idProfesor)throws Exception;
     List<Profesor>listar() throws Exception;
-
     Boolean existePorCorreo(String correo) throws Exception;
-
     Profesor findByCorreo(String correo) throws Exception;
+    Profesor findById(Long idProfesor) throws Exception;
 }

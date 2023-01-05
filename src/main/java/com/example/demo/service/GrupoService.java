@@ -9,6 +9,6 @@ public interface GrupoService {
 
     String registrar(Grupo grupo)throws Exception;
     String actualizar(GrupoDTO grupoDTO) throws Exception;
-    void eliminar (Long idGrupo)throws Exception;
+    String eliminar (Long idGrupo)throws Exception;
     List<Grupo>listar() throws Exception;
 }

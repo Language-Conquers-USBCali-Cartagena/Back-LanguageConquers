@@ -64,7 +64,7 @@ public class CredencialesController {
 
     @Operation(summary = "Este metodo permite eliminar una credencial")
     @DeleteMapping("/eliminarCredencial")
-    public ResponseEntity<?> eliminarCredencial(@RequestParam Long idCredencial){
+    public ResponseEntity<String> eliminarCredencial(@RequestParam Long idCredencial){
         try {
             credencialesService.eliminar(idCredencial);
             return ResponseEntity.ok("Se eliminó satisfactoriamente");

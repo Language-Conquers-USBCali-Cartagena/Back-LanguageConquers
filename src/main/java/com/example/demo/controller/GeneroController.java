@@ -62,7 +62,7 @@ public class GeneroController {
 
     @Operation(summary = "Este metodo permite eliminar un genero")
     @DeleteMapping("/eliminarGenero")
-    public ResponseEntity<?> eliminarGenero(@RequestParam Long idGenero){
+    public ResponseEntity<String> eliminarGenero(@RequestParam Long idGenero){
         try {
             generoService.eliminar(idGenero);
             return ResponseEntity.ok("Se eliminó satisfactoriamente");

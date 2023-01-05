@@ -9,6 +9,6 @@ public interface GeneroService {
 
     String registrar(Genero genero) throws Exception;
     String actualizar(GeneroDTO generoDTO) throws Exception;
-    void eliminar(Long idGenero) throws Exception;
+    String eliminar(Long idGenero) throws Exception;
     List<Genero> listar()throws Exception;
 }

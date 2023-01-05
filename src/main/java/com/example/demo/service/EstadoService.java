@@ -9,6 +9,8 @@ public interface EstadoService {
 
     String registrar (Estado estado) throws Exception;
     String actualizar(EstadoDTO estadoDTO) throws Exception;
-    void eliminar(Long idEstado) throws Exception;
+    String eliminar(Long idEstado) throws Exception;
     List<Estado>listar() throws Exception;
+
+    Estado findById(Long idEstado) throws Exception;
 }

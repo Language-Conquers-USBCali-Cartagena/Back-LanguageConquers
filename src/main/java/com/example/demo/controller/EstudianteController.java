@@ -65,8 +65,8 @@ public class EstudianteController {
     }
 
     @Operation(summary = "Este metodo permite eliminar un estudiante")
-    @DeleteMapping("/eliminarEstudiante")
-    public ResponseEntity<?> eliminarEstudiante(@RequestParam Long idEstudiante){
+    @DeleteMapping("/eliminarEstudiante/{id}")
+    public ResponseEntity<String> eliminarEstudiante(@PathVariable("id") Long idEstudiante){
         try {
             estudianteService.eliminar(idEstudiante);
             return ResponseEntity.ok("Se eliminó satisfactoriamente");
@@ -108,4 +108,14 @@ public class EstudianteController {
         }
     }
 
+    @Operation(summary = "Este metodo permite buscar por id un estudiante")
+    @GetMapping("/porId/{id}")
+    public ResponseEntity<EstudianteDTO> estudiantePorId (@PathVariable("id") Long idEstudiante){
+        try{
+            EstudianteDTO estudianteDTO = estudianteMapper.toDTO(estudianteService.findById(idEstudiante));
+            return new ResponseEntity<>(estudianteDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

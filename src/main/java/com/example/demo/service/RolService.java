@@ -9,6 +9,6 @@ public interface RolService {
 
     String registrar(Rol rol) throws Exception;
     String actualizar(RolDTO rolDTO) throws Exception;
-    void eliminar(Long idRol) throws Exception;
+    String eliminar(Long idRol) throws Exception;
     List<Rol>listar() throws Exception;
 }

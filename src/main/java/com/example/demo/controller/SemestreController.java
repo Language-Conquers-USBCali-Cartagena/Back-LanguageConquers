@@ -62,7 +62,7 @@ public class SemestreController {
 
     @Operation(summary = "Este metodo permite eliminar un semestre")
     @DeleteMapping("/eliminarSemestre")
-    public ResponseEntity<?> eliminarSemestre(@RequestParam Long idSemestre){
+    public ResponseEntity<String> eliminarSemestre(@RequestParam Long idSemestre){
         try {
             semestreService.eliminar(idSemestre);
             return ResponseEntity.ok("Se eliminó satisfactoriamente");

@@ -47,7 +47,7 @@ public class GeneroServiceImpl implements GeneroService {
     }
 
     @Override
-    public void eliminar(Long idGenero) throws Exception {
+    public String eliminar(Long idGenero) throws Exception {
         if(idGenero == null){
             throw new Exception("El id del genero es obligatorio");
         }
@@ -61,6 +61,7 @@ public class GeneroServiceImpl implements GeneroService {
             throw new Exception("No se puede eliminar el genero porque esta siendo utilizado por un profesor");
         }
         generoDAO.deleteById(idGenero);
+        return "Se elimino exitosamente el genero";
     }
 
     @Override

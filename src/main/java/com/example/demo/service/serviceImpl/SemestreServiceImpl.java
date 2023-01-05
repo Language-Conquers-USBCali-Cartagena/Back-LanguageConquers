@@ -2,11 +2,11 @@ package com.example.demo.service.serviceImpl;
 
 import com.example.demo.dao.EstudianteDAO;
 import com.example.demo.dao.SemestreDAO;
-import com.example.demo.model.Estudiante;
 import com.example.demo.model.Semestre;
 import com.example.demo.model.dto.SemestreDTO;
 import com.example.demo.service.SemestreService;
 import com.example.demo.util.Validaciones;
+import org.aspectj.apache.bcel.generic.RET;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class SemestreServiceImpl implements SemestreService {
         return "Se actualizo el semestre satisfactoriamente";
     }
     @Override
-    public void eliminar(Long idSemestre) throws Exception {
+    public String eliminar(Long idSemestre) throws Exception {
         if(idSemestre == null){
             throw new Exception("El Id del semestre es obligatorio");
         }
@@ -51,6 +51,7 @@ public class SemestreServiceImpl implements SemestreService {
             throw new Exception("No se puede eliminar el semestre porque esta asignado a un estudiante");
         }
         semestreDAO.deleteById(idSemestre);
+        return "Se elimino exitosamente el semestre";
     }
     @Override
     public List<Semestre> listar() {

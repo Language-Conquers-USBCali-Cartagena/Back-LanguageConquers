@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.mapper.MonedasMapper;
-import com.example.demo.model.Monedas;
 import com.example.demo.model.dto.MonedasDTO;
 import com.example.demo.service.MonedasService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,10 +36,45 @@ public class MonedasController {
     @PostMapping
     public ResponseEntity<String> crearMoneda(@RequestBody MonedasDTO monedasDTO){
         try{
-            String mensaje = monedasService.crarMonedas(monedasMapper.toEntity(monedasDTO));
+            String mensaje = monedasService.registrar(monedasMapper.toEntity(monedasDTO));
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite actualizar una moneda" +
+            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @PutMapping("/actualizarMoneda")
+    public ResponseEntity<String> modificar(@RequestBody MonedasDTO monedasDTO){
+        try{
+            return new ResponseEntity<>(monedasService.actualizar(monedasDTO), HttpStatus.OK);
+        }catch (Exception e){
+            String mensaje = e.getMessage();
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite eliminar una moneda")
+    @DeleteMapping("/eliminarMoneda/{id}")
+    public ResponseEntity<String> eliminarMoneda(@PathVariable("id") Long idMoneda){
+        try {
+            String mensaje = monedasService.eliminar(idMoneda);
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+        } catch (Exception e) {
+            String mensaje = e.getMessage();
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite buscar por id una moneda")
+    @GetMapping("/porId/{id}")
+    public ResponseEntity<MonedasDTO> monedaPorId (@PathVariable("id") Long idMoneda){
+        try{
+           MonedasDTO monedasDTO = monedasMapper.toDTO(monedasService.findById(idMoneda));
+            return new ResponseEntity<>(monedasDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

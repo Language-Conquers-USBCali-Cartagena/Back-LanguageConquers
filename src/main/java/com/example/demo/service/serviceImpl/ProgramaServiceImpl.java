@@ -42,7 +42,7 @@ public class ProgramaServiceImpl implements ProgramaService {
     }
 
     @Override
-    public void eliminar(Long idPrograma) throws Exception {
+    public String eliminar(Long idPrograma) throws Exception {
         if(idPrograma == null){
             throw new Exception("Debe ingresar el Id del programa");
         }
@@ -53,6 +53,18 @@ public class ProgramaServiceImpl implements ProgramaService {
             throw new Exception("No se puede eliminar el programa porque esta siendo utilizado en un estudiante");
         }
         programaDAO.deleteById(idPrograma);
+        return "Se elimino exitosamente el programa";
+    }
+
+    @Override
+    public Programa findById(Long idPrograma) throws Exception {
+        if(idPrograma == null){
+            throw new Exception("Debe ingresar el Id del programa");
+        }
+        if(!programaDAO.existsById(idPrograma)){
+            throw new Exception("No se encontro el programa con ese Id");
+        }
+        return programaDAO.findById(idPrograma).get();
     }
 
     @Override

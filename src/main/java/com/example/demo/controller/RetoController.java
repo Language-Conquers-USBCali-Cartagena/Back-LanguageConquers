@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.mapper.RetoMapper;
 import com.example.demo.model.Reto;
+import com.example.demo.model.dto.AvatarDTO;
 import com.example.demo.model.dto.RetoDTO;
 import com.example.demo.service.RetoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,14 +33,50 @@ public class RetoController {
         }
     }
 
-    @Operation(summary = "Crea retos")
+    @Operation(summary = "Este metodo permite crear un reto")
     @PostMapping
     public ResponseEntity<String> crearReto(@RequestBody  RetoDTO retoDTO){
         try {
             Reto reto = retoMapper.toEntity(retoDTO);
-            return new ResponseEntity<>(retoService.crearreto(reto), HttpStatus.OK);
+            return new ResponseEntity<>(retoService.registrar(reto), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite buscar por id un reto")
+    @GetMapping("/porId/{id}")
+    public ResponseEntity<RetoDTO> retoPorId (@PathVariable("id") Long idReto){
+        try{
+            RetoDTO retoDTO= retoMapper.toDTO(retoService.findById(idReto));
+            return new ResponseEntity<>(retoDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite actualizar los retos" +
+            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @PutMapping("/actualizarReto")
+    public ResponseEntity<String> modificar(@RequestBody RetoDTO retoDTO){
+        try{
+            return new ResponseEntity<>(retoService.actualizar(retoDTO), HttpStatus.OK);
+        }catch (Exception e){
+            String mensaje = e.getMessage();
+            System.out.println(mensaje);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite eliminar un reto")
+    @DeleteMapping("/eliminarReto/{id}")
+    public ResponseEntity<String> eliminarReto(@PathVariable("id") Long idReto){
+        try {
+            String mensaje = retoService.eliminar(idReto);
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+        } catch (Exception e) {
+            String mensaje = e.getMessage();
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 }

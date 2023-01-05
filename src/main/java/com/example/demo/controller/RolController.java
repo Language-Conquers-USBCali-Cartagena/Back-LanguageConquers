@@ -62,7 +62,7 @@ public class RolController {
 
     @Operation(summary = "Este metodo permite eliminar un rol")
     @DeleteMapping("/eliminarRol")
-    public ResponseEntity<?> eliminarRol(@RequestParam Long idRol){
+    public ResponseEntity<String> eliminarRol(@RequestParam Long idRol){
         try {
             rolService.eliminar(idRol);
             return ResponseEntity.ok("Se eliminó satisfactoriamente");

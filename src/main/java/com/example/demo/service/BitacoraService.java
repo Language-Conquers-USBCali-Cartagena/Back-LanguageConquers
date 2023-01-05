@@ -9,6 +9,6 @@ public interface BitacoraService {
 
     String registrar(Bitacora bitacora) throws Exception;
     String actualizar(BitacoraDTO bitacoraDTO) throws Exception;
-    void eliminar (Long idBitacora) throws Exception;
+    String eliminar (Long idBitacora) throws Exception;
     List<Bitacora> listar()throws Exception;
 }

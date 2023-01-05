@@ -68,7 +68,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findById(Long idAvatar) throws Exception {
-    //validamos el numero de identificacion
+
         if(idAvatar == null) {
              throw new Exception("Debe ingresar el id de un avatar");
         }

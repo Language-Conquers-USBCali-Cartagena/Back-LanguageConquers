@@ -61,7 +61,7 @@ public class GrupoController {
 
     @Operation(summary = "Este metodo permite eliminar un grupo")
     @DeleteMapping("/eliminarGrupo")
-    public ResponseEntity<?> eliminarGrupo(@RequestParam Long idGrupo){
+    public ResponseEntity<String> eliminarGrupo(@RequestParam Long idGrupo){
         try {
             grupoService.eliminar(idGrupo);
             return ResponseEntity.ok("Se eliminó satisfactoriamente");

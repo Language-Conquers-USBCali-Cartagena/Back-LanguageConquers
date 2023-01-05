@@ -63,7 +63,7 @@ public class BitacoraController {
 
     @Operation(summary = "Este metodo permite eliminar el registro de acceso del usuario a la plataforma")
     @DeleteMapping("/eliminarBitacora")
-    public ResponseEntity<?> eliminarBitacora(@RequestParam Long idBitacora){
+    public ResponseEntity<String> eliminarBitacora(@RequestParam Long idBitacora){
         try {
             bitacoraService.eliminar(idBitacora);
             return ResponseEntity.ok("Se eliminó satisfactoriamente");

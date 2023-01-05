@@ -47,7 +47,7 @@ public class RolServiceImpl implements RolService {
     }
 
     @Override
-    public void eliminar(Long idRol) throws Exception {
+    public String eliminar(Long idRol) throws Exception {
         if(idRol == null){
             throw new Exception("El id del rol es obligatorio");
         }
@@ -58,6 +58,7 @@ public class RolServiceImpl implements RolService {
             throw new Exception("No se puede eliminar el rol porque esta asignado en un reto estudiante");
         }
         rolDAO.deleteById(idRol);
+        return "Se elimino exitosamente el rol";
     }
 
     @Override

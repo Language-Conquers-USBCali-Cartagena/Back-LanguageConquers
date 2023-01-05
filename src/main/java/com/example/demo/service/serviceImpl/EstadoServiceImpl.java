@@ -53,7 +53,7 @@ public class EstadoServiceImpl implements EstadoService {
     }
 
     @Override
-    public void eliminar(Long idEstado) throws Exception {
+    public String eliminar(Long idEstado) throws Exception {
         if(idEstado == null){
             throw new Exception("El Id del estado es obligatorio");
         }
@@ -82,11 +82,24 @@ public class EstadoServiceImpl implements EstadoService {
             throw new Exception("No se puede eliminar el estado porque esta siendo utilizado en un articulo");
         }
         estadoDAO.deleteById(idEstado);
+        return "Se elimino exitosamente el estado";
     }
 
     @Override
     public List<Estado> listar() {
         return estadoDAO.findAll();
+    }
+
+    @Override
+    public Estado findById(Long idEstado) throws Exception {
+        if(idEstado == null){
+            throw new Exception("Debe ingresar el id de un estado");
+        }
+        if(!estadoDAO.existsById(idEstado)){
+            throw new Exception("El estado con id: " + idEstado + " no existe");
+        }
+        //Todo: Falta validaciones de misionEstudiante, categoria, articulo, retoEstudiante, estudiante, curso y reto
+        return estadoDAO.findById(idEstado).get();
     }
 
     private void validacionesCrear(Estado estado)throws Exception{

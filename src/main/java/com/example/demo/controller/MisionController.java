@@ -1,11 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.MisionDAO;
 import com.example.demo.mapper.MisionMapper;
 import com.example.demo.model.Mision;
+import com.example.demo.model.dto.AvatarDTO;
 import com.example.demo.model.dto.MisionDTO;
 import com.example.demo.service.MisionService;
-import com.sendgrid.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,10 +39,46 @@ public class MisionController {
     public ResponseEntity<String> crearMision(@RequestBody MisionDTO misionDTO){
         try{
             Mision mision = misionMapper.toEntity(misionDTO);
-            String mensaje = misionService.crearMision(mision);
+            String mensaje = misionService.registrar(mision);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite actualizar una mision" +
+            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @PutMapping("/actualizarMision")
+    public ResponseEntity<String> modificar(@RequestBody MisionDTO misionDTO){
+        try{
+            return new ResponseEntity<>(misionService.actualizar(misionDTO), HttpStatus.OK);
+        }catch (Exception e){
+            String mensaje = e.getMessage();
+            System.out.println(mensaje);
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite eliminar una mision")
+    @DeleteMapping("/eliminarMision/{id}")
+    public ResponseEntity<String> eliminarMision(@PathVariable("id") Long idMision){
+        try {
+            String mensaje = misionService.eliminar(idMision);
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+        } catch (Exception e) {
+            String mensaje = e.getMessage();
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite buscar por id una mision")
+    @GetMapping("/porId/{id}")
+    public ResponseEntity<MisionDTO> misionPorId (@PathVariable("id") Long idMision){
+        try{
+            MisionDTO misionDTO = misionMapper.toDTO(misionService.findById(idMision));
+            return new ResponseEntity<>(misionDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

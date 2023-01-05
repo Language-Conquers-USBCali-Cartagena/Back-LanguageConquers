@@ -43,7 +43,7 @@ public class CredencialesServiceImpl implements CredencialesService {
     }
 
     @Override
-    public void eliminar(Long idCredencial) throws Exception {
+    public String eliminar(Long idCredencial) throws Exception {
         if(idCredencial ==null){
             throw new Exception("Se debe ingresar el id de la credencial que desea eliminar");
         }
@@ -51,6 +51,7 @@ public class CredencialesServiceImpl implements CredencialesService {
             throw new Exception("No se encontro la credencial con ese Id");
         }
         credencialesDAO.deleteById(idCredencial);
+        return "Se elimino exitosamente la credencial";
     }
 
     @Override

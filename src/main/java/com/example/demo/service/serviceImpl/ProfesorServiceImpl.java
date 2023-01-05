@@ -49,7 +49,7 @@ public class ProfesorServiceImpl implements ProfesorService {
     }
 
     @Override
-    public void eliminar(Long idProfesor) throws Exception {
+    public String eliminar(Long idProfesor) throws Exception {
         if(idProfesor == null){
             throw new Exception("Debe ingresar el id del profesor que desea eliminar");
         }
@@ -63,6 +63,7 @@ public class ProfesorServiceImpl implements ProfesorService {
             throw new Exception("No se puede eliminar el profesor porque esta asociado a un curso");
         }
         profesorDAO.deleteById(idProfesor);
+        return "Se elimino exitosamente el profesor";
     }
 
     @Override
@@ -84,6 +85,17 @@ public class ProfesorServiceImpl implements ProfesorService {
             throw new Exception("El formato del correo no es valido");
         }
         return profesorDAO.findByCorreo(correo);
+    }
+
+    @Override
+    public Profesor findById(Long idProfesor) throws Exception {
+        if(idProfesor == null){
+            throw new Exception("Debe ingresar el id de un profesor");
+        }
+        if(!profesorDAO.existsById(idProfesor)){
+            throw new Exception("El profesor con id: " + idProfesor + " no existe");
+        }
+        return profesorDAO.findById(idProfesor).get();
     }
 
     private void validacionesCrear(Profesor profesor) throws Exception {

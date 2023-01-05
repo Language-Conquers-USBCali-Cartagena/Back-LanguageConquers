@@ -9,6 +9,6 @@ public interface CredencialesService {
 
     String crear(Credenciales credenciales) throws Exception;
     String actualizar(CredencialesDTO credencialesDTO) throws Exception;
-    void eliminar(Long idCredencial) throws Exception;
+    String eliminar(Long idCredencial) throws Exception;
     List<Credenciales> listar()throws Exception;
 }

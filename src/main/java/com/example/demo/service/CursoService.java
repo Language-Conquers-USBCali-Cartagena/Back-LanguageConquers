@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface CursoService {
 
-    String crearCurso(Curso curso) throws Exception;
-
+    String registrar(Curso curso) throws Exception;
+    String actualizar (CursoDTO cursoDTO) throws Exception;
+    String eliminar (Long idCurso) throws Exception;
     List<Curso> findByCorreoEstudiante (String correoEstudiante) throws Exception;
-
     List<Curso> findAll() throws Exception;
+    Curso findById(Long idCurso) throws Exception;
+
 }

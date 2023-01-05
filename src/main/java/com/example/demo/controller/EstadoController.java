@@ -61,13 +61,24 @@ public class EstadoController {
 
     @Operation(summary = "Este metodo permite eliminar los estados")
     @DeleteMapping("/eliminarEstado")
-    public ResponseEntity<?> eliminarEstado(@RequestParam Long idEstado){
+    public ResponseEntity<String> eliminarEstado(@RequestParam Long idEstado){
         try {
             estadoService.eliminar(idEstado);
             return ResponseEntity.ok("Se eliminó satisfactoriamente");
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo permite buscar por id un estado")
+    @GetMapping("/porId/{id}")
+    public ResponseEntity<EstadoDTO> estadoPorId (@PathVariable("id") Long idEstado){
+        try{
+                EstadoDTO estadoDTO = estadoMapper.toDTO(estadoService.findById(idEstado));
+            return new ResponseEntity<>(estadoDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
