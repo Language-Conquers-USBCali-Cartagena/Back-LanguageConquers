@@ -87,9 +87,9 @@ public class NivelMisionServiceImpl implements NivelMisionService {
         if(Validaciones.isStringLenght(nivelMision.getImgNivelMision(), 80)){
             throw new Exception("El nombre de la imagen es muy largo.");
         }
-        if(Validaciones.validExtensionImg(nivelMision.getImgNivelMision())){
+       /* if(Validaciones.validExtensionImg(nivelMision.getImgNivelMision())){
             throw new Exception("Debe ingresar un formato valido de imagen. Se aceptan formatos PNG, JPG, TIFF, JPGE, GIF y SVG.");
-        }
+        }*/
         if(nivelMision.getPuntajeMinimo()<0){
             throw new Exception("El puntaje minimo no debe ser menor a cero");
         }
@@ -123,9 +123,10 @@ public class NivelMisionServiceImpl implements NivelMisionService {
         if(Validaciones.isStringLenght(nivelMisionDTO.getImgNivelMision(), 80)){
             throw new Exception("El nombre de la imagen es muy largo.");
         }
+        /*
         if(Validaciones.validExtensionImg(nivelMisionDTO.getImgNivelMision())){
             throw new Exception("Debe ingresar un formato valido de imagen. Se aceptan formatos PNG, JPG, TIFF, JPGE, GIF y SVG.");
-        }
+        }*/
         if(nivelMisionDTO.getPuntajeMinimo()<0){
             throw new Exception("El puntaje minimo no debe ser menor a cero");
         }
