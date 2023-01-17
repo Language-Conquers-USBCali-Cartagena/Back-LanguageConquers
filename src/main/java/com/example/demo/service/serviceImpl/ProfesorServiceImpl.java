@@ -19,8 +19,7 @@ public class ProfesorServiceImpl implements ProfesorService {
     private ProfesorDAO profesorDAO;
     @Autowired
     private GeneroDAO generoDAO;
-    @Autowired
-    private ComentarioDAO comentarioDAO;
+
     @Autowired
     private CursoDAO cursoDAO;
 
@@ -30,7 +29,7 @@ public class ProfesorServiceImpl implements ProfesorService {
     public String registarProfesor(Profesor profesor) throws Exception {
         validacionesCrear(profesor);
         profesorDAO.save(profesor);
-        return "Se creo exitosamente el profesor";
+        return "Se creo exitosamente el profesor.";
     }
 
     @Override
@@ -45,25 +44,22 @@ public class ProfesorServiceImpl implements ProfesorService {
         profesor.setUsuarioModificador(profesorDTO.getUsuarioModificador());
         profesor.setFechaModificacion(profesorDTO.getFechaModificacion());
         profesorDAO.save(profesor);
-        return "Se actualizo el profesor";
+        return "Se actualizo el profesor.";
     }
 
     @Override
     public String eliminar(Long idProfesor) throws Exception {
         if(idProfesor == null){
-            throw new Exception("Debe ingresar el id del profesor que desea eliminar");
+            throw new Exception("Debe ingresar el id del profesor que desea eliminar.");
         }
         if(!profesorDAO.existsById(idProfesor)){
-            throw new Exception("No se encontro un profesor con ese Id");
-        }
-        if(!comentarioDAO.findByIdProfesor(idProfesor).isEmpty()){
-            throw new Exception("No se puede eliminar el profesor porque esta asociado a un comentario");
+            throw new Exception("No se encontró un profesor con ese Id.");
         }
         if(!cursoDAO.findByIdProfesor(idProfesor).isEmpty()){
-            throw new Exception("No se puede eliminar el profesor porque esta asociado a un curso");
+            throw new Exception("No se puede eliminar el profesor porque esta asociado a un curso.");
         }
         profesorDAO.deleteById(idProfesor);
-        return "Se elimino exitosamente el profesor";
+        return "Se elimino exitosamente el profesor.";
     }
 
     @Override
@@ -74,7 +70,7 @@ public class ProfesorServiceImpl implements ProfesorService {
     @Override
     public Boolean existePorCorreo(String correo) throws Exception {
         if(!Validaciones.formatoCorreoValido(correo)){
-            throw new Exception("El formato del correo no es valido");
+            throw new Exception("El formato del correo no es válido.");
         }
         return profesorDAO.existsByCorreo(correo);
     }
@@ -82,7 +78,7 @@ public class ProfesorServiceImpl implements ProfesorService {
     @Override
     public Profesor findByCorreo(String correo) throws Exception {
         if(!Validaciones.formatoCorreoValido(correo)){
-            throw new Exception("El formato del correo no es valido");
+            throw new Exception("El formato del correo no es válido.");
         }
         return profesorDAO.findByCorreo(correo);
     }
@@ -90,121 +86,121 @@ public class ProfesorServiceImpl implements ProfesorService {
     @Override
     public Profesor findById(Long idProfesor) throws Exception {
         if(idProfesor == null){
-            throw new Exception("Debe ingresar el id de un profesor");
+            throw new Exception("Debe ingresar el id de un profesor.");
         }
         if(!profesorDAO.existsById(idProfesor)){
-            throw new Exception("El profesor con id: " + idProfesor + " no existe");
+            throw new Exception("El profesor con id: " + idProfesor + " no existe.");
         }
         return profesorDAO.findById(idProfesor).get();
     }
 
     private void validacionesCrear(Profesor profesor) throws Exception {
         if(profesor.getGenero().getIdGenero()==null){
-            throw new Exception("Debe ingresar el id un genero");
+            throw new Exception("Debe ingresar el id un genero.");
         }
         if(profesor.getGenero().getIdGenero()<0){
-            throw new Exception("Debe ingresar un id genero mayor a 0");
+            throw new Exception("Debe ingresar un id genero válido.");
         }
         if(generoDAO.findById(profesor.getGenero().getIdGenero()).toString().equals("Optional.empty")){
-            throw new Exception("No existe un genero con ese Id, ingrese un Id valido");
+            throw new Exception("No existe un genero con ese id, ingrese un id válido.");
         }
         if(profesor.getNombre()==null || profesor.getNombre().equals("")){
-            throw new Exception("Debe ingresar el nombre del profesor");
+            throw new Exception("Debe ingresar el nombre del profesor.");
         }
         if(Validaciones.isStringLenght(profesor.getNombre(),50)){
-            throw new Exception("El nombre del profesor no debe contener más de 50 caracteres");
+            throw new Exception("El nombre del profesor no debe contener más de 50 caracteres.");
         }
         if(profesor.getApellido()==null || profesor.getApellido().equals("")){
-            throw new Exception("Debe ingresar el apellido del profesor");
+            throw new Exception("Debe ingresar el apellido del profesor.");
         }
         if(Validaciones.isStringLenght(profesor.getApellido(),50)){
-            throw new Exception("El apellido no debe contener más de 50 caracteres");
+            throw new Exception("El apellido no debe contener más de 50 caracteres.");
         }
         if(profesor.getCorreo()==null || profesor.getCorreo().equals("")){
             throw new Exception("Debe ingresar el correo del profesor");
         }
         if(Validaciones.isStringLenght(profesor.getCorreo(),50)){
-            throw new Exception("El correo no debe contener más de 50 caracteres");
+            throw new Exception("El correo no debe contener más de 50 caracteres.");
         }
         if(!Validaciones.formatoCorreoValido(profesor.getCorreo())){
-            throw new Exception("Debe ingresar un correo valido");
+            throw new Exception("Debe ingresar un correo válido.");
         }
         if(Validaciones.isStringLenght(profesor.getFoto(),80)){
-            throw new Exception("El nombre de la foto es muy largo, se acpetan maximo 80 caracteres");
+            throw new Exception("El nombre de la foto es muy largo, se aceptan máximo 80 caracteres.");
         }
         if(!Validaciones.validExtensionImg(profesor.getFoto())){
-            throw new Exception("El formato de la imagen no es valido");
+            throw new Exception("El formato de la imagen no es válido.");
         }
         if(profesor.getUsuarioCreador()==null|| profesor.getUsuarioCreador().equals("")){
-            throw new Exception("Debe ingresar el nombre del usuario creador");
+            throw new Exception("Debe ingresar el nombre del usuario creador.");
         }
         if(Validaciones.isStringLenght(profesor.getUsuarioCreador(),50)){
-            throw new Exception("El usuario creador no debe contener más de 50 caracteres");
+            throw new Exception("El usuario creador no debe contener más de 50 caracteres.");
         }
         if(profesor.getFechaCreacion()==null || profesor.getFechaCreacion().toString().equals("")){
-            throw new Exception("Debe ingresar la fecha de creación");
+            throw new Exception("Debe ingresar la fecha de creación.");
         }
         Date fechaActual = new Date();
         if(profesor.getFechaCreacion().compareTo(fechaActual)>0){
-            throw  new Exception("No se puede ingresar una fecha que aun no ha sucedido");
+            throw  new Exception("No se puede ingresar una fecha que aun no ha sucedido.");
         }
         if(estudianteDAO.existsByCorreo(profesor.getCorreo()) || profesorDAO.existsByCorreo(profesor.getCorreo())){
-            throw new Exception("El correo ya existe en la base de datos");
+            throw new Exception("El correo ya existe.");
         }
 
     }
     private void validacionesActualizar(ProfesorDTO profesorDTO) throws Exception{
         if(profesorDTO.getIdProfesor()==null || profesorDTO.getIdProfesor().toString().equals("")){
-            throw new Exception("Debe ingresar el id del profesor que desea editar");
+            throw new Exception("Debe ingresar el id del profesor que desea editar.");
         }
         if(!generoDAO.existsById(profesorDTO.getIdGenero())){
-            throw new Exception("No existe un genero con ese id");
+            throw new Exception("No existe un genero con ese id.");
         }
         if(profesorDTO.getIdGenero()==null){
-            throw new Exception("Debe ingresar el id un genero");
+            throw new Exception("Debe ingresar el id un genero.");
         }
         if(profesorDTO.getIdGenero()<0){
-            throw new Exception("Debe ingresar un id genero mayor a 0");
+            throw new Exception("Debe ingresar un id genero válido.");
         }
         if(profesorDTO.getNombre()== null || profesorDTO.getNombre().equals("")){
-            throw new Exception("Debe ingresar el nombre del profesor");
+            throw new Exception("Debe ingresar el nombre del profesor.");
         }
         if(Validaciones.isStringLenght(profesorDTO.getNombre(),50)){
-            throw new Exception("El nombre del profesor no debe contener más de 50 caracteres");
+            throw new Exception("El nombre del profesor no debe contener más de 50 caracteres.");
         }
         if(profesorDTO.getApellido()==null || profesorDTO.getApellido().equals("")){
-            throw new Exception("Debe ingresar el apellido del profesor");
+            throw new Exception("Debe ingresar el apellido del profesor.");
         }
         if(Validaciones.isStringLenght(profesorDTO.getApellido(),50)){
-            throw new Exception("El apellido no debe contener más de 50 caracteres");
+            throw new Exception("El apellido no debe contener más de 50 caracteres.");
         }
         if(profesorDTO.getCorreo()==null || profesorDTO.getCorreo().equals("")){
-            throw new Exception("Debe ingresar el correo del profesor");
+            throw new Exception("Debe ingresar el correo del profesor.");
         }
         if(Validaciones.isStringLenght(profesorDTO.getCorreo(),50)){
-            throw new Exception("El correo no debe contener más de 50 caracteres");
+            throw new Exception("El correo no debe contener más de 50 caracteres.");
         }
         if(!Validaciones.formatoCorreoValido(profesorDTO.getCorreo())){
-            throw new Exception("Debe ingresar un correo valido");
+            throw new Exception("Debe ingresar un correo válido.");
         }
         if(Validaciones.isStringLenght(profesorDTO.getFoto(),80)){
-            throw new Exception("El nombre de la foto es muy largo, se acpetan maximo 80 caracteres");
+            throw new Exception("El nombre de la foto es muy largo, se aceptan máximo 80 caracteres.");
         }
         if(!Validaciones.validExtensionImg(profesorDTO.getFoto())){
-            throw new Exception("El formato de la imagen no es valido");
+            throw new Exception("El formato de la imagen no es válido.");
         }
         if(profesorDTO.getUsuarioModificador()==null|| profesorDTO.getUsuarioModificador().equals("")){
-            throw new Exception("Debe ingresar el nombre del usuario modificador");
+            throw new Exception("Debe ingresar el nombre del usuario modificador.");
         }
         if(Validaciones.isStringLenght(profesorDTO.getUsuarioModificador(),50)){
-            throw new Exception("El usuario modificador no debe contener más de 50 caracteres");
+            throw new Exception("El usuario modificador no debe contener más de 50 caracteres.");
         }
         if(profesorDTO.getFechaModificacion()==null || profesorDTO.getFechaModificacion().toString().equals("")){
-            throw new Exception("Debe ingresar la fecha de modificación");
+            throw new Exception("Debe ingresar la fecha de modificación.");
         }
         Date fechaActual = new Date();
         if(profesorDTO.getFechaModificacion().compareTo(fechaActual)>0){
-            throw  new Exception("No se puede ingresar una fecha que aun no ha sucedido");
+            throw  new Exception("No se puede ingresar una fecha que aun no ha sucedido.");
         }
 
     }

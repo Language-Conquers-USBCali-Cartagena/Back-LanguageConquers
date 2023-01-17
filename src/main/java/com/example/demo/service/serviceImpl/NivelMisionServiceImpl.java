@@ -30,9 +30,9 @@ public class NivelMisionServiceImpl implements NivelMisionService {
         try{
             validacionesCrear(nivelMision);
             nivelMisionDAO.save(nivelMision);
-            return "Se pudo crear correctamente el nivel misión";
+            return "Se creo exitosamente el nivel misión.";
         }catch (Exception e){
-            throw new Exception("No se puede crear el nivel misión");
+            throw new Exception("No se creo el nivel misión.");
         }
     }
 
@@ -47,7 +47,7 @@ public class NivelMisionServiceImpl implements NivelMisionService {
         nivelMision.setFechaCreacion(nivelMisionDTO.getFechaCreacion());
         nivelMision.setUsuarioModificador(nivelMisionDTO.getUsuarioModificador());
         nivelMisionDAO.save(nivelMision);
-        return "Se actualizo correctamente el nivelMision";
+        return "Se actualizo correctamente el nivel misión.";
     }
 
     @Override
@@ -56,19 +56,19 @@ public class NivelMisionServiceImpl implements NivelMisionService {
             throw new Exception("Se debe ingresar el id del nivel misión que desea eliminar. ");
         }
         if(!nivelMisionDAO.existsById(idNivelMision)){
-            throw new Exception("No se encontro el nivelMision con el id: " + idNivelMision);
+            throw new Exception("No se encontró el nivel misión con el id: " + idNivelMision +".");
         }
         nivelMisionDAO.deleteById(idNivelMision);
-        return "Se elimino el nivel mision correctamente!";
+        return "Se elimino el nivel misión correctamente.";
     }
 
     @Override
     public NivelMision findById(Long idNivelMision) throws Exception {
         if(idNivelMision == null){
-            throw new Exception("Se debe ingresar el id del ");
+            throw new Exception("Se debe ingresar el id del nivel misión.");
         }
         if(!nivelMisionDAO.existsById(idNivelMision)){
-            throw new Exception("No se encontro el nivelMision con el id: " + idNivelMision);
+            throw new Exception("No se encontró el nivel misión con el id: " + idNivelMision+ ".");
         }
         return nivelMisionDAO.findById(idNivelMision).get();
     }
@@ -76,22 +76,13 @@ public class NivelMisionServiceImpl implements NivelMisionService {
     private void validacionesCrear(NivelMision nivelMision) throws Exception{
 
         if(nivelMision.getNombre() == null || nivelMision.getNombre().equals("")){
-            throw new Exception("Debe ingresar el nombre del Nivel Misión.");
+            throw new Exception("Debe ingresar el nombre del nivel misión.");
         }
         if(Validaciones.isStringLenght(nivelMision.getNombre(), 50)){
-            throw new Exception("El nombre del Nivel Misión es muy largo.");
+            throw new Exception("El nombre del nivel misión es muy largo.");
         }
-        if(nivelMision.getImgNivelMision() == null || nivelMision.getImgNivelMision().equals("")){
-            throw new Exception("Debe ingresar una imagen para el Nivel Misión.");
-        }
-        if(Validaciones.isStringLenght(nivelMision.getImgNivelMision(), 80)){
-            throw new Exception("El nombre de la imagen es muy largo.");
-        }
-       /* if(Validaciones.validExtensionImg(nivelMision.getImgNivelMision())){
-            throw new Exception("Debe ingresar un formato valido de imagen. Se aceptan formatos PNG, JPG, TIFF, JPGE, GIF y SVG.");
-        }*/
         if(nivelMision.getPuntajeMinimo()<0){
-            throw new Exception("El puntaje minimo no debe ser menor a cero");
+            throw new Exception("El puntaje mínimo es cero.");
         }
         if(nivelMision.getUsuarioCreador() == null || nivelMision.getUsuarioCreador().equals("")){
             throw new Exception("Debe ingresar el nombre del usuario creador.");
@@ -102,33 +93,27 @@ public class NivelMisionServiceImpl implements NivelMisionService {
         if(nivelMision.getFechaCreacion() == null || nivelMision.getFechaCreacion().toString().equals("")){
             throw new Exception("Debe ingresar una fecha de creación.");
         }
+        Date fechaActual = new Date();
+        if(nivelMision.getFechaCreacion().compareTo(fechaActual)>0){
+            throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
+        }
     }
 
     private void validacionesActualizar(NivelMisionDTO nivelMisionDTO) throws Exception{
         if(nivelMisionDTO.getIdNivelMision() == null){
-            throw new Exception("Debe ingresar el ID del Nivel Misión que desea actualizar.");
+            throw new Exception("Debe ingresar el id del nivel misión que desea actualizar.");
         }
         if(!nivelMisionDAO.existsById(nivelMisionDTO.getIdNivelMision())){
-            throw new Exception("No se encontro el nivel misión con es ID.");
+            throw new Exception("No se encontró el nivel misión con es id.");
         }
         if(nivelMisionDTO.getNombre() == null || nivelMisionDTO.getNombre().equals("")){
-            throw new Exception("Debe ingresar el nombre del Nivel Misión.");
+            throw new Exception("Debe ingresar el nombre del nivel misión.");
         }
         if(Validaciones.isStringLenght(nivelMisionDTO.getNombre(), 50)){
-            throw new Exception("El nombre del Nivel Misión es muy largo.");
+            throw new Exception("El nombre del nivel misión es muy largo.");
         }
-        if(nivelMisionDTO.getImgNivelMision() == null || nivelMisionDTO.getImgNivelMision().equals("")){
-            throw new Exception("Debe ingresar una imagen para el Nivel Misión.");
-        }
-        if(Validaciones.isStringLenght(nivelMisionDTO.getImgNivelMision(), 80)){
-            throw new Exception("El nombre de la imagen es muy largo.");
-        }
-        /*
-        if(Validaciones.validExtensionImg(nivelMisionDTO.getImgNivelMision())){
-            throw new Exception("Debe ingresar un formato valido de imagen. Se aceptan formatos PNG, JPG, TIFF, JPGE, GIF y SVG.");
-        }*/
         if(nivelMisionDTO.getPuntajeMinimo()<0){
-            throw new Exception("El puntaje minimo no debe ser menor a cero");
+            throw new Exception("El puntaje mínimo no debe ser menor a cero");
         }
         if(nivelMisionDTO.getUsuarioModificador() == null || nivelMisionDTO.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el nombre del usuario modificador.");

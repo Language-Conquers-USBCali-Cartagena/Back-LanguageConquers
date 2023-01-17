@@ -24,7 +24,7 @@ public class CredencialesServiceImpl implements CredencialesService {
     public String crear(Credenciales credenciales) throws Exception {
         validacionesCrear(credenciales);
         credencialesDAO.save(credenciales);
-        return "Se agrego la credencial";
+        return "Se agrego la credencial.";
     }
 
     @Override
@@ -39,19 +39,19 @@ public class CredencialesServiceImpl implements CredencialesService {
         credenciales.setUsuarioModificador(credencialesDTO.getUsuarioModificador());
         credenciales.setFechaModificacion(credencialesDTO.getFechaModificacion());
         credencialesDAO.save(credenciales);
-        return "Se actualizo la credencial";
+        return "Se actualizo la credencial.";
     }
 
     @Override
     public String eliminar(Long idCredencial) throws Exception {
         if(idCredencial ==null){
-            throw new Exception("Se debe ingresar el id de la credencial que desea eliminar");
+            throw new Exception("Se debe ingresar el id de la credencial que desea eliminar.");
         }
         if(!credencialesDAO.existsById(idCredencial)){
-            throw new Exception("No se encontro la credencial con ese Id");
+            throw new Exception("No se encontró la credencial con ese id.");
         }
         credencialesDAO.deleteById(idCredencial);
-        return "Se elimino exitosamente la credencial";
+        return "Se elimino exitosamente la credencial.";
     }
 
     @Override
@@ -60,92 +60,92 @@ public class CredencialesServiceImpl implements CredencialesService {
     }
     private void validacionesCrear(Credenciales credenciales)throws Exception{
         if(credenciales.getCuenta() == null || credenciales.getCuenta().equals("")){
-            throw new Exception("Debe ingresar el nombre o correo asociado a la cuenta");
+            throw new Exception("Debe ingresar el nombre o correo asociado a la cuenta.");
         }
         if(Validaciones.isStringLenght(credenciales.getCuenta(),80)){
-            throw new Exception("La cuenta o correo es largo, se aceptan solo 80 caracteres");
+            throw new Exception("La cuenta o correo es largo, se aceptan solo 80 caracteres.");
         }
         if(credenciales.getPassword() == null || credenciales.getPassword().equals("")){
-            throw new Exception("Debe ingresar la contraseña");
+            throw new Exception("Debe ingresar la contraseña.");
         }
         if(Validaciones.isStringLenght(credenciales.getPassword(),80)){
-            throw new Exception("La contraseña es largo, se aceptan solo 80 caracteres");
+            throw new Exception("La contraseña es larga, se aceptan solo 80 caracteres.");
         }
         if(credenciales.getUrl() == null || credenciales.getUrl().equals("")){
-            throw new Exception("Debe ingresar la url");
+            throw new Exception("Debe ingresar la url.");
         }
         if(Validaciones.isStringLenght(credenciales.getUrl(),150)){
-            throw new Exception("La url esta muy larga, se aceptan solo 150 caracteres");
+            throw new Exception("La url esta muy larga, se aceptan solo 150 caracteres.");
         }
         if(!Validaciones.urlValidator(credenciales.getUrl())){
-            throw new Exception("La url no es valida, ingrese una valida");
+            throw new Exception("La url no es válida, ingrese una válida.");
         }
         if(credenciales.getPlataforma() == null || credenciales.getPlataforma().equals("")){
-            throw new Exception("Debe ingresar la plataforma a la cual pertenece la cuenta");
+            throw new Exception("Debe ingresar el nombre de la plataforma a la cual pertenece la cuenta.");
         }
         if(Validaciones.isStringLenght(credenciales.getPlataforma(),80)){
-            throw new Exception("El nombre de la plataforma es muy largo, se aceptan solo 80 caracteres");
+            throw new Exception("El nombre de la plataforma es muy largo, se aceptan solo 80 caracteres.");
         }
         if(credenciales.getUsuarioCreador() ==null || credenciales.getUsuarioCreador().equals("")){
-            throw new Exception("Debe ingresar el nombre del usuario creador");
+            throw new Exception("Debe ingresar el nombre del usuario creador.");
         }
         if(Validaciones.isStringLenght(credenciales.getUsuarioCreador(),50)){
-            throw new Exception("El nombre del usuario creador solo puede contener 50 caracteres ");
+            throw new Exception("El nombre del usuario creador solo puede contener 50 caracteres.");
         }
         Date fechaActual = new Date();
         if(credenciales.getFechaCreacion()==null || credenciales.getFechaCreacion().toString().equals("")){
-            throw new Exception("Debe ingresar la fecha de creación");
+            throw new Exception("Debe ingresar la fecha de creación.");
         }
         if(credenciales.getFechaCreacion().compareTo(fechaActual)>0){
-            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
+            throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
     }
     private void validacionesActualizar(CredencialesDTO credencialesDTO) throws Exception{
         if(credencialesDTO.getIdCredencial()==null){
-            throw new Exception("Debe ingresar el id de la credencial para actualizarla");
+            throw new Exception("Debe ingresar el id de la credencial para actualizarla.");
         }
         if(!credencialesDAO.existsById(credencialesDTO.getIdCredencial())){
-            throw new Exception("No se encontro ninguna credencial asociada a ese id");
+            throw new Exception("No se encontró ninguna credencial asociada a ese id.");
         }
         if(credencialesDTO.getCuenta() == null || credencialesDTO.getCuenta().equals("")){
-            throw new Exception("Debe ingresar el nombre o correo asociado a la cuenta");
+            throw new Exception("Debe ingresar el nombre o correo asociado a la cuenta.");
         }
         if(Validaciones.isStringLenght(credencialesDTO.getCuenta(),80)){
-            throw new Exception("La cuenta o correo es largo, se aceptan solo 80 caracteres");
+            throw new Exception("La cuenta o correo es larga, se aceptan solo 80 caracteres.");
         }
         if(credencialesDTO.getPassword() == null || credencialesDTO.getPassword().equals("")){
-            throw new Exception("Debe ingresar la contraseña");
+            throw new Exception("Debe ingresar la contraseña.");
         }
         if(Validaciones.isStringLenght(credencialesDTO.getPassword(),80)){
-            throw new Exception("La contraseña es largo, se aceptan solo 80 caracteres");
+            throw new Exception("La contraseña es larga, se aceptan solo 80 caracteres.");
         }
         if(credencialesDTO.getUrl() == null || credencialesDTO.getUrl().equals("")){
-            throw new Exception("Debe ingresar la url");
+            throw new Exception("Debe ingresar la url.");
         }
         if(Validaciones.isStringLenght(credencialesDTO.getUrl(),150)){
-            throw new Exception("La url esta muy larga, se aceptan solo 150 caracteres");
+            throw new Exception("La url esta muy larga, se aceptan solo 150 caracteres.");
         }
         if(!Validaciones.urlValidator(credencialesDTO.getUrl())){
-            throw new Exception("La url no es valida, ingrese una valida");
+            throw new Exception("La url no es válida, ingrese una válida.");
         }
         if(credencialesDTO.getPlataforma() == null || credencialesDTO.getPlataforma().equals("")){
-            throw new Exception("Debe ingresar la plataforma a la cual pertenece la cuenta");
+            throw new Exception("Debe ingresar la plataforma a la cual pertenece la cuenta.");
         }
         if(Validaciones.isStringLenght(credencialesDTO.getPlataforma(),80)){
-            throw new Exception("El nombre de la plataforma es muy largo, se aceptan solo 80 caracteres");
+            throw new Exception("El nombre de la plataforma es muy largo, se aceptan solo 80 caracteres.");
         }
         if(credencialesDTO.getUsuarioModificador() ==null || credencialesDTO.getUsuarioModificador().equals("")){
-            throw new Exception("Debe ingresar el nombre del usuario modificador");
+            throw new Exception("Debe ingresar el nombre del usuario modificador.");
         }
         if(Validaciones.isStringLenght(credencialesDTO.getUsuarioModificador(),50)){
-            throw new Exception("El nombre del usuario modificador solo puede contener 50 caracteres ");
+            throw new Exception("El nombre del usuario modificador solo puede contener 50 caracteres.");
         }
         Date fechaActual = new Date();
         if(credencialesDTO.getFechaModificacion()==null || credencialesDTO.getFechaModificacion().toString().equals("")){
-            throw new Exception("Debe ingresar la fecha de modificación");
+            throw new Exception("Debe ingresar la fecha de modificación.");
         }
         if(credencialesDTO.getFechaModificacion().compareTo(fechaActual)>0){
-            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
+            throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
     }
 

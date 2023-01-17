@@ -43,9 +43,9 @@ public class RetoServiceImpl implements RetoService {
         //TODO:FALTAN VALIDACIONES
         try{
             retoDAO.save(reto);
-            return "Se creo correctamente el reto";
+            return "Se creo exitosamente el reto.";
         }catch (Exception e){
-            throw new Exception("EL reto no se pudo crear el reto");
+            throw new Exception("EL reto no se creo.");
         }
     }
 
@@ -71,29 +71,29 @@ public class RetoServiceImpl implements RetoService {
         idCurso = cursoService.findById(retoDTO.getIdCurso());
         reto.setCurso(idCurso);
         retoDAO.save(reto);
-        return "Se actualizo el reto";
+        return "Se actualizo el reto.";
     }
 
     @Override
     public String eliminar(Long idReto) throws Exception {
         if(idReto == null){
-            throw new Exception("El id del reto no existe");
+            throw new Exception("El id del reto no existe.");
         }
         if(!retoDAO.existsById(idReto)){
-            throw new Exception("No se encontro un reto con el id: " + idReto);
+            throw new Exception("No se encontró un reto con el id: " + idReto+".");
         }
         //TODO: FALTA VALIDACION DE SI EXISTE EN ORDEN_RETO_IDE, EN RETO_ESTUDIANTE Y EN ROL
         retoDAO.deleteById(idReto);
-        return "El reto se elimino exitosamente";
+        return "El reto se elimino exitosamente.";
     }
 
     @Override
     public Reto findById(Long idReto) throws Exception {
         if(idReto == null){
-            throw new Exception("Debe ingresar el id de un reto");
+            throw new Exception("Debe ingresar el id de un reto.");
         }
         if(!retoDAO.existsById(idReto)){
-            throw new Exception("El reto con id: " + idReto + " no existe");
+            throw new Exception("El reto con id: " + idReto + " no existe.");
         }
         return retoDAO.findById(idReto).get();
     }

@@ -73,8 +73,6 @@ public class Estudiante {
     @JoinColumn(name = "id_genero", nullable = false)
     private Genero genero;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "estudiante")
-    List<Comentario> comentarios = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "estudiante")
     List<CursoEstudiante> cursoEstudiantes = new ArrayList<>();

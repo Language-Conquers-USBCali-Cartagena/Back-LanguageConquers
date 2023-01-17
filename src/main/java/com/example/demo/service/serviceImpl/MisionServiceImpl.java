@@ -39,10 +39,10 @@ public class MisionServiceImpl implements MisionService {
         try{
             misionDAO.save(mision);
 
-            return "Se creo la mision";
+            return "Se creo exitosamente la misión.";
 
         }catch (Exception e){
-            throw  new Exception("No se pudo crear la mision");
+            throw  new Exception("No se pudo crear la misión.");
         }
     }
 
@@ -70,29 +70,29 @@ public class MisionServiceImpl implements MisionService {
         mision.setFechaCreacion(misionDTO.getFechaCreacion());
         misionDTO.setUsuarioModificador(misionDTO.getUsuarioModificador());
         misionDAO.save(mision);
-        return "Se actualizo la misión correctamente";
+        return "Se actualizo la misión correctamente.";
     }
 
     @Override
     public String eliminar(Long idMision) throws Exception {
         if(idMision == null){
-            throw new Exception("Se debe ingresar el id de la mision");
+            throw new Exception("Se debe ingresar el id de la misión.");
         }
         if(!misionDAO.existsById(idMision)){
-            throw new Exception("La mision con id: "+ idMision + " no existe");
+            throw new Exception("La misión con id: "+ idMision + " no existe.");
         }
         //Todo: falta validacion de reto y mision_estudiante
         misionDAO.deleteById(idMision);
-        return "La mision de ha eliminado exitosamente";
+        return "La misión se ha eliminado exitosamente.";
     }
 
     @Override
     public Mision findById(Long idMision) throws Exception {
         if(idMision == null){
-            throw new Exception("Debe ingresar el id de una mision");
+            throw new Exception("Debe ingresar el id de una misión");
         }
         if(!misionDAO.existsById(idMision)){
-            throw new Exception("La mision con id: " + idMision + " no existe");
+            throw new Exception("La misión con id: " + idMision + " no existe.");
         }
         return misionDAO.findById(idMision).get();
     }

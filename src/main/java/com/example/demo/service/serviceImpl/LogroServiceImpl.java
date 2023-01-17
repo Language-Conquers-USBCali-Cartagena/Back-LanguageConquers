@@ -23,7 +23,7 @@ public class LogroServiceImpl implements LogroService {
     public List<Logro> listarLogros() throws Exception {
         List<Logro> logros = logroDAO.findAll();
         if(logros.isEmpty()){
-            throw new Exception("No hay logros disponibles");
+            throw new Exception("No hay logros disponibles.");
         }
         return logros;
     }
@@ -32,7 +32,7 @@ public class LogroServiceImpl implements LogroService {
     public Page<Logro> pageLogros(Pageable pageable) throws Exception {
         Page<Logro> logros= logroDAO.findAll(pageable);
         if(logros.isEmpty()){
-            throw new Exception("No hay logros disponibles");
+            throw new Exception("No hay logros disponibles.");
         }
         return logros;
     }
@@ -41,19 +41,19 @@ public class LogroServiceImpl implements LogroService {
     public String registrar(Logro logro) throws Exception {
         validaciones(logro);
         logroDAO.save(logro);
-        return "Se guardo exitosamente el logro";
+        return "Se guardo exitosamente el logro.";
     }
 
     @Override
     public String eliminar(Long idLogro) throws Exception {
         if(idLogro == null){
-            throw new Exception("Se debe ingresar el id del logro");
+            throw new Exception("Se debe ingresar el id del logro.");
         }
         if(!logroDAO.existsById(idLogro)){
-            throw new Exception("El id logro no existe");
+            throw new Exception("El id logro no existe.");
         }
         logroDAO.deleteById(idLogro);
-        return "El logro se elimino exitosamente";
+        return "El logro se elimino exitosamente.";
     }
 
     @Override
@@ -69,34 +69,34 @@ public class LogroServiceImpl implements LogroService {
         logro.setFechaCreacion(logroDTO.getFechaCreacion());
         logro.setUsuarioModificador(logroDTO.getUsuarioModificador());
         logroDAO.save(logro);
-        return "Se actualizo correctamente el logo";
+        return "Se actualizo correctamente el logro.";
     }
 
     @Override
     public Logro findById(Long idLogro) throws Exception {
         if(idLogro == null){
-            throw new Exception("Se debe ingresar el id del logro");
+            throw new Exception("Se debe ingresar el id del logro.");
         }
         if(!logroDAO.existsById(idLogro)){
-            throw new Exception("El id logro no existe");
+            throw new Exception("El id logro no existe.");
         }
         return logroDAO.findById(idLogro).get();
     }
 
 
     private void validaciones(Logro logro) throws Exception {
-        //Todo: revisar este metodo
+        //Todo: revisar este metodo no estan todas las validaciones
         if(logro.getCategoria().equals(null)){
-            throw new Exception("Debe ingresar una categoria");
+            throw new Exception("Debe ingresar una categoría.");
         }
         if(logro.getDescripcion().equals(null)){
-            throw new Exception("Debe ingresar una descripcion");
+            throw new Exception("Debe ingresar una descripción.");
         }
         if(logro.getImagen().equals(null)){
-            throw new Exception("Debe ingresar una imagen");
+            throw new Exception("Debe ingresar una imagen.");
         }
         if(logro.getNombre().equals(null)){
-            throw new Exception("Debe ingresar el nombre del logro");
+            throw new Exception("Debe ingresar el nombre del logro.");
         }
 
     }

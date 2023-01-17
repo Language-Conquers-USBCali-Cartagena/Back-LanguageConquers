@@ -27,7 +27,7 @@ public class MonedasServiceImpl implements MonedasService {
     public String registrar(Monedas monedas) throws Exception {
         try{
             monedasDAO.save(monedas);
-            return "Se creo correctamente las monedas";
+            return "Se creo exitosamente la moneda.";
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
@@ -45,29 +45,29 @@ public class MonedasServiceImpl implements MonedasService {
         monedas.setUsuarioModificador(monedasDTO.getUsuarioModificador());
         monedas.setFechaModificacion(monedasDTO.getFechaModificacion());
         monedasDAO.save(monedas);
-        return "Se actualizo la moneda correctamente";
+        return "Se actualizo exitosamente la moneda.";
     }
 
     @Override
     public String eliminar(Long idMonedas) throws Exception {
         if(idMonedas == null){
-            throw new Exception("Se debe ingresar el id de la moneda");
+            throw new Exception("Se debe ingresar el id de la moneda.");
         }
         if(!monedasDAO.existsById(idMonedas)){
-            throw new Exception("La moneda con id: "+idMonedas+ " no existe");
+            throw new Exception("La moneda con id: "+idMonedas+ " no existe.");
         }
         //Todo: Falta validacion de mision
         monedasDAO.deleteById(idMonedas);
-        return "Se elimino exitosamente la moneda";
+        return "Se elimino exitosamente la moneda.";
     }
 
     @Override
     public Monedas findById(Long idMonedas) throws Exception {
         if(idMonedas == null){
-            throw new Exception("Se debe ingresar el id de la moneda");
+            throw new Exception("Se debe ingresar el id de la moneda.");
         }
         if(!monedasDAO.existsById(idMonedas)){
-            throw new Exception("La moneda con id: "+idMonedas+ " no existe");
+            throw new Exception("La moneda con id: "+idMonedas+ " no existe.");
         }
         return monedasDAO.findById(idMonedas).get();
     }

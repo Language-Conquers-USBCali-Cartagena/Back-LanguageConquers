@@ -30,40 +30,39 @@ public class LogroEstudianteServiceImpl implements LogroEstudianteService {
     public String save(LogroEstudiante logroEstudiante) throws Exception {
         validaciones(logroEstudiante);
         logroEstudianteDAO.save(logroEstudiante);
-        return "Se guardo exitosamente el logroEstudiante";
+        return "Se guardo exitosamente el logro estudiante.";
     }
 
     @Override
     public String delete(Long idLogroEstudiante) throws Exception {
-        if(!logroEstudianteDAO.existsById(idLogroEstudiante)){
-            throw new Exception("El id del logro estdiante no existe");
+        if (!logroEstudianteDAO.existsById(idLogroEstudiante)) {
+            throw new Exception("El id del logro estudiante no existe.");
         }
         logroEstudianteDAO.deleteById(idLogroEstudiante);
-        return "El logro estudiante fue eliminado satisfactoriamente";
+        return "El logro estudiante fue eliminado exitosamente.";
     }
-
     @Override
     public String actualizar(LogroEstudiante logroEstudiante) throws Exception {
         validaciones(logroEstudiante);
         logroEstudianteDAO.save(logroEstudiante);
-        return "Se actualizo correctamente el Logro estudiante";
+        return "Se actualizo correctamente el logro estudiante.";
     }
 
     @Override
     public List<LogroEstudiante> findAllByIdEstudiante(Long idEstudiante) throws Exception {
         List<LogroEstudiante> logroEstudiantes = logroEstudianteDAO.findByEstudiante(estudianteDAO.findById(idEstudiante).get());
         if(logroEstudiantes.isEmpty()){
-            throw new Exception("No hay logros para el estudiante");
+            throw new Exception("El estudiante aun no ha obtenido un logro.");
         }
         return logroEstudiantes;
     }
 
     private void validaciones(LogroEstudiante logroEstudiante) throws Exception{
         if(!estudianteDAO.existsById(logroEstudiante.getEstudiante().getIdEstudiante())){
-            throw new Exception("El id estudiante no es valido");
+            throw new Exception("El id estudiante no es válido.");
         }
         if(!logroDAO.existsById(logroEstudiante.getLogro().getIdLogro())){
-            throw new Exception("El id logro no es valido");
+            throw new Exception("El id logro no es válido.");
         }
     }
 }

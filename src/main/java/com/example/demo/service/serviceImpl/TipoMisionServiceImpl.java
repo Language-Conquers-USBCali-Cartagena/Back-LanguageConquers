@@ -29,7 +29,7 @@ public class TipoMisionServiceImpl implements TipoMisionService {
         //Todo:Faltan validaciones
         try{
             tipoMisionDAO.save(tipoMision);
-            return "El tipo mision se creo exitosamente";
+            return "El tipo misión se creo exitosamente.";
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
@@ -46,28 +46,28 @@ public class TipoMisionServiceImpl implements TipoMisionService {
         tipoMision.setUsuarioModificador(tipoMisionDTO.getUsuarioModificador());
         tipoMision.setFechaModificacion(tipoMisionDTO.getFechaModificacion());
         tipoMisionDAO.save(tipoMision);
-        return "Se actualizo correctamente el tipoMision";
+        return "Se actualizo correctamente el tipo misión.";
     }
 
     @Override
     public String eliminar(Long idTipoMision) throws Exception {
         if(idTipoMision == null){
-            throw new Exception("Se debe ingresar el id del tipoMision");
+            throw new Exception("Se debe ingresar el id del tipo misión.");
         }
         if(!tipoMisionDAO.existsById(idTipoMision)){
-            throw new Exception("No se encontro el tipoMision con el id: " + idTipoMision);
+            throw new Exception("No se encontró el tipo misión con el id: " + idTipoMision +".");
         }
         tipoMisionDAO.deleteById(idTipoMision);
-        return "Se elimino correctamente el tipoMision";
+        return "Se elimino correctamente el tipo misión.";
     }
 
     @Override
     public TipoMision findById(Long idTipoMision) throws Exception {
         if(idTipoMision == null){
-            throw new Exception("Se debe ingresar el id del tipoMision");
+            throw new Exception("Se debe ingresar el id del tipo misión.");
         }
         if(!tipoMisionDAO.existsById(idTipoMision)){
-            throw new Exception("No se encontro el tipoMision con el id: " + idTipoMision);
+            throw new Exception("No se encontró el tipo misión con el id: " + idTipoMision+".");
         }
         return tipoMisionDAO.findById(idTipoMision).get();
     }

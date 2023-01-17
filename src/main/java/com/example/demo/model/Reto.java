@@ -66,8 +66,6 @@ public class Reto {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reto")
     List<RetoEstudiante> retoEstudiantes = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reto")
-    List<Comentario> comentarios = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reto")
     List<OrdenRetoIDE> ordenRetoIDES = new ArrayList<>();

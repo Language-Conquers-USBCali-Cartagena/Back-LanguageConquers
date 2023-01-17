@@ -21,9 +21,6 @@ public class NivelMision {
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
 
-    @Column(name = "img_nivel_mision", nullable = false, length = 80)
-    private String imgNivelMision;
-
     @Column(name = "puntaje_minimo", nullable = false)
     private int puntajeMinimo;
 

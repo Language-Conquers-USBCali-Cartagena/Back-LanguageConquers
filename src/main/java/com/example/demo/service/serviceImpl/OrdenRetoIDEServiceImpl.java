@@ -86,27 +86,27 @@ public class OrdenRetoIDEServiceImpl implements OrdenRetoIDEService {
         System.out.println(ordenRetoIDE.getUsuarioModificador());
 
         ordenRetoIDEDAO.save(ordenRetoIDE);
-        return "Se creo correctamente el orden reto ide";
+        return "Se creo correctamente el orden reto IDE.";
 
     }
 
     @Override
     public List<OrdenRetoIDE> findByIdReto(Long idREto) throws Exception {
         if(!retoDAO.existsById(idREto)){
-            throw new Exception("El id reto no existe");
+            throw new Exception("El id reto no existe.");
         }
         return ordenRetoIDEDAO.encontrarPorIdReto(idREto);
     }
 
     void validaciones (OrdenRetoIDE ordenRetoIDE) throws Exception{
         if(ordenRetoIDE.getOrden() == 0){
-            throw new Exception("Debe ingresar un orden");
+            throw new Exception("Debe ingresar un orden.");
         }
         if(retoDAO.existsById(ordenRetoIDE.getReto().getIdReto())){
-            throw new Exception("El id reto no existe  " + ordenRetoIDE.getReto().getIdReto());
+            throw new Exception("El id reto no existe  " + ordenRetoIDE.getReto().getIdReto() +".");
         }
         if(palabrasReservadasDAO.existsById(ordenRetoIDE.getPalabrasReservadas().getIdPalabraReservada())){
-            throw new Exception("El id reto no existe");
+            throw new Exception("El id reto no existe.");
         }
 
     }

@@ -40,7 +40,7 @@ public class CursoServiceImpl implements CursoService {
     public String registrar(Curso curso) throws Exception {
         validaciones(curso);
         cursoDAO.save(curso);
-        return "Se creo existosamente el curso";
+        return "Se creo exitosamente el curso.";
     }
 
     @Override
@@ -61,20 +61,20 @@ public class CursoServiceImpl implements CursoService {
         idEstado = estadoService.findById(cursoDTO.getIdEstado());
         curso.setEstado(idEstado);
         cursoDAO.save(curso);
-        return "Se actualizo el curso";
+        return "Se actualizo el curso.";
     }
 
     @Override
     public String eliminar(Long idCurso) throws Exception {
         if(idCurso == null){
-            throw new Exception("Se debe de ingresar el id del curso");
+            throw new Exception("Se debe de ingresar el id del curso.");
         }
         if (!cursoDAO.existsById(idCurso)){
-            throw new Exception("El curso con id: " + idCurso + " no existe");
+            throw new Exception("El curso con id: " + idCurso + " no existe.");
         }
         //Todo: Faltan las validaciones de reto, mision y cursoEstudiante
         cursoDAO.deleteById(idCurso);
-        return "Se elimino exitosamente el curso";
+        return "Se elimino exitosamente el curso.";
     }
 
 
@@ -93,20 +93,20 @@ public class CursoServiceImpl implements CursoService {
     @Override
     public Curso findById(Long idCurso) throws Exception {
         if(idCurso == null){
-            throw new Exception("Debe ingresar el id de un curso");
+            throw new Exception("Debe ingresar el id de un curso.");
         }
         if(!cursoDAO.existsById(idCurso)){
-            throw new Exception("El curso con id: " + idCurso + " no existe");
+            throw new Exception("El curso con id: " + idCurso + " no existe.");
         }
         return cursoDAO.findById(idCurso).get();
     }
 
     public void validaciones(Curso curso) throws Exception{
         if(!estadoDAO.existsById(curso.getEstado().getIdEstado())){
-            throw new Exception("El estado que ingreso no es valido");
+            throw new Exception("El estado que ingreso no es válido.");
         }
         if(!profesorDAO.existsById(curso.getProfesor().getIdProfesor())){
-            throw new Exception("El profesor que ingreso no es valido");
+            throw new Exception("El profesor que ingreso no es válido.");
         }
     }
 }

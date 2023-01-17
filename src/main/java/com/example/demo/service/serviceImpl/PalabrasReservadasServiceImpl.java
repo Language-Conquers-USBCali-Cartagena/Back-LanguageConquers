@@ -26,7 +26,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
     public String crearPalabraResevada(PalabrasReservadas palabrasReservadas) throws Exception {
         try{
             palabrasReservadasDAO.save(palabrasReservadas);
-            return "Se ha creado correctamente la palabra reservada";
+            return "Se ha creado correctamente la palabra reservada.";
         }catch (Exception e){
             throw  new Exception(e.getMessage());
         }

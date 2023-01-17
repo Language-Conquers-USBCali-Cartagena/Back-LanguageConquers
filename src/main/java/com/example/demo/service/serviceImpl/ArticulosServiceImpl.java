@@ -28,9 +28,9 @@ public class ArticulosServiceImpl implements ArticulosService {
 
     @Override
     public String registrar(Articulos articulos) throws Exception {
-        validaciones(articulos);
+        validacionesCrear(articulos);
         articulosDAO.save(articulos);
-        return "Se creo correctamente el articulo";
+        return "Se creo correctamente el artículo.";
 
     }
 
@@ -50,29 +50,29 @@ public class ArticulosServiceImpl implements ArticulosService {
         //idCategoria = categoriaService.
 
         articulosDAO.save(articulo);
-        return "Se actualizo correctamente el articulo";
+        return "Se actualizo correctamente el artículo.";
     }
 
     @Override
     public String eliminar(Long idArticulo) throws Exception {
         if(idArticulo == null){
-            throw new Exception("Se debe ingresar el id del articulo");
+            throw new Exception("Se debe ingresar el id del artículo.");
         }
         if(!articulosDAO.existsById(idArticulo)){
-            throw new Exception("El articulo con id: " + idArticulo + " no existe");
+            throw new Exception("El artículo con id: " + idArticulo + " no existe.");
         }
         //TODO: Falta validacion de si existe en articulo_adquirido
         articulosDAO.deleteById(idArticulo);
-        return "El articulo se ha eliminado exitosamente";
+        return "El artículo se ha eliminado exitosamente.";
     }
 
     @Override
     public Articulos findById(Long idArticulo) throws Exception {
         if(idArticulo == null){
-            throw new Exception("Se debe ingresar el id del articulo");
+            throw new Exception("Se debe ingresar el id del artículo.");
         }
         if(!articulosDAO.existsById(idArticulo)){
-            throw new Exception("El articulo con id: " + idArticulo + " no existe");
+            throw new Exception("El articulo con id: " + idArticulo + " no existe.");
         }
         return articulosDAO.findById(idArticulo).get();
     }
@@ -81,26 +81,26 @@ public class ArticulosServiceImpl implements ArticulosService {
     public List<Articulos> findAll() throws Exception {
         List<Articulos> articulos = articulosDAO.findAll();
         if(articulos.isEmpty()){
-            throw new Exception("No hay articulos disponibles");
+            throw new Exception("No hay artículos disponibles.");
         }
         return articulos;
     }
 
-    private void validaciones (Articulos articulos) throws Exception{
+    private void validacionesCrear (Articulos articulos) throws Exception{
         if(articulos.getCategoria().equals(null)){
-            throw new Exception("Debe ingresar una categoria");
+            throw new Exception("Debe ingresar una categoría.");
         }
         if(articulos.getEstado().equals(null)){
-            throw new Exception("Debe ingresar un estado");
+            throw new Exception("Debe ingresar un estado.");
         }
         if(articulos.getNombre().equals(null)){
-            throw new Exception("Debe ingresar un nombre para el articulo");
+            throw new Exception("Debe ingresar un nombre para el artículo.");
         }
         if(articulos.getDescripcion().equals(null)){
-            throw new Exception("Debe ingresar una descripcion para el articulo");
+            throw new Exception("Debe ingresar una descripción para el artículo.");
         }
         if(articulos.getImagen().equals(null)){
-            throw new Exception("Debe ingresar una imagen para el articulo");
+            throw new Exception("Debe ingresar una imagen para el artículo.");
         }
     }
 }

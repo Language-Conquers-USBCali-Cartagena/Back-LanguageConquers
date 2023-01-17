@@ -47,8 +47,6 @@ public class Profesor {
     @JoinColumn(name = "id_genero", nullable = false)
     private Genero genero;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "profesor")
-    List<Comentario> comentarios = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "profesor")
     List<Curso> cursos = new ArrayList<>();

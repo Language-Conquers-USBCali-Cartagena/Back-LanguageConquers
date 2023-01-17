@@ -14,7 +14,6 @@ public class NivelMisionDTO implements Serializable {
 
     private Long idNivelMision;
     private String nombre;
-    private String imgNivelMision;
     private int puntajeMinimo;
     private String usuarioCreador;
     private String usuarioModificador;

@@ -40,13 +40,12 @@ public class EstudianteServiceImpl implements EstudianteService {
     private CursoEstudianteDAO cursoEstudianteDAO;
     @Autowired
     private MisionEstudianteDAO misionEstudianteDAO;
-    @Autowired
-    private ComentarioDAO comentarioDAO;
+
     @Override
     public String crearEstudiante(Estudiante estudiante) throws Exception {
         validacionesCrear(estudiante);
         estudianteDAO.save(estudiante);
-        return "Se creo exitosamente al estudiante";
+        return "Se creo exitosamente el estudiante.";
     }
 
     @Override
@@ -68,34 +67,32 @@ public class EstudianteServiceImpl implements EstudianteService {
         estudiante.setUsuarioModificador(estudianteDTO.getUsuarioModificador());
         estudiante.setFechaModificacion(estudianteDTO.getFechaModificacion());
         estudianteDAO.save(estudiante);
-        return "Se actualizo exitosamente al estudiante";
+        return "Se actualizo exitosamente el estudiante.";
     }
 
     @Override
     public String eliminar(Long idEstudiante) throws Exception {
         if(idEstudiante == null){
-            throw new Exception("El id del estudiante es obligatorio");
+            throw new Exception("El id del estudiante es obligatorio.");
         }
         if(!estudianteDAO.existsById(idEstudiante)){
-            throw new Exception("No se encontro un estudiante con ese Id");
+            throw new Exception("No se encontró un estudiante con ese id.");
         }
         if(!retoEstudianteDAO.findByIdEstudiante(idEstudiante).isEmpty()){
-            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un reto estudiante");
+            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un reto estudiante.");
         }
         if(!articulosAdquiridosDAO.findByIdEstudiante(idEstudiante).isEmpty()){
-            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un articulo adquirido");
+            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un artículo adquirido.");
         }
         if(!cursoEstudianteDAO.findByIdEstudiante(idEstudiante).isEmpty()){
-            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un curso estudiante");
+            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un curso estudiante.");
         }
         if(!misionEstudianteDAO.findByIdEstudiante(idEstudiante).isEmpty()){
-            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un mision estudiante");
+            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un misión estudiante.");
         }
-        if(!comentarioDAO.findByIdEstudiante(idEstudiante).isEmpty()){
-            throw new Exception("No se puede eliminar el estudiante porque se encuentra asociado a un comentario");
-        }
+
         estudianteDAO.deleteById(idEstudiante);
-        return "Se elimino exitosamente el estudiante";
+        return "Se elimino exitosamente el estudiante.";
     }
 
     @Override
@@ -115,7 +112,7 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Override
     public Estudiante findByCorreo(String correo) throws Exception {
         if(!Validaciones.formatoCorreoValido(correo)){
-            throw new Exception("El formato del correo no es valido");
+            throw new Exception("El formato del correo no es válido.");
         }
         return estudianteDAO.findByCorreo(correo);
     }
@@ -123,10 +120,10 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Override
     public Estudiante findById(Long idEstudiante) throws Exception {
         if(idEstudiante ==null){
-            throw new Exception("Debe ingresar el id de un estudiante");
+            throw new Exception("Debe ingresar el id de un estudiante.");
         }
         if(!estudianteDAO.existsById(idEstudiante)){
-            throw new Exception("El estudiante con id: " + idEstudiante +" no existe");
+            throw new Exception("El estudiante con id: " + idEstudiante +" no existe.");
         }
         return estudianteDAO.findById(idEstudiante).get();
     }
@@ -135,220 +132,220 @@ public class EstudianteServiceImpl implements EstudianteService {
     public List<Estudiante> rankingEstudiante() throws Exception {
         List<Estudiante> estudiantes = estudianteDAO.rankingEstudiantes();
         if(estudiantes.isEmpty()){
-            throw new Exception("No hay estudiantes");
+            throw new Exception("No hay estudiantes.");
         }
         return estudiantes;
     }
 
     private void validacionesCrear(Estudiante estudiante) throws Exception {
         if(estudiante.getAvatar().getIdAvatar() == null){
-            throw new Exception("Debe ingresar un id avatar");
+            throw new Exception("Debe ingresar un id avatar.");
         }
         if(estudiante.getGenero().getIdGenero() == null){
-            throw new Exception("Debe ingresar un id genero");
+            throw new Exception("Debe ingresar un id genero.");
         }
         if(estudiante.getSemestre().getIdSemestre() == null){
-            throw new Exception("Debe ingresar un id semestre");
+            throw new Exception("Debe ingresar un id semestre.");
         }
         if(estudiante.getPrograma().getIdPrograma() == null){
-            throw new Exception("Debe ingresar un id programa");
+            throw new Exception("Debe ingresar un id programa.");
         }
         if(estudiante.getEstado().getIdEstado() == null){
-            throw new Exception("Debe ingresar un id estado");
+            throw new Exception("Debe ingresar un id estado.");
         }
         if(estudiante.getAvatar().getIdAvatar()<0){
-            throw new Exception("Debe ingresar un id avatar mayor a 0");
+            throw new Exception("Debe ingresar un id avatar válido.");
         }
         if(estudiante.getPrograma().getIdPrograma()<0){
-            throw new Exception("Debe ingresar un id programa mayor a 0");
+            throw new Exception("Debe ingresar un id programa válido.");
         }
         if(estudiante.getEstado().getIdEstado()<0){
-            throw new Exception("Debe ingresar un id estado mayor a 0");
+            throw new Exception("Debe ingresar un id estado válido.");
         }
         if(estudiante.getSemestre().getIdSemestre()<0){
-            throw new Exception("Debe ingresar un id semestre mayor a 0");
+            throw new Exception("Debe ingresar un id semestre válido.");
         }
         if(estudiante.getGenero().getIdGenero()<0){
-            throw new Exception("Debe ingresar un id genero mayor a 0");
+            throw new Exception("Debe ingresar un id genero válido.");
         }
         if(avatarDAO.findById(estudiante.getAvatar().getIdAvatar()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id avatar que exista");
+            throw new Exception("Debe ingresar un id avatar válido.");
         }
         if(generoDAO.findById(estudiante.getGenero().getIdGenero()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id genero que exista");
+            throw new Exception("Debe ingresar un id genero válido.");
         }
         if(semestreDAO.findById(estudiante.getSemestre().getIdSemestre()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id semestre que exista");
+            throw new Exception("Debe ingresar un id semestre válido.");
         }
         if(estadoDAO.findById(estudiante.getEstado().getIdEstado()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id estado que exista");
+            throw new Exception("Debe ingresar un id estado válido");
         }
         if(programaDAO.findById(estudiante.getPrograma().getIdPrograma()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id programa que exista");
+            throw new Exception("Debe ingresar un id programa válido.");
         }
         if(estudiante.getNombre() == null || estudiante.getNombre().equals("")){
-            throw new Exception("Debe ingresar el nombre del estudiante");
+            throw new Exception("Debe ingresar el nombre del estudiante.");
         }
         if(Validaciones.isStringLenght(estudiante.getNombre(),80)){
-            throw new Exception("El nombre del estudiante es muy largo");
+            throw new Exception("El nombre del estudiante es muy largo.");
         }
         if(estudiante.getApellido() == null || estudiante.getApellido().equals("")){
-            throw new Exception("Debe ingresar el apellido del estudiante");
+            throw new Exception("Debe ingresar el apellido del estudiante.");
         }
         if(Validaciones.isStringLenght(estudiante.getApellido(),80)){
-            throw new Exception("El apellido del estudiante es muy largo");
+            throw new Exception("El apellido del estudiante es muy largo.");
         }
         if(estudiante.getNickName() == null || estudiante.getNickName().equals("")){
-            throw new Exception("Debe ingresar un nick name para el estudiante");
+            throw new Exception("Debe ingresar un nickname para el estudiante.");
         }
         if(Validaciones.isStringLenght(estudiante.getNickName(),80)){
-            throw new Exception("Debe ingresar un nick name para el estudiante, no mayor a 80 caracteres");
+            throw new Exception("Debe ingresar un nickname para el estudiante, no mayor a 80 caracteres.");
         }
         if(estudiante.getPuntaje()<0){
-            throw new Exception("El puntaje no debe ser negativo");
+            throw new Exception("El puntaje no debe ser negativo.");
         }
         if(estudiante.getCorreo() == null || estudiante.getCorreo().equals("")){
-            throw new Exception("Debe ingresar un correo del estudiante");
+            throw new Exception("Debe ingresar un correo del estudiante.");
         }
         if(!Validaciones.formatoCorreoValido(estudiante.getCorreo())) {
-            throw new Exception("Debe ingresar un correo valido");
+            throw new Exception("Debe ingresar un correo válido.");
         }
         if(estudiante.getFechaNacimiento() == null){
-            throw new Exception("Debe ingresar una fecha de nacimiento");
+            throw new Exception("Debe ingresar una fecha de nacimiento.");
         }
         Date fechaActual = new Date();
         if(estudiante.getFechaNacimiento().compareTo(fechaActual)>0){
-            throw new Exception("Digite una fecha de nacimiento valida");
+            throw new Exception("Digite una fecha de nacimiento válida.");
         }
         if(estudiante.getUsuarioCreador()==null || estudiante.getUsuarioCreador().equals("")){
-            throw new Exception("Debe ingresar el usuario creador");
+            throw new Exception("Debe ingresar el usuario creador.");
         }
         if(Validaciones.isStringLenght(estudiante.getUsuarioCreador(),50)){
-            throw new Exception("El nombre del usuario creador es muy largo, solo puede contener 50 caracteres");
+            throw new Exception("El nombre del usuario creador es muy largo, solo puede contener 50 caracteres.");
         }
         if(estudiante.getFechaCreacion()==null || estudiante.getFechaCreacion().toString().equals("")){
-            throw new Exception("Debe ingresar una fecha de creación");
+            throw new Exception("Debe ingresar una fecha de creación.");
         }
 //        if(estudiante.getFechaCreacion().compareTo(fechaActual)>=0){
 //            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
 //        }
         if(profesorDAO.existsByCorreo(estudiante.getCorreo()) || estudianteDAO.existsByCorreo(estudiante.getCorreo())){
-            throw new Exception("El correo ya existe en la base de datos");
+            throw new Exception("El correo ya existe.");
         }
 
     }
     private void validacionesActualizar(EstudianteDTO estudianteDTO) throws Exception {
         if(estudianteDTO.getIdEstudiante() == null){
-            throw new Exception("Debe ingresar el id del estudiante que desea actualizar");
+            throw new Exception("Debe ingresar el id del estudiante que desea actualizar.");
         }
         if(!estudianteDAO.existsById(estudianteDTO.getIdEstudiante())){
-            throw new Exception("No se encontro el estudiante con ese Id");
+            throw new Exception("No se encontró el estudiante con ese id.");
         }
         if(!avatarDAO.existsById(estudianteDTO.getIdAvatar())){
-            throw new Exception("No existe un avatar con ese id");
+            throw new Exception("No existe un avatar con ese id.");
         }
         if(!generoDAO.existsById(estudianteDTO.getIdGenero())){
-            throw new Exception("No existe un genero con ese id");
+            throw new Exception("No existe un genero con ese id.");
         }
         if(!estadoDAO.existsById(estudianteDTO.getIdEstado())){
-            throw new Exception("No existe un estado con ese id");
+            throw new Exception("No existe un estado con ese id.");
         }
         if(!programaDAO.existsById(estudianteDTO.getIdPrograma())){
-            throw new Exception("No existe un programa con ese id");
+            throw new Exception("No existe un programa con ese id.");
         }
         if(!semestreDAO.existsById(estudianteDTO.getIdSemestre())){
-            throw new Exception("No existe un semestre con ese id");
+            throw new Exception("No existe un semestre con ese id.");
         }
         if(estudianteDTO.getIdAvatar().toString().equals("")){
-            throw new Exception("Debe ingresar un id avatar");
+            throw new Exception("Debe ingresar un id avatar.");
         }
         if(estudianteDTO.getIdGenero().toString().equals("")){
-            throw new Exception("Debe ingresar un id genero");
+            throw new Exception("Debe ingresar un id genero.");
         }
         if(estudianteDTO.getIdSemestre().toString().equals("")){
-            throw new Exception("Debe ingresar un id semestre");
+            throw new Exception("Debe ingresar un id semestre.");
         }
         if(estudianteDTO.getIdPrograma().toString().equals("")){
-            throw new Exception("Debe ingresar un id programa");
+            throw new Exception("Debe ingresar un id programa.");
         }
         if(estudianteDTO.getIdEstado().toString().equals("")){
-            throw new Exception("Debe ingresar un id estado");
+            throw new Exception("Debe ingresar un id estado.");
         }
         if(estudianteDTO.getIdAvatar()<0){
-            throw new Exception("Debe ingresar un id avatar mayor a 0");
+            throw new Exception("Debe ingresar un id avatar válido.");
         }
         if(estudianteDTO.getIdPrograma()<0){
-            throw new Exception("Debe ingresar un id programa mayor a 0");
+            throw new Exception("Debe ingresar un id programa válido.");
         }
         if(estudianteDTO.getIdEstado()<0){
-            throw new Exception("Debe ingresar un id estado mayor a 0");
+            throw new Exception("Debe ingresar un id estado válido.");
         }
         if(estudianteDTO.getIdSemestre()<0){
-            throw new Exception("Debe ingresar un id semestre mayor a 0");
+            throw new Exception("Debe ingresar un id semestre válido.");
         }
         if(estudianteDTO.getIdGenero()<0){
-            throw new Exception("Debe ingresar un id genero mayor a 0");
+            throw new Exception("Debe ingresar un id genero válido.");
         }
         if(avatarDAO.findById(estudianteDTO.getIdAvatar()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id avatar que exista");
+            throw new Exception("Debe ingresar un id avatar que exista.");
         }
         if(generoDAO.findById(estudianteDTO.getIdGenero()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id genero que exista");
+            throw new Exception("Debe ingresar un id genero que exista.");
         }
         if(semestreDAO.findById(estudianteDTO.getIdSemestre()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id semestre que exista");
+            throw new Exception("Debe ingresar un id semestre que exista.");
         }
         if(estadoDAO.findById(estudianteDTO.getIdEstado()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id estado que exista");
+            throw new Exception("Debe ingresar un id estado que exista.");
         }
         if(programaDAO.findById(estudianteDTO.getIdPrograma()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id programa que exista");
+            throw new Exception("Debe ingresar un id programa que exista.");
         }
         if(estudianteDTO.getNombre() == null || estudianteDTO.getNombre().trim().equals("")){
-            throw new Exception("Debe ingresar el nombre del estudiante");
+            throw new Exception("Debe ingresar el nombre del estudiante.");
         }
         if(estudianteDTO.getNombre().length()>80){
-            throw new Exception("El nombre del estudiante es muy largo");
+            throw new Exception("El nombre del estudiante es muy largo.");
         }
         if(estudianteDTO.getApellido() == null || estudianteDTO.getApellido().trim().equals("")){
-            throw new Exception("Debe ingresar el apellido del estudiante");
+            throw new Exception("Debe ingresar el apellido del estudiante.");
         }
         if(estudianteDTO.getApellido().length()>80){
-            throw new Exception("El apellido del estudiante es muy largo");
+            throw new Exception("El apellido del estudiante es muy largo.");
         }
         if(estudianteDTO.getNickName() == null || estudianteDTO.getNickName().trim().equals("")){
-            throw new Exception("Debe ingresar un nick name para el estudiante");
+            throw new Exception("Debe ingresar un nickname para el estudiante.");
         }
         if(estudianteDTO.getNickName().length()>80){
-            throw new Exception("Debe ingresar un nick name para el estudiante");
+            throw new Exception("Debe ingresar un nickname para el estudiante, no debe contener más de 80 caracteres.");
         }
         if(estudianteDTO.getPuntaje()<0){
-            throw new Exception("El puntaje no debe ser negativo");
+            throw new Exception("El puntaje no debe ser negativo.");
         }
         if(estudianteDTO.getCorreo() == null || estudianteDTO.getCorreo().trim().equals("")){
-            throw new Exception("Debe ingresar un correo del estudiante");
+            throw new Exception("Debe ingresar un correo del estudiante.");
         }
         if(!Validaciones.formatoCorreoValido(estudianteDTO.getCorreo())) {
-            throw new Exception("Debe ingresar un correo valido");
+            throw new Exception("Debe ingresar un correo válido.");
         }
         if(estudianteDTO.getFechaNacimiento() == null){
-            throw new Exception("Debe ingresar una fecha de nacimiento");
+            throw new Exception("Debe ingresar una fecha de nacimiento.");
         }
         Date fechaActual = new Date();
         if(estudianteDTO.getFechaNacimiento().compareTo(fechaActual)>0){
-            throw new Exception("Digite una fecha de nacimiento valida");
+            throw new Exception("Digite una fecha de nacimiento válida.");
         }
         if(estudianteDTO.getUsuarioModificador()==null || estudianteDTO.getUsuarioModificador().equals("")){
-            throw new Exception("Debe ingresar el usuario modificador");
+            throw new Exception("Debe ingresar el usuario modificador.");
         }
         if(Validaciones.isStringLenght(estudianteDTO.getUsuarioModificador(),50)){
-            throw new Exception("El nombre del usuario modificador es muy largo, solo puede contener 50 caracteres");
+            throw new Exception("El nombre del usuario modificador es muy largo, solo puede contener 50 caracteres.");
         }
         if(estudianteDTO.getFechaModificacion()==null || estudianteDTO.getFechaModificacion().toString().equals("")){
-            throw new Exception("Debe ingresar una fecha de modificación");
+            throw new Exception("Debe ingresar una fecha de modificación.");
         }
         if(estudianteDTO.getFechaModificacion().compareTo(fechaActual)>0){
-            throw new Exception("No puede ingresar una fecha que aun no ha sucedido");
+            throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
 
     }

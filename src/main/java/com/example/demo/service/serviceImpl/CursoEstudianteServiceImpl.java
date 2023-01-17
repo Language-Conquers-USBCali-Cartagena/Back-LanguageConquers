@@ -28,7 +28,7 @@ public class CursoEstudianteServiceImpl implements CursoEstudianteService {
     public String crearCursoEstudiante(CursoEstudiante cursoEstudiante) throws Exception {
         validacionesCursoEstudiante(cursoEstudiante);
         cursoEstudianteDAO.save(cursoEstudiante);
-        return "Se creo exitosamente el curso estudiante";
+        return "Se creo exitosamente el curso estudiante.";
     }
 
     @Override
@@ -40,10 +40,10 @@ public class CursoEstudianteServiceImpl implements CursoEstudianteService {
     private void validacionesCursoEstudiante(CursoEstudiante cursoEstudiante) throws Exception{
 
         if(!estudianteDAO.existsById(cursoEstudiante.getEstudiante().getIdEstudiante())){
-            throw new Exception("El estudiante asignado no se encuentra en la base de datos");
+            throw new Exception("El estudiante asignado no se encuentra registrado.");
         }
         if(!cursoDAO.existsById(cursoEstudiante.getCurso().getIdCurso())){
-            throw new Exception("El curros asignado no existe en la base de datos");
+            throw new Exception("El curso asignado no existe.");
         }
     }
 }
