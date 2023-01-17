@@ -23,7 +23,7 @@ public class CredencialesController {
     private CredencialesMapper credencialesMapper;
 
 
-    @Operation(summary = "Este metodo permite listar las credenciales")
+    @Operation(summary = "Este método permite listar las credenciales.")
     @GetMapping
     public ResponseEntity<List<CredencialesDTO>> listar(){
         try{
@@ -36,8 +36,8 @@ public class CredencialesController {
         }
     }
 
-    @Operation(summary = "Este metodo permite crear una credencial" +
-            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @Operation(summary = "Este método permite crear una credencial" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación.")
     @PostMapping("/crearCredencial")
     public ResponseEntity<String> crear(@RequestBody CredencialesDTO credencialesDTO){
         try {
@@ -49,8 +49,8 @@ public class CredencialesController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar la credencial" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar la credencial" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarCredencial")
     public ResponseEntity<String> modificar(@RequestBody CredencialesDTO credencialesDTO){
         try{
@@ -62,12 +62,11 @@ public class CredencialesController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar una credencial")
+    @Operation(summary = "Este método permite eliminar una credencial.")
     @DeleteMapping("/eliminarCredencial")
     public ResponseEntity<String> eliminarCredencial(@RequestParam Long idCredencial){
         try {
-            credencialesService.eliminar(idCredencial);
-            return ResponseEntity.ok("Se eliminó satisfactoriamente");
+            return new ResponseEntity<>(credencialesService.eliminar(idCredencial), HttpStatus.OK);
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);

@@ -22,7 +22,7 @@ public class RolController {
     @Autowired
     private RolMapper rolMapper;
 
-    @Operation(summary = "Este metodo permite listar los roles")
+    @Operation(summary = "Este método permite listar los roles.")
     @GetMapping
     public ResponseEntity<List<RolDTO>> listar(){
         try{
@@ -35,8 +35,8 @@ public class RolController {
 
     }
 
-    @Operation(summary = "Este metodo permite crear un rol" +
-            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @Operation(summary = "Este método permite crear un rol" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación.")
     @PostMapping("/guardarRol")
     public ResponseEntity<String> save(@RequestBody RolDTO rolDTO){
         try {
@@ -48,8 +48,8 @@ public class RolController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar un rol" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar un rol" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarRol")
     public ResponseEntity<String> modificar(@RequestBody RolDTO rolDTO){
         try{
@@ -60,12 +60,11 @@ public class RolController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar un rol")
+    @Operation(summary = "Este método permite eliminar un rol.")
     @DeleteMapping("/eliminarRol")
     public ResponseEntity<String> eliminarRol(@RequestParam Long idRol){
         try {
-            rolService.eliminar(idRol);
-            return ResponseEntity.ok("Se eliminó satisfactoriamente");
+            return new ResponseEntity<>(rolService.eliminar(idRol), HttpStatus.OK);
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);

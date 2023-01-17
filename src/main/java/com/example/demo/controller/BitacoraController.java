@@ -23,7 +23,7 @@ public class BitacoraController {
     @Autowired
     private BitacoraMapper bitacoraMapper;
 
-    @Operation(summary = "Este metodo permite listar el registro de acceso de los usuarios a la plataforma")
+    @Operation(summary = "Este método permite listar el registro de acceso de los usuarios a la plataforma.")
     @GetMapping
     public ResponseEntity<List<BitacoraDTO>> listar(){
         try{
@@ -36,8 +36,8 @@ public class BitacoraController {
         }
     }
 
-    @Operation(summary = "Este metodo permite guardar el registro de acceso del usuario a la plataforma" +
-            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @Operation(summary = "Este método permite guardar el registro de acceso del usuario a la plataforma" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación.")
     @PostMapping("/guardarBitacora")
     public ResponseEntity<String> save(@RequestBody BitacoraDTO bitacoraDTO){
         try {
@@ -49,8 +49,8 @@ public class BitacoraController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar el registro de acceso del usuario a la plataforma" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar el registro de acceso del usuario a la plataforma" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarBitacora")
     public ResponseEntity<String> modificar(@RequestBody BitacoraDTO bitacoraDTO){
         try{
@@ -61,12 +61,12 @@ public class BitacoraController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar el registro de acceso del usuario a la plataforma")
+    @Operation(summary = "Este método permite eliminar el registro de acceso del usuario a la plataforma.")
     @DeleteMapping("/eliminarBitacora")
     public ResponseEntity<String> eliminarBitacora(@RequestParam Long idBitacora){
         try {
             bitacoraService.eliminar(idBitacora);
-            return ResponseEntity.ok("Se eliminó satisfactoriamente");
+            return new  ResponseEntity<>(bitacoraService.eliminar(idBitacora),HttpStatus.OK);
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);

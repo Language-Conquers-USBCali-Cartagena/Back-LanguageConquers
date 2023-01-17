@@ -22,7 +22,7 @@ public class LogroEstudianteController {
     @Autowired
     LogroEstudianteMapper logroEstudianteMapper;
 
-    @Operation(summary = "Obtener logros por estudiante")
+    @Operation(summary = "Este método permite obtener logros por estudiante.")
     @GetMapping
     public ResponseEntity<List<LogroEstudianteDTO>> logrosEstudiantePorEstudiante(@RequestParam Long idestudiante){
         try{
@@ -34,7 +34,7 @@ public class LogroEstudianteController {
         }
     }
 
-    @Operation(summary = "Guardar logro estudiante")
+    @Operation(summary = "Este método permite guardar un logro estudiante.")
     @PostMapping
     public ResponseEntity<String> guardarLogroEstudiante(@RequestBody LogroEstudianteDTO logroEstudianteDTO){
         try{
@@ -45,7 +45,7 @@ public class LogroEstudianteController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
         }
     }
-    @Operation(summary = "Actualizar logro estudiante")
+    @Operation(summary = "Este método permite actualizar un logro estudiante.")
     @PutMapping
     public ResponseEntity<String> actualizarLogroEstudiante(@RequestBody LogroEstudianteDTO logroEstudianteDTO){
         try{
@@ -56,7 +56,7 @@ public class LogroEstudianteController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Eliminar logro estudiante")
+    @Operation(summary = "Este método permite eliminar un logro estudiante.")
     @DeleteMapping
     public ResponseEntity<String> eliminarLogroEstudiante(@RequestParam Long idLogroEstudiante){
         try{

@@ -22,7 +22,7 @@ public class GeneroController {
     @Autowired
     private GeneroMapper generoMapper;
 
-    @Operation(summary = "Este metodo permite listar los generos")
+    @Operation(summary = "Este método permite listar los géneros.")
     @GetMapping
     public ResponseEntity<List<GeneroDTO>> listar(){
         try{
@@ -35,8 +35,8 @@ public class GeneroController {
         }
     }
 
-    @Operation(summary = "Este metodo permite crear un genero" +
-            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @Operation(summary = "Este método permite crear un genero" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación.")
     @PostMapping("/guardarGenero")
     public ResponseEntity<String> save(@RequestBody GeneroDTO generoDTO){
         try {
@@ -48,8 +48,8 @@ public class GeneroController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar un genero" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar un genero" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarGenero")
     public ResponseEntity<String> modificar(@RequestBody GeneroDTO generoDTO){
         try{
@@ -60,12 +60,11 @@ public class GeneroController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar un genero")
+    @Operation(summary = "Este método permite eliminar un genero.")
     @DeleteMapping("/eliminarGenero")
     public ResponseEntity<String> eliminarGenero(@RequestParam Long idGenero){
         try {
-            generoService.eliminar(idGenero);
-            return ResponseEntity.ok("Se eliminó satisfactoriamente");
+            return new ResponseEntity<>(generoService.eliminar(idGenero), HttpStatus.OK);
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);

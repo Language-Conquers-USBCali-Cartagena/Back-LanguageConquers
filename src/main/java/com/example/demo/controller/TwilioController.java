@@ -25,12 +25,12 @@ public class TwilioController {
     @Autowired
     private MailSenderService mailSenderService;
 
-    @Operation(summary = "Este metodo permite enviar mensajes SMS utilizando Twilio")
+    @Operation(summary = "Este método permite enviar mensajes SMS utilizando Twilio.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Envio Exitoso",
+            @ApiResponse(responseCode = "200", description = "Envío Exitoso",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Sms.class)) }),
-            @ApiResponse(responseCode = "400", description = "Envio Invalido",
+            @ApiResponse(responseCode = "400", description = "Envío Inválido",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Sms no encontrado",
                     content = @Content) })
@@ -45,12 +45,12 @@ public class TwilioController {
             return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite enviar correos electronicos utilizando Twilio SendGrid")
+    @Operation(summary = "Este método permite enviar correos electrónicos utilizando Twilio SendGrid.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Envio Exitoso",
+            @ApiResponse(responseCode = "200", description = "Envío Exitoso",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Correo.class)) }),
-            @ApiResponse(responseCode = "400", description = "Envio Invalido",
+            @ApiResponse(responseCode = "400", description = "Envío Inválido",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Correo no encontrado",
                     content = @Content) })
@@ -58,9 +58,9 @@ public class TwilioController {
     public ResponseEntity<String> sendEmail(@RequestBody Correo correoRequest){
        Response response = mailSenderService.envioCorreo(correoRequest);
         if(response.getStatusCode()==200 || response.getStatusCode() == 202){
-           return new ResponseEntity<>("Envio exitoso", HttpStatus.OK);
+           return new ResponseEntity<>("Envío exitoso", HttpStatus.OK);
        }else{
-            return new ResponseEntity<>("Fallo el envio", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Fallo el envío", HttpStatus.NOT_FOUND);
        }
     }
 

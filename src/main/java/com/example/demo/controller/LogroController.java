@@ -24,7 +24,7 @@ public class LogroController {
     @Autowired
     private LogroMapper logroMapper;
 
-    @Operation(summary = "Este metodo permite listar los logros")
+    @Operation(summary = "Este método permite listar los logros.")
     @GetMapping
     public ResponseEntity<List<LogroDTO>> listarLogros() throws Exception{
         try{
@@ -36,7 +36,7 @@ public class LogroController {
         }
     }
 
-    @Operation(summary = "Este metodo permite listar los logros de manera paginada")
+    @Operation(summary = "Este método permite listar los logros de manera paginada.")
     @GetMapping("/logrosPaginado")
     public ResponseEntity<List<LogroDTO>> listarLogrosPaginado(@RequestParam Integer page, @RequestParam Integer size) throws Exception{
         try{
@@ -48,7 +48,7 @@ public class LogroController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite crear un logro")
+    @Operation(summary = "Este método permite crear un logro.")
     @PostMapping
     public ResponseEntity<String> crearLogro(@RequestBody LogroDTO logroDTO){
         try{
@@ -59,7 +59,7 @@ public class LogroController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite actualizar un logro")
+    @Operation(summary = "Este método permite actualizar un logro")
     @PutMapping
     public ResponseEntity<String> actualizarLogro(@RequestBody LogroDTO logroDTO){
         try{
@@ -69,7 +69,7 @@ public class LogroController {
             return  new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite eliminar un logro")
+    @Operation(summary = "Este método permite eliminar un logro.")
     public ResponseEntity<String> eliminarLogro(@RequestParam Long idLogro){
         try{
             String mensaje = logroService.eliminar(idLogro);
@@ -79,7 +79,7 @@ public class LogroController {
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id un logro")
+    @Operation(summary = "Este método permite buscar por id un logro.")
     @GetMapping("/porId/{id}")
     public ResponseEntity<LogroDTO> logroPorId (@PathVariable("id") Long idLogro){
         try{

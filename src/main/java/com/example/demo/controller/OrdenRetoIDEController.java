@@ -21,7 +21,7 @@ public class OrdenRetoIDEController {
     @Autowired
     OrdenRetoIDEMapper ordenRetoIDEMapper;
 
-    @Operation(summary = "Este metodo permite verificar el intento")
+    @Operation(summary = "Este método permite verificar el intento.")
     @PostMapping("/verificar")
     public ResponseEntity<List<OrdenRetoIDEDTO>> verificarIntento(@RequestBody List<OrdenRetoIDEDTO> ordenRetoIDEDTOS, @RequestParam Long idReto){
         try{
@@ -32,7 +32,7 @@ public class OrdenRetoIDEController {
         }
     }
 
-    @Operation(summary = "Este metodo permite listar todos los orden reto")
+    @Operation(summary = "Este método permite listar todos los orden reto.")
     @GetMapping
     public ResponseEntity<List<OrdenRetoIDEDTO>> listarOrdenRetoIDE(){
         try{
@@ -43,7 +43,7 @@ public class OrdenRetoIDEController {
         }
     }
 
-    @Operation(summary = "Este metodo permite crear un orden reto")
+    @Operation(summary = "Este método permite crear un orden reto.")
     @PostMapping
     public ResponseEntity<String> crearOrdenRetoIDE(@RequestBody OrdenRetoIDEDTO ordenRetoIDEDTO){
         try{
@@ -54,7 +54,7 @@ public class OrdenRetoIDEController {
         }
     }
 
-    @Operation(summary = "Este metodo permite lostar el ordenReto por idReto")
+    @Operation(summary = "Este método permite listar el ordenReto por idReto.")
     @GetMapping("/porIdReto")
     public ResponseEntity<List<OrdenRetoIDEDTO>> listarPorIdReto(@RequestParam Long idReto){
         try{

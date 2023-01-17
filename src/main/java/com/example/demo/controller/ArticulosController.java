@@ -21,7 +21,7 @@ public class ArticulosController {
     @Autowired
     ArticulosMapper articulosMapper;
 
-    @Operation(summary = "Este metodo permite crear un articulo")
+    @Operation(summary = "Este método permite crear un artículo.")
     @PostMapping
     public ResponseEntity<String> crearArticulo(@RequestBody ArticulosDTO articulosDTO){
         try{
@@ -32,7 +32,7 @@ public class ArticulosController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite actualizar el articulo")
+    @Operation(summary = "Este método permite actualizar el artículo.")
     @PutMapping
     public ResponseEntity<String> actualizarArticulo(@RequestBody ArticulosDTO articulosDTO){
         try{
@@ -42,7 +42,7 @@ public class ArticulosController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite eliminar un articuli")
+    @Operation(summary = "Este método permite eliminar un artículo.")
     @DeleteMapping
     public ResponseEntity<String> eliminarArticulo(@RequestParam Long idArticulio){
         try{
@@ -52,7 +52,7 @@ public class ArticulosController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite listar todos los articulos")
+    @Operation(summary = "Este método permite listar todos los artículos.")
     @GetMapping
     public ResponseEntity<List<ArticulosDTO>> listarArticulos(){
         try{
@@ -63,7 +63,7 @@ public class ArticulosController {
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id un articulo")
+    @Operation(summary = "Este método permite buscar por id un artículo.")
     @GetMapping("/porId/{id}")
     public ResponseEntity<ArticulosDTO> articuloPorId (@PathVariable("id") Long idArticulo){
         try{

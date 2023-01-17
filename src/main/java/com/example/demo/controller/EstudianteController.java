@@ -25,7 +25,7 @@ public class EstudianteController {
     @Autowired
     private EstudianteMapper estudianteMapper;
 
-    @Operation(summary = "Este metodo permite listar los estudiante")
+    @Operation(summary = "Este método permite listar los estudiante.")
     @GetMapping
     public ResponseEntity<List<EstudianteDTO>> listar(){
         try{
@@ -38,8 +38,8 @@ public class EstudianteController {
         }
     }
 
-    @Operation(summary = "Este metodo permite crear un estudiante" +
-            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @Operation(summary = "Este método permite crear un estudiante" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación.")
     @PostMapping("/crearEstudiante")
     public ResponseEntity<String> crear(@RequestBody EstudianteDTO estudianteDTO){
         try {
@@ -51,8 +51,8 @@ public class EstudianteController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar el estudiante" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar el estudiante" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarEstudiante")
     public ResponseEntity<String> modificar(@RequestBody EstudianteDTO estudianteDTO){
         try{
@@ -64,18 +64,17 @@ public class EstudianteController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar un estudiante")
+    @Operation(summary = "Este método permite eliminar un estudiante.")
     @DeleteMapping("/eliminarEstudiante/{id}")
     public ResponseEntity<String> eliminarEstudiante(@PathVariable("id") Long idEstudiante){
         try {
-            estudianteService.eliminar(idEstudiante);
-            return ResponseEntity.ok("Se eliminó satisfactoriamente");
+            return new ResponseEntity<>(estudianteService.eliminar(idEstudiante), HttpStatus.OK);
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite saber si el correo del estudiante existe en la bd")
+    @Operation(summary = "Este método permite saber si el correo del estudiante ya se encuentra registrado.")
     @GetMapping("/existePorCorreo")
     public ResponseEntity<Boolean> existePorCorreo(@RequestParam String correo){
         try {
@@ -85,7 +84,7 @@ public class EstudianteController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite traer un estudiante por correo")
+    @Operation(summary = "Este método permite traer un estudiante por correo.")
     @GetMapping("/porCorrero")
     public ResponseEntity<EstudianteDTO> encontrarPorCorreo(@RequestParam String correo){
         try {
@@ -96,7 +95,7 @@ public class EstudianteController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite listar el ranking de los estudiantes")
+    @Operation(summary = "Este método permite listar el ranking de los estudiantes.")
     @GetMapping("/rankingEstudiante")
     public ResponseEntity<List<EstudianteDTO>> rankingEstudiantes(){
         try{
@@ -108,7 +107,7 @@ public class EstudianteController {
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id un estudiante")
+    @Operation(summary = "Este método permite buscar por id un estudiante.")
     @GetMapping("/porId/{id}")
     public ResponseEntity<EstudianteDTO> estudiantePorId (@PathVariable("id") Long idEstudiante){
         try{

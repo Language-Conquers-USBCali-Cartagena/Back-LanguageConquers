@@ -22,7 +22,7 @@ public class TipoMisionController {
     @Autowired
     TipoMisionMapper tipoMisionMapper;
 
-    @Operation(summary = "Este metodo permite listar todos los tipoMision")
+    @Operation(summary = "Este método permite listar todos los tipo misión.")
     @GetMapping
     public ResponseEntity<List<TipoMisionDTO>> listarTipoMision(){
         try{
@@ -34,7 +34,7 @@ public class TipoMisionController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite crear ub TipoMision")
+    @Operation(summary = "Este método permite crear un tipo misión.")
     @PostMapping
     public ResponseEntity<String> crearTipoMision(@RequestBody TipoMisionDTO tipoMisionDTO){
         try{
@@ -46,8 +46,8 @@ public class TipoMisionController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar un tipoMision" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar un tipo misión" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarTipoMision")
     public ResponseEntity<String> modificar(@RequestBody TipoMisionDTO tipoMisionDTO){
         try{
@@ -58,7 +58,7 @@ public class TipoMisionController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar un tipoMision")
+    @Operation(summary = "Este método permite eliminar un tipo misión.")
     @DeleteMapping("/eliminarTipoMision/{id}")
     public ResponseEntity<String> eliminarTipoMision(@PathVariable("id") Long idTipoMision){
         try {
@@ -70,7 +70,7 @@ public class TipoMisionController {
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id un tipoMision")
+    @Operation(summary = "Este método permite buscar por id un tipo misión.")
     @GetMapping("/porId/{id}")
     public ResponseEntity<TipoMisionDTO> tipoMisionPorId (@PathVariable("id") Long idTipoMision){
         try{

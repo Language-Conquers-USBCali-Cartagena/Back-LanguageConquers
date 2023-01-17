@@ -22,7 +22,7 @@ public class NivelMisionController {
     @Autowired
     NivelMisionMapper nivelMisionMapper;
 
-    @Operation(summary = "Este metodo permite listar todos los NivelMision")
+    @Operation(summary = "Este método permite listar todos los nivel misión")
     @GetMapping
     public ResponseEntity<List<NivelMisionDTO>> listarNivelMision(){
         try{
@@ -33,7 +33,7 @@ public class NivelMisionController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite crear un NivelMision")
+    @Operation(summary = "Este método permite crear un nivel misión.")
     @PostMapping
     public ResponseEntity<String> crearNivelMision(@RequestBody NivelMisionDTO nivelMisionDTO){
         try{
@@ -46,8 +46,8 @@ public class NivelMisionController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar un nivelMision" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar un nivel misión" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarNivelMision")
     public ResponseEntity<String> modificar(@RequestBody NivelMisionDTO nivelMisionDTO){
         try{
@@ -59,7 +59,7 @@ public class NivelMisionController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar un nivelMision")
+    @Operation(summary = "Este método permite eliminar un nivel misión.")
     @DeleteMapping("/eliminarNivelMision/{id}")
     public ResponseEntity<String> eliminarNivelMision(@PathVariable("id") Long idNivelMision){
         try {
@@ -71,7 +71,7 @@ public class NivelMisionController {
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id un nivelMision")
+    @Operation(summary = "Este método permite buscar por id un nivel misión")
     @GetMapping("/porId/{id}")
     public ResponseEntity<NivelMisionDTO> nivelMisionPorId (@PathVariable("id") Long idNivelMision){
         try{

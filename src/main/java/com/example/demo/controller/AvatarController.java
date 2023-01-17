@@ -25,7 +25,7 @@ public class AvatarController {
     private AvatarMapper avatarMapper;
 
 
-    @Operation(summary = "Este metodo permite listar los avatares")
+    @Operation(summary = "Este método permite listar los avatares.")
     @GetMapping
     public ResponseEntity<List<AvatarDTO>> listar(){
         try{
@@ -37,7 +37,7 @@ public class AvatarController {
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id un avatar")
+    @Operation(summary = "Este método permite buscar por id un avatar.")
     @GetMapping("/porId/{id}")
     public ResponseEntity<AvatarDTO> avatarPorId (@PathVariable("id") Long idAvatar){
         try{
@@ -48,8 +48,8 @@ public class AvatarController {
         }
     }
 
-    @Operation(summary = "Este metodo permite guardar los avatares," +
-            "No se debe de ingresar el usuario modificador y la fecha modificación")
+    @Operation(summary = "Este método permite guardar los avatares," +
+            "No se debe de ingresar el usuario modificador y la fecha modificación.")
     @PostMapping("/guardarAvatar")
     public ResponseEntity<String> save(@RequestBody AvatarDTO avatarDTO){
         try {
@@ -61,8 +61,8 @@ public class AvatarController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar los avatares" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar los avatares" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarAvatar")
     public ResponseEntity<String> modificar(@RequestBody AvatarDTO avatarDTO){
         try{
@@ -74,7 +74,7 @@ public class AvatarController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar los avatares")
+    @Operation(summary = "Este método permite eliminar los avatares.")
     @DeleteMapping("/eliminarAvatar/{id}")
     public ResponseEntity<String> eliminarAvatar(@PathVariable("id") Long idAvatar){
         try {
@@ -86,7 +86,7 @@ public class AvatarController {
         }
     }
 
-    @Operation(summary = "Este metodo permite listar los avatares de manera paginada")
+    @Operation(summary = "Este método permite listar los avatares de manera paginada.")
     @GetMapping("/paginado")
     public ResponseEntity<List<AvatarDTO>> avataresPaginado(@RequestParam Integer page){
         try {

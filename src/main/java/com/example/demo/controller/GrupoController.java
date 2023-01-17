@@ -22,7 +22,7 @@ public class GrupoController {
     @Autowired
     private GrupoMapper grupoMapper;
 
-    @Operation(summary = "Este metodo permite listar los grupos")
+    @Operation(summary = "Este método permite listar los grupos.")
     @GetMapping
     public ResponseEntity<List<GrupoDTO>> listar(){
         try{
@@ -34,8 +34,8 @@ public class GrupoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite crear un grupo" +
-            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @Operation(summary = "Este método permite crear un grupo" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación.")
     @PostMapping("/guardarGrupo")
     public ResponseEntity<String> save(@RequestBody GrupoDTO grupoDTO){
         try {
@@ -47,8 +47,8 @@ public class GrupoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar un grupo" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar un grupo" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarGrupo")
     public ResponseEntity<String> modificar(@RequestBody GrupoDTO grupoDTO){
         try{
@@ -59,12 +59,11 @@ public class GrupoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar un grupo")
+    @Operation(summary = "Este método permite eliminar un grupo.")
     @DeleteMapping("/eliminarGrupo")
     public ResponseEntity<String> eliminarGrupo(@RequestParam Long idGrupo){
         try {
-            grupoService.eliminar(idGrupo);
-            return ResponseEntity.ok("Se eliminó satisfactoriamente");
+            return new ResponseEntity<>( grupoService.eliminar(idGrupo), HttpStatus.OK);
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);

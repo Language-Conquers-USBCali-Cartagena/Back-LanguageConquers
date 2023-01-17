@@ -21,7 +21,7 @@ public class EstadoController {
     @Autowired
     private EstadoService estadoService;
 
-    @Operation(summary = "Este metodo permite listar los estados registrados")
+    @Operation(summary = "Este método permite listar los estados registrados.")
     @GetMapping
     public ResponseEntity<List<EstadoDTO>> listar(){
         try{
@@ -34,8 +34,8 @@ public class EstadoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite guardar los estados" +
-            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @Operation(summary = "Este método permite guardar los estados" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación.")
     @PostMapping("/guardarEstado")
     public ResponseEntity<String> save(@RequestBody EstadoDTO estadoDTO){
         try {
@@ -47,8 +47,8 @@ public class EstadoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar los estados" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar los estados" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarEstado")
     public ResponseEntity<String> modificar(@RequestBody EstadoDTO estadoDTO){
         try{
@@ -59,19 +59,18 @@ public class EstadoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar los estados")
+    @Operation(summary = "Este método permite eliminar los estados.")
     @DeleteMapping("/eliminarEstado")
     public ResponseEntity<String> eliminarEstado(@RequestParam Long idEstado){
         try {
-            estadoService.eliminar(idEstado);
-            return ResponseEntity.ok("Se eliminó satisfactoriamente");
+            return new ResponseEntity<>(estadoService.eliminar(idEstado), HttpStatus.OK);
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id un estado")
+    @Operation(summary = "Este método permite buscar por id un estado.")
     @GetMapping("/porId/{id}")
     public ResponseEntity<EstadoDTO> estadoPorId (@PathVariable("id") Long idEstado){
         try{

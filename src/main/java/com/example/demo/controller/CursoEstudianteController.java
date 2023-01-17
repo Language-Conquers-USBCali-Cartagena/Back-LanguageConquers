@@ -19,7 +19,7 @@ public class CursoEstudianteController {
     CursoEstudianteService cursoEstudianteService;
     @Autowired
     CursoEstudianteMapper cursoEstudianteMapper;
-    @Operation(summary = "Este metodo perimite crear un curosEstudiante")
+    @Operation(summary = "Este método permite crear un curso estudiante.")
     @PostMapping("/crearCursoEstudiante")
     public ResponseEntity<String> crearCursoEstudiane(@RequestBody CursoEstudianteDTO cursoEstudianteDTO){
         try{

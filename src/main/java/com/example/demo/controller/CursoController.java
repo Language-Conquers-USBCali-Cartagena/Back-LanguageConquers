@@ -20,7 +20,7 @@ public class CursoController {
 
     @Autowired
     CursoMapper cursoMapper;
-    @Operation(summary = "Este metodo permite crear un curso")
+    @Operation(summary = "Este método permite crear un curso.")
     @PostMapping("/registrarCurso")
     public ResponseEntity<String> crearCurso(@RequestBody CursoDTO cursoDTO){
         try {
@@ -30,8 +30,8 @@ public class CursoController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite actualizar un curso" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar un curso" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarCurso")
     public ResponseEntity<String> modificar(@RequestBody CursoDTO cursoDTO){
         try{
@@ -42,7 +42,7 @@ public class CursoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar un curso")
+    @Operation(summary = "Este método permite eliminar un curso.")
     @DeleteMapping("/eliminarCurso/{id}")
     public ResponseEntity<String> eliminarCurso(@PathVariable("id") Long idCurso){
         try {
@@ -54,7 +54,7 @@ public class CursoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id un curso")
+    @Operation(summary = "Este método permite buscar por id un curso.")
     @GetMapping("/porId/{id}")
         public ResponseEntity<CursoDTO> cursoPorId (@PathVariable("id") Long idCurso){
         try{
@@ -64,7 +64,7 @@ public class CursoController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite listar todos los cursos")
+    @Operation(summary = "Este método permite listar todos los cursos.")
     @GetMapping
     public ResponseEntity<List<CursoDTO>> listaCursos(){
         try{
@@ -75,7 +75,7 @@ public class CursoController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo perimite listar los cursos por correo estudiante")
+    @Operation(summary = "Este método permite listar los cursos por correo estudiante.")
     @GetMapping("/porCorreoEstudiante")
     public ResponseEntity<List<CursoDTO>> listarCursosPorCorreoEstudiante(@RequestParam String correoEstudiante){
         try{

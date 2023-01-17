@@ -22,7 +22,7 @@ public class ProgramaController {
     @Autowired
     private ProgramaMapper programaMapper;
 
-    @Operation(summary = "Este metodo permite listar los programas registrados")
+    @Operation(summary = "Este método permite listar los programas registrados.")
     @GetMapping
     public ResponseEntity<List<ProgramaDTO>> listar(){
         try{
@@ -34,8 +34,8 @@ public class ProgramaController {
         }
     }
 
-    @Operation(summary = "Este metodo permite crear un programa" +
-            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @Operation(summary = "Este método permite crear un programa" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación.")
     @PostMapping("/guardarPrograma")
     public ResponseEntity<String> save(@RequestBody ProgramaDTO programaDTO){
         try {
@@ -47,8 +47,8 @@ public class ProgramaController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar un programa" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar un programa" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarPrograma")
     public ResponseEntity<String> modificar(@RequestBody ProgramaDTO programaDTO){
         try{
@@ -59,19 +59,18 @@ public class ProgramaController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar un programa")
+    @Operation(summary = "Este método permite eliminar un programa.")
     @DeleteMapping("/eliminarPrograma")
     public ResponseEntity<String> eliminarPrograma(@RequestParam Long idPrograma){
         try {
-            programaService.eliminar(idPrograma);
-            return ResponseEntity.ok("Se eliminó satisfactoriamente");
+            return new ResponseEntity<>(programaService.eliminar(idPrograma), HttpStatus.OK);
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id un programa")
+    @Operation(summary = "Este método permite buscar por id un programa.")
     @GetMapping("/porId/{id}")
     public ResponseEntity<ProgramaDTO> programaPorId (@PathVariable("id") Long idPrograma){
         try{

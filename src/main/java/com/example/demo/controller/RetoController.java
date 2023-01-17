@@ -22,7 +22,7 @@ public class RetoController {
     @Autowired
     RetoMapper retoMapper;
 
-    @Operation(summary = "Lista todos los retos")
+    @Operation(summary = "Este método permite listar todos los retos.")
     @GetMapping
     public ResponseEntity<List<RetoDTO>> listarRetos(){
         try {
@@ -33,7 +33,7 @@ public class RetoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite crear un reto")
+    @Operation(summary = "Este método permite crear un reto.")
     @PostMapping
     public ResponseEntity<String> crearReto(@RequestBody  RetoDTO retoDTO){
         try {
@@ -44,7 +44,7 @@ public class RetoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id un reto")
+    @Operation(summary = "Este método permite buscar por id un reto.")
     @GetMapping("/porId/{id}")
     public ResponseEntity<RetoDTO> retoPorId (@PathVariable("id") Long idReto){
         try{
@@ -55,8 +55,8 @@ public class RetoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar los retos" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar los retos" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarReto")
     public ResponseEntity<String> modificar(@RequestBody RetoDTO retoDTO){
         try{
@@ -68,7 +68,7 @@ public class RetoController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar un reto")
+    @Operation(summary = "Este método permite eliminar un reto.")
     @DeleteMapping("/eliminarReto/{id}")
     public ResponseEntity<String> eliminarReto(@PathVariable("id") Long idReto){
         try {

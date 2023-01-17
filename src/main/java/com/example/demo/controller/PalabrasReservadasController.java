@@ -23,7 +23,7 @@ public class PalabrasReservadasController {
     PalabrasReservadasMapper palabrasReservadasMapper;
 
 
-    @Operation(summary = "Este metodo permite listar todas las palabras reservadas")
+    @Operation(summary = "Este método permite listar todas las palabras reservadas.")
     @GetMapping
     public ResponseEntity<List<PalabrasReservadasDTO>> listarPalabrasReservadas(){
         try{
@@ -34,7 +34,7 @@ public class PalabrasReservadasController {
         }
     }
 
-    @Operation(summary = "Este metodo permite crear una palabra reservada")
+    @Operation(summary = "Este método permite crear una palabra reservada.")
     @PostMapping
     public ResponseEntity<String> crearPalabraReservada(@RequestBody PalabrasReservadasDTO palabrasReservadasDTO){
         try{

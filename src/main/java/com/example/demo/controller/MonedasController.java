@@ -22,7 +22,7 @@ public class MonedasController {
     MonedasMapper monedasMapper;
 
 
-    @Operation(summary = "Este metodo permite listar todoas las monedas")
+    @Operation(summary = "Este método permite listar todas las monedas.")
     @GetMapping
     public ResponseEntity<List<MonedasDTO>> listarMonedas(){
         try{
@@ -32,7 +32,7 @@ public class MonedasController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite crear una moneda")
+    @Operation(summary = "Este método permite crear una moneda.")
     @PostMapping
     public ResponseEntity<String> crearMoneda(@RequestBody MonedasDTO monedasDTO){
         try{
@@ -43,8 +43,8 @@ public class MonedasController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar una moneda" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar una moneda" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarMoneda")
     public ResponseEntity<String> modificar(@RequestBody MonedasDTO monedasDTO){
         try{
@@ -55,7 +55,7 @@ public class MonedasController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar una moneda")
+    @Operation(summary = "Este método permite eliminar una moneda.")
     @DeleteMapping("/eliminarMoneda/{id}")
     public ResponseEntity<String> eliminarMoneda(@PathVariable("id") Long idMoneda){
         try {
@@ -67,7 +67,7 @@ public class MonedasController {
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id una moneda")
+    @Operation(summary = "Este método permite buscar por id una moneda.")
     @GetMapping("/porId/{id}")
     public ResponseEntity<MonedasDTO> monedaPorId (@PathVariable("id") Long idMoneda){
         try{

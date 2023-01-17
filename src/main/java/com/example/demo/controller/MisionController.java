@@ -24,7 +24,7 @@ public class MisionController {
     MisionMapper misionMapper;
 
 
-    @Operation(summary = "Este metodo sirve para listar las misiones")
+    @Operation(summary = "Este método sirve para listar las misiones.")
     @GetMapping
     public ResponseEntity<List<MisionDTO>> listarMisiones(){
         try{
@@ -34,7 +34,7 @@ public class MisionController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite crear una mision")
+    @Operation(summary = "Este método permite crear una misión.")
     @PostMapping
     public ResponseEntity<String> crearMision(@RequestBody MisionDTO misionDTO){
         try{
@@ -46,8 +46,8 @@ public class MisionController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar una mision" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar una misión" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarMision")
     public ResponseEntity<String> modificar(@RequestBody MisionDTO misionDTO){
         try{
@@ -59,7 +59,7 @@ public class MisionController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar una mision")
+    @Operation(summary = "Este método permite eliminar una misión.")
     @DeleteMapping("/eliminarMision/{id}")
     public ResponseEntity<String> eliminarMision(@PathVariable("id") Long idMision){
         try {
@@ -71,7 +71,7 @@ public class MisionController {
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id una mision")
+    @Operation(summary = "Este método permite buscar por id una misión.")
     @GetMapping("/porId/{id}")
     public ResponseEntity<MisionDTO> misionPorId (@PathVariable("id") Long idMision){
         try{

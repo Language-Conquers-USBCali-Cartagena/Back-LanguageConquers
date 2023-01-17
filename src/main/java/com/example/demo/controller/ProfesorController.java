@@ -23,7 +23,7 @@ public class ProfesorController {
     @Autowired
     private ProfesorMapper profesorMapper;
 
-    @Operation(summary = "Este metodo permite listar los profesores")
+    @Operation(summary = "Este método permite listar los profesores.")
     @GetMapping
     public ResponseEntity<List<ProfesorDTO>> listar(){
         try{
@@ -35,8 +35,8 @@ public class ProfesorController {
             return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
-    @Operation(summary = "Este metodo permite crear un profesor" +
-            ", No se debe de ingresar el usuario modificador y la fecha modificación")
+    @Operation(summary = "Este método permite crear un profesor" +
+            ", No se debe de ingresar el usuario modificador y la fecha modificación.")
     @PostMapping("/registrarProfesor")
     public ResponseEntity<String> registrar(@RequestBody ProfesorDTO profesorDTO){
         try {
@@ -48,8 +48,8 @@ public class ProfesorController {
         }
     }
 
-    @Operation(summary = "Este metodo permite actualizar el profesor" +
-            ", No se debe de ingresar el usuario creador y la fecha creación")
+    @Operation(summary = "Este método permite actualizar el profesor" +
+            ", No se debe de ingresar el usuario creador y la fecha creación.")
     @PutMapping("/actualizarProfesor")
     public ResponseEntity<String> modificar(@RequestBody ProfesorDTO profesorDTO){
         try{
@@ -61,19 +61,18 @@ public class ProfesorController {
         }
     }
 
-    @Operation(summary = "Este metodo permite eliminar un profesor")
+    @Operation(summary = "Este método permite eliminar un profesor.")
     @DeleteMapping("/eliminarProfesor/{id}")
     public ResponseEntity<String> eliminarProfesor(@PathVariable("id") Long idProfesor){
         try {
-            profesorService.eliminar(idProfesor);
-            return ResponseEntity.ok("Se eliminó satisfactoriamente");
+            return new ResponseEntity<>(profesorService.eliminar(idProfesor), HttpStatus.OK);
         } catch (Exception e) {
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Operation(summary = "Este metodo permite saber si el correo del profesor existe en la bd")
+    @Operation(summary = "Este método permite saber si el correo del profesor esta registrado.")
     @GetMapping("/existePorCorreo")
     public ResponseEntity<Boolean> existePorCorreo(@RequestParam String correo){
         try {
@@ -84,7 +83,7 @@ public class ProfesorController {
         }
     }
 
-    @Operation(summary = "Este metodo permite obtener un profesor por su correo")
+    @Operation(summary = "Este método permite buscar un profesor por su correo.")
     @GetMapping("/porCorreo")
     public ResponseEntity<ProfesorDTO> encontrarPorCorreo(@RequestParam String correo){
         try {
@@ -95,7 +94,7 @@ public class ProfesorController {
         }
     }
 
-    @Operation(summary = "Este metodo permite buscar por id un profesor")
+    @Operation(summary = "Este método permite buscar por id un profesor.")
     @GetMapping("/porId/{id}")
     public ResponseEntity<ProfesorDTO> profesorPorId (@PathVariable("id") Long idProfesor){
         try{
