@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/articulos")
+@RequestMapping("/articulo")
 public class ArticulosController {
     @Autowired
     ArticulosService articulosService;
@@ -22,7 +22,7 @@ public class ArticulosController {
     ArticulosMapper articulosMapper;
 
     @Operation(summary = "Este método permite crear un artículo.")
-    @PostMapping
+    @PostMapping("/guardarArticulo")
     public ResponseEntity<String> crearArticulo(@RequestBody ArticulosDTO articulosDTO){
         try{
             Articulos articulos = articulosMapper.toEntity(articulosDTO);
@@ -33,7 +33,7 @@ public class ArticulosController {
         }
     }
     @Operation(summary = "Este método permite actualizar el artículo.")
-    @PutMapping
+    @PutMapping("/actualizarArticulo")
     public ResponseEntity<String> actualizarArticulo(@RequestBody ArticulosDTO articulosDTO){
         try{
             String mensaje = articulosService.actualizar(articulosDTO);
@@ -43,8 +43,8 @@ public class ArticulosController {
         }
     }
     @Operation(summary = "Este método permite eliminar un artículo.")
-    @DeleteMapping
-    public ResponseEntity<String> eliminarArticulo(@RequestParam Long idArticulio){
+    @DeleteMapping("/eliminarArticulo/{id}")
+    public ResponseEntity<String> eliminarArticulo(@PathVariable("id") Long idArticulio){
         try{
             String mensaje = articulosService.eliminar(idArticulio);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
