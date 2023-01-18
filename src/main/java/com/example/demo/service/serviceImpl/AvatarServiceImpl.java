@@ -30,7 +30,7 @@ public class AvatarServiceImpl implements AvatarService {
     public String registrar(Avatar avatar) throws Exception {
         validacionesCrear(avatar);
         avatarDAO.save(avatar);
-        return "Se Registro el avatar.";
+        return "Se registro el avatar.";
     }
 
     @Override

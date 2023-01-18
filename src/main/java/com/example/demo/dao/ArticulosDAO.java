@@ -10,4 +10,7 @@ import java.util.List;
 public interface ArticulosDAO extends JpaRepository<Articulos, Long> {
     @Query(value = "select * from articulo where id_estado = ?1", nativeQuery = true)
     List<Articulos> findByIdEstado(Long idEstado) throws Exception;
+
+    @Query(value = "select * from articulo where id_categoria = ?1", nativeQuery = true)
+    List<Articulos> findByIdCategoria(Long idCategoria)throws Exception;
 }
