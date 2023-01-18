@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/retos")
+@RequestMapping("/reto")
 public class RetoController {
 
     @Autowired
@@ -34,7 +34,7 @@ public class RetoController {
     }
 
     @Operation(summary = "Este método permite crear un reto.")
-    @PostMapping
+    @PostMapping("/guardarReto")
     public ResponseEntity<String> crearReto(@RequestBody  RetoDTO retoDTO){
         try {
             Reto reto = retoMapper.toEntity(retoDTO);
