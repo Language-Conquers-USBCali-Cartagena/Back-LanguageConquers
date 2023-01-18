@@ -49,7 +49,7 @@ public class LogroController {
         }
     }
     @Operation(summary = "Este método permite crear un logro.")
-    @PostMapping
+    @PostMapping("/guardarLogro")
     public ResponseEntity<String> crearLogro(@RequestBody LogroDTO logroDTO){
         try{
             Logro logro = logroMapper.toEntity(logroDTO);
@@ -60,7 +60,7 @@ public class LogroController {
         }
     }
     @Operation(summary = "Este método permite actualizar un logro")
-    @PutMapping
+    @PutMapping("/actualizarLogro")
     public ResponseEntity<String> actualizarLogro(@RequestBody LogroDTO logroDTO){
         try{
             String mensaje = logroService.actualizar(logroDTO);
@@ -70,7 +70,8 @@ public class LogroController {
         }
     }
     @Operation(summary = "Este método permite eliminar un logro.")
-    public ResponseEntity<String> eliminarLogro(@RequestParam Long idLogro){
+    @DeleteMapping("/eliminarLogro/{id}")
+    public ResponseEntity<String> eliminarLogro(@PathVariable("id") Long idLogro){
         try{
             String mensaje = logroService.eliminar(idLogro);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
