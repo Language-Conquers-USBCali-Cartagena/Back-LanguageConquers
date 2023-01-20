@@ -28,9 +28,14 @@ public class ArticulosServiceImpl implements ArticulosService {
 
     @Override
     public String registrar(Articulos articulos) throws Exception {
-        validacionesCrear(articulos);
-        articulosDAO.save(articulos);
-        return "Se creo correctamente el artículo.";
+        try{
+            validacionesCrear(articulos);
+            articulosDAO.save(articulos);
+            return "Se creo correctamente el artículo.";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+
 
     }
 
