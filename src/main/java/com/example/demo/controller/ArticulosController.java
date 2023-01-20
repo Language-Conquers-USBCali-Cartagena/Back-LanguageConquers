@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/articulo", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/articulo", consumes = "text/plain;charset=UTF-8")
 public class ArticulosController {
     @Autowired
     ArticulosService articulosService;
