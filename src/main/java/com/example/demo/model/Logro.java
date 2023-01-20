@@ -23,7 +23,7 @@ public class Logro {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "imagen", nullable = false)
+    @Column(name = "imagen", nullable = false, length = 250)
     private String imagen;
 
     @Column(name = "descripcion", nullable = false)

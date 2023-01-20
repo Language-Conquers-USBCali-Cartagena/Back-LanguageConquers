@@ -22,7 +22,7 @@ public class Credenciales {
     @Column(name = "password", length = 80)
     private String password;
 
-    @Column(name = "url", length = 150)
+    @Column(name = "url", length = 350)
     private String url;
 
     @Column(name = "plataforma", length = 80)

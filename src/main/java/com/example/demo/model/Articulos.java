@@ -31,7 +31,7 @@ public class Articulos {
     @Column(name = "descripcion", nullable = false, length = 200)
     private String descripcion;
 
-    @Column(name = "imagen", nullable = false, length = 80)
+    @Column(name = "imagen", nullable = false, length = 250)
     private String imagen;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)

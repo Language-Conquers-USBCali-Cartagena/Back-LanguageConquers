@@ -21,7 +21,7 @@ public class Mision {
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
 
-    @Column(name = "imagen", nullable = true)
+    @Column(name = "imagen", nullable = false, length = 250)
     private String imagen;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)

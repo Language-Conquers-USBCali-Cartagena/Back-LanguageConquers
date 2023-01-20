@@ -21,7 +21,7 @@ public class Avatar {
     @Column(name = "nombre_avatar", nullable = false, length = 50)
     private String nombreAvatar;
 
-    @Column(name = "img_avatar", nullable = false, length = 80)
+    @Column(name = "img_avatar", nullable = false, length = 250)
     private String imgAvatar;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)

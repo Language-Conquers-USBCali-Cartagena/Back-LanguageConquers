@@ -21,7 +21,7 @@ public class Monedas {
     @Column(name = "cantidad", nullable = false)
     private int cantidad;
 
-    @Column(name = "img_monedas", nullable = false, length = 80)
+    @Column(name = "img_monedas", nullable = false, length = 250)
     private String imgMonedas;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)

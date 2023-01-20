@@ -28,7 +28,7 @@ public class Profesor {
     @Column(name = "correo", nullable = false, length = 50)
     private String correo;
 
-    @Column(name = "foto", nullable = false, length = 80)
+    @Column(name = "foto", nullable = false, length = 250)
     private String foto;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)
