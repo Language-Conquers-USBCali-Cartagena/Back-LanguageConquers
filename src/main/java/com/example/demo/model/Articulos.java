@@ -22,7 +22,7 @@ public class Articulos {
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
 
-    @Column(name = "precio", nullable = false, precision=19, scale=2)
+    @Column(name = "precio", nullable = false, precision=19, scale=2, columnDefinition = "Decimal(19,2)")
     private double precio;
 
     @Column(name = "nivel_valido", nullable = false)
