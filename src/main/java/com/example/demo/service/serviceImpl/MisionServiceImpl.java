@@ -42,7 +42,7 @@ public class MisionServiceImpl implements MisionService {
             return "Se creo exitosamente la misión.";
 
         }catch (Exception e){
-            throw  new Exception("No se pudo crear la misión.");
+            throw  new Exception("No se pudo crear la misión. " + e.getMessage() );
         }
     }
 

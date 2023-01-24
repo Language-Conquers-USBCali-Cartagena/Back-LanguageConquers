@@ -57,9 +57,6 @@ public class RetoServiceImpl implements RetoService {
     @Override
     public String actualizar(RetoDTO retoDTO) throws Exception {
         Reto reto = null;
-        Mision idMision = null;
-        Estado idEstado = null;
-        Curso idCurso = null;
         validacionesActualizar(retoDTO);
         reto = retoDAO.findById(retoDTO.getIdReto()).orElse(null);
         reto.setNombreReto(retoDTO.getNombreReto());
