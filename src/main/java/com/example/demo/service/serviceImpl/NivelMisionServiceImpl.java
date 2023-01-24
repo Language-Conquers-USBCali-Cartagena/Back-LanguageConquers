@@ -43,7 +43,6 @@ public class NivelMisionServiceImpl implements NivelMisionService {
         nivelMision = nivelMisionDAO.findById(nivelMisionDTO.getIdNivelMision()).orElse(null);
         nivelMision.setNombre(nivelMisionDTO.getNombre());
         nivelMision.setPuntajeMinimo(nivelMisionDTO.getPuntajeMinimo());
-        nivelMision.setUsuarioCreador(nivelMisionDTO.getUsuarioCreador());
         nivelMision.setFechaModificacion(nivelMisionDTO.getFechaModificacion());
         nivelMision.setUsuarioModificador(nivelMisionDTO.getUsuarioModificador());
         nivelMisionDAO.save(nivelMision);
