@@ -44,7 +44,7 @@ public class NivelMisionServiceImpl implements NivelMisionService {
         nivelMision.setNombre(nivelMisionDTO.getNombre());
         nivelMision.setPuntajeMinimo(nivelMisionDTO.getPuntajeMinimo());
         nivelMision.setUsuarioCreador(nivelMisionDTO.getUsuarioCreador());
-        nivelMision.setFechaCreacion(nivelMisionDTO.getFechaCreacion());
+        nivelMision.setFechaModificacion(nivelMisionDTO.getFechaModificacion());
         nivelMision.setUsuarioModificador(nivelMisionDTO.getUsuarioModificador());
         nivelMisionDAO.save(nivelMision);
         return "Se actualizo correctamente el nivel misión.";
