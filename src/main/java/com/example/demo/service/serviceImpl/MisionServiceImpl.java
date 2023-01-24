@@ -91,7 +91,7 @@ public class MisionServiceImpl implements MisionService {
         if(Validaciones.isStringLenght(mision.getNombre(), 50)){
             throw new Exception("El nombre de la misión es muy largo, solo se aceptan 50 caracteres.");
         }
-        if(mision.getImagen() == null || mision.getImagen().trim().equals("")){
+        if(mision.getImagen() == null || mision.getImagen().equals("")){
             throw new Exception("Se debe ingresar una imagen de la misión");
         }
         if(Validaciones.isStringLenght(mision.getImagen(), 250)){
