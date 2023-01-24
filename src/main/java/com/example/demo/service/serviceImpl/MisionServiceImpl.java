@@ -91,9 +91,7 @@ public class MisionServiceImpl implements MisionService {
         if(Validaciones.isStringLenght(mision.getNombre(), 50)){
             throw new Exception("El nombre de la misión es muy largo, solo se aceptan 50 caracteres.");
         }
-        if(mision.getImagen() == null){
-            throw new Exception("Se debe ingresar una imagen de la misión");
-        }
+        //TODO: FALTA VALIDACIÓN DE IMAGEN
         if(Validaciones.isStringLenght(mision.getImagen(), 250)){
             throw new Exception("La URL de la imagen es muy largo, solo se aceptan 250 caracteres.");
         }
@@ -169,9 +167,7 @@ public class MisionServiceImpl implements MisionService {
         if(Validaciones.isStringLenght(misionDTO.getNombre(), 50)){
             throw new Exception("El nombre de la misión es muy largo, solo se aceptan 50 caracteres.");
         }
-        if(misionDTO.getImagen() == null || misionDTO.getImagen().trim().equals("")){
-            throw new Exception("Se debe ingresar una imagen de la misión");
-        }
+        //TODO: FALTA VALIDACIÓN DE IMAGEN
         if(Validaciones.isStringLenght(misionDTO.getImagen(), 250)){
             throw new Exception("La URL de la imagen es muy largo, solo se aceptan 250 caracteres.");
         }
