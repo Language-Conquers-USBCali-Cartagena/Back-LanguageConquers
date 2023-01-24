@@ -38,13 +38,9 @@ public class MisionServiceImpl implements MisionService {
 
     @Override
     public String registrar(Mision mision) throws Exception {
-        try{
-            validacionesCrear(mision);
-            misionDAO.save(mision);
-            return "Se creo exitosamente la misión.";
-        }catch (Exception e){
-            throw  new Exception("No se pudo crear la misión. " + e.getMessage() );
-        }
+        validacionesCrear(mision);
+        misionDAO.save(mision);
+        return "Se creo exitosamente la misión.";
     }
 
     @Override
