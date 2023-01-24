@@ -32,7 +32,7 @@ public class NivelMisionServiceImpl implements NivelMisionService {
             nivelMisionDAO.save(nivelMision);
             return "Se creo exitosamente el nivel misión.";
         }catch (Exception e){
-            throw new Exception("No se creo el nivel misión.");
+            throw new Exception(e.getMessage());
         }
     }
 
