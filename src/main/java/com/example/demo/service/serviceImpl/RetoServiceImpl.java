@@ -69,7 +69,7 @@ public class RetoServiceImpl implements RetoService {
         reto.setFechaLimite(retoDTO.getFechaLimite());
         reto.setEsGrupal(retoDTO.isEsGrupal());
         reto.setNrEstudiatesGrupo(retoDTO.getNrEstudiatesGrupo());
-        reto.setMision(misionDAO.findById(retoDTO.getIdReto()).orElse(null));
+        reto.setMision(misionDAO.findById(retoDTO.getIdMision()).orElse(null));
         reto.setEstado(estadoDAO.findById(retoDTO.getIdEstado()).orElse(null));
         reto.setCurso(cursoDAO.findById(retoDTO.getIdCurso()).orElse(null));
         retoDAO.save(reto);
