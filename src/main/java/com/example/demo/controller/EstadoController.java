@@ -60,8 +60,8 @@ public class EstadoController {
     }
 
     @Operation(summary = "Este método permite eliminar los estados.")
-    @DeleteMapping("/eliminarEstado")
-    public ResponseEntity<String> eliminarEstado(@RequestParam Long idEstado){
+    @DeleteMapping("/eliminarEstado/{id}")
+    public ResponseEntity<String> eliminarEstado(@PathVariable("id") Long idEstado){
         try {
             return new ResponseEntity<>(estadoService.eliminar(idEstado), HttpStatus.OK);
         } catch (Exception e) {
