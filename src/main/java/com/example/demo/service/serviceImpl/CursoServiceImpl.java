@@ -205,12 +205,6 @@ public class CursoServiceImpl implements CursoService {
             throw new Exception("Debe ingresar una fecha de inicio del curso.");
         }
         Date fechaActual = new Date();
-        if(cursoDTO.getInicioCurso().compareTo(fechaActual)>0){
-            throw new Exception("Digite una fecha de inicio del curso válida.");
-        }
-        if(cursoDTO.getFinCurso().compareTo(fechaActual)>0){
-            throw new Exception("Digite una fecha de finalización del curso válida.");
-        }
         if(cursoDTO.getFinCurso().compareTo(cursoDTO.getInicioCurso())>0){
             throw new Exception("La fecha de finalización del curso no puede ser antes de la fecha de inicio.");
         }
