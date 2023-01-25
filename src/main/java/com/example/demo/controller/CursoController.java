@@ -24,7 +24,8 @@ public class CursoController {
     @PostMapping("/registrarCurso")
     public ResponseEntity<String> crearCurso(@RequestBody CursoDTO cursoDTO){
         try {
-            String respuesta = cursoService.registrar(cursoMapper.toEntity(cursoDTO));
+            Curso curso = cursoMapper.toEntity(cursoDTO);
+            String respuesta = cursoService.registrar(curso);
             return new ResponseEntity<>(respuesta, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
