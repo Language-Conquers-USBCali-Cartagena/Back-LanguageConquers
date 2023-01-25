@@ -64,9 +64,8 @@ public class LogroServiceImpl implements LogroService {
         logro.setNombre(logroDTO.getNombre());
         logro.setImagen(logroDTO.getImagen());
         logro.setDescripcion(logroDTO.getDescripcion());
-        logro.setCategoria(logroDTO.getCategoria());//revisar si se quita
-        logro.setUsuarioCreador(logroDTO.getUsuarioCreador());
-        logro.setFechaCreacion(logroDTO.getFechaCreacion());
+        logro.setCategoria(logroDTO.getCategoria());
+        logro.setFechaModificacion(logroDTO.getFechaModificacion());
         logro.setUsuarioModificador(logroDTO.getUsuarioModificador());
         logroDAO.save(logro);
         return "Se actualizo correctamente el logro.";
