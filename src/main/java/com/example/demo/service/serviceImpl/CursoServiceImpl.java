@@ -141,9 +141,6 @@ public class CursoServiceImpl implements CursoService {
         if(curso.getInicioCurso().compareTo(fechaActual)>0){
             throw new Exception("Digite una fecha de inicio del curso válida.");
         }
-        if(curso.getFinCurso().compareTo(curso.getInicioCurso())>0){
-            throw new Exception("La fecha de finalización del curso no puede ser antes de la fecha de inicio.");
-        }
         if(curso.getEstado().getIdEstado() == null){
             throw new Exception("Debe ingresar un id estado.");
         }
