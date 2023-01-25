@@ -25,7 +25,7 @@ import java.util.List;
 @Service
 public class RetoServiceImpl implements RetoService {
 
-    //TODO: Faltan validacones para los metodos de crear y actualizar
+
     @Autowired
     RetoDAO retoDAO;
 
@@ -69,6 +69,8 @@ public class RetoServiceImpl implements RetoService {
         reto.setMision(misionDAO.findById(retoDTO.getIdMision()).orElse(null));
         reto.setEstado(estadoDAO.findById(retoDTO.getIdEstado()).orElse(null));
         reto.setCurso(cursoDAO.findById(retoDTO.getIdCurso()).orElse(null));
+        reto.setFechaModificacion(retoDTO.getFechaModificacion());
+        reto.setUsuarioModificador(retoDTO.getUsuarioModificador());
         retoDAO.save(reto);
         return "Se actualizo el reto.";
     }

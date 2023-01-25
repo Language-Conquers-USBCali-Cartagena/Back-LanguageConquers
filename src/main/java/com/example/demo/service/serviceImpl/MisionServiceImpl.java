@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class MisionServiceImpl implements MisionService {
 
-    //TODO: TERMINAR DE CREAR LOS SERVICIOS BASICOS COMO EDITAR Y ELIMINAR
+    //TODO: TERMINAR DE CREAR el SERVICIO de ELIMINAR
     @Autowired
     MisionDAO misionDAO;
 
@@ -53,9 +53,8 @@ public class MisionServiceImpl implements MisionService {
         mision.setCurso(cursoDAO.findById(misionDTO.getIdCurso()).orElse(null));
         mision.setTipoMision(tipoMisionDAO.findById(misionDTO.getIdTipoMision()).orElse(null));
         mision.setMonedas(monedasDAO.findById(misionDTO.getIdMonedas()).orElse(null));
-        mision.setUsuarioCreador(misionDTO.getUsuarioCreador());
-        mision.setFechaCreacion(misionDTO.getFechaCreacion());
-        misionDTO.setUsuarioModificador(misionDTO.getUsuarioModificador());
+        mision.setUsuarioModificador(misionDTO.getUsuarioModificador());
+        mision.setFechaModificacion(misionDTO.getFechaModificacion());
         misionDAO.save(mision);
         return "Se actualizo la misión correctamente.";
     }

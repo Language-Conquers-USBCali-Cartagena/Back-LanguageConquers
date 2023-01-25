@@ -62,9 +62,7 @@ public class RetoController {
         try{
             return new ResponseEntity<>(retoService.actualizar(retoDTO), HttpStatus.OK);
         }catch (Exception e){
-            String mensaje = e.getMessage();
-            System.out.println(mensaje);
-            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
