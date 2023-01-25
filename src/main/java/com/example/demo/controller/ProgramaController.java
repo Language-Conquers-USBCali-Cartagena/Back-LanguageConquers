@@ -60,8 +60,8 @@ public class ProgramaController {
     }
 
     @Operation(summary = "Este método permite eliminar un programa.")
-    @DeleteMapping("/eliminarPrograma")
-    public ResponseEntity<String> eliminarPrograma(@RequestParam Long idPrograma){
+    @DeleteMapping("/eliminarPrograma/{id}")
+    public ResponseEntity<String> eliminarPrograma(@PathVariable("id") Long idPrograma){
         try {
             return new ResponseEntity<>(programaService.eliminar(idPrograma), HttpStatus.OK);
         } catch (Exception e) {
