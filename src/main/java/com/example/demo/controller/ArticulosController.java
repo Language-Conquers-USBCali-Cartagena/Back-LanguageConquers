@@ -27,8 +27,7 @@ public class ArticulosController {
     public ResponseEntity<String> crearArticulo(@RequestBody ArticulosDTO articulosDTO){
         try{
             Articulos articulos = articulosMapper.toEntity(articulosDTO);
-            String mensaje = articulosService.registrar(articulos);
-            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+            return new ResponseEntity<>(articulosService.registrar(articulos), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -37,18 +36,17 @@ public class ArticulosController {
     @PutMapping("/actualizarArticulo")
     public ResponseEntity<String> actualizarArticulo(@RequestBody ArticulosDTO articulosDTO){
         try{
-            String mensaje = articulosService.actualizar(articulosDTO);
-            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+
+            return new ResponseEntity<>(articulosService.actualizar(articulosDTO), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
     @Operation(summary = "Este método permite eliminar un artículo.")
     @DeleteMapping("/eliminarArticulo/{id}")
-    public ResponseEntity<String> eliminarArticulo(@PathVariable("id") Long idArticulio){
+    public ResponseEntity<String> eliminarArticulo(@PathVariable("id") Long idArticulo){
         try{
-            String mensaje = articulosService.eliminar(idArticulio);
-            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+            return new ResponseEntity<>(articulosService.eliminar(idArticulo), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -57,7 +55,8 @@ public class ArticulosController {
     @GetMapping
     public ResponseEntity<List<ArticulosDTO>> listarArticulos(){
         try{
-            List<ArticulosDTO> articulosDTOS = articulosMapper.toDTOList(articulosService.findAll());
+            List<Articulos> articulosList = articulosService.findAll();
+            List<ArticulosDTO> articulosDTOS = articulosMapper.toDTOList(articulosList);
             return new ResponseEntity<>(articulosDTOS, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
