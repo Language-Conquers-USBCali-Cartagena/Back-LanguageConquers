@@ -16,6 +16,8 @@ public class RetoDTO implements Serializable {
     private String nombreReto;
     private String descripcion;
     private int maximoIntentos;
+    private int moneda;
+    private String solucion;
     private Date fechaLimite;
     private Date fechaInicio;
     private boolean esGrupal;

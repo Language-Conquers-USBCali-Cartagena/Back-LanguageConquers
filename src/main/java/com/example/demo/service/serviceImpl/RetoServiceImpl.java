@@ -43,6 +43,7 @@ public class RetoServiceImpl implements RetoService {
         return retoDAO.findAll();
     }
 
+    //TODO: FALTA VALIDACION de crear y actualizar DE LOS NUEVOS ATRIBUTOS DE SOLUCION Y MONEDAS
     @Override
     public String registrar(Reto reto) throws Exception {
         validacionesCrear(reto);
@@ -61,6 +62,8 @@ public class RetoServiceImpl implements RetoService {
         reto.setFechaInicio(retoDTO.getFechaInicio());
         reto.setFechaLimite(retoDTO.getFechaLimite());
         reto.setEsGrupal(retoDTO.isEsGrupal());
+        reto.setMoneda(retoDTO.getMoneda());
+        reto.setSolucion(retoDTO.getSolucion());
         reto.setNrEstudiatesGrupo(retoDTO.getNrEstudiatesGrupo());
         reto.setMision(misionDAO.findById(retoDTO.getIdMision()).orElse(null));
         reto.setEstado(estadoDAO.findById(retoDTO.getIdEstado()).orElse(null));
