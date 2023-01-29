@@ -58,6 +58,7 @@ public class EstudianteServiceImpl implements EstudianteService {
         estudiante.setNickName(estudianteDTO.getNickName());
         estudiante.setPuntaje(estudianteDTO.getPuntaje());
         estudiante.setCorreo(estudianteDTO.getCorreo());
+        estudiante.setMonedasObtenidas(estudianteDTO.getMonedasObtenidas());
         estudiante.setSemestre(semestreDAO.findById(estudianteDTO.getIdSemestre()).orElse(null));
         estudiante.setGenero(generoDAO.findById(estudianteDTO.getIdGenero()).orElse(null));
         estudiante.setAvatar(avatarDAO.findById(estudianteDTO.getIdAvatar()).orElse(null));
@@ -204,6 +205,12 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudiante.getPuntaje()<0){
             throw new Exception("El puntaje no debe ser negativo.");
         }
+        if(estudiante.getMonedasObtenidas()<0){
+                throw new Exception("Las monedas obtenidas no debe ser negativo.");
+        }
+        if(estudiante.getMonedasObtenidas()!=0){
+            throw new Exception("Las monedas obtenidas al momento de crear el estudiante son 0.");
+        }
         if(estudiante.getCorreo() == null || estudiante.getCorreo().equals("")){
             throw new Exception("Debe ingresar un correo del estudiante.");
         }
@@ -321,6 +328,12 @@ public class EstudianteServiceImpl implements EstudianteService {
         }
         if(estudianteDTO.getPuntaje()<0){
             throw new Exception("El puntaje no debe ser negativo.");
+        }
+        if(estudianteDTO.getMonedasObtenidas()<0){
+            throw new Exception("Las monedas obtenidas no debe ser negativo.");
+        }
+        if(estudianteDTO.getMonedasObtenidas()!=0){
+            throw new Exception("Las monedas obtenidas al momento de crear el estudiante son 0.");
         }
         if(estudianteDTO.getCorreo() == null || estudianteDTO.getCorreo().trim().equals("")){
             throw new Exception("Debe ingresar un correo del estudiante.");

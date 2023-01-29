@@ -24,6 +24,12 @@ public class Reto {
     @Column(name = "descripcion", nullable = false, length = 300)
     private String descripcion;
 
+    @Column(name = "moneda", nullable = false)
+    private int moneda;
+
+    @Column(name = "solucion", nullable = false, length = 800)
+    private String solucion;
+
     @Column(name = "maximo_intentos", nullable = false)
     private int maximoIntentos;
 

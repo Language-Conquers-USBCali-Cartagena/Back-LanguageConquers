@@ -18,6 +18,7 @@ public class EstudianteDTO implements Serializable {
     private String apellido;
     private String nickName;
     private int puntaje;
+    private int monedasObtenidas;
     private Date fechaNacimiento;
     private String correo;
     private String usuarioCreador;

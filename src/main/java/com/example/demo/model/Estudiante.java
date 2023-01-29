@@ -35,6 +35,9 @@ public class Estudiante {
     @Column(name = "puntaje", nullable = false)
     private int puntaje;
 
+    @Column(name = "monedasObtenidas", nullable = false)
+    private int monedasObtenidas;
+
     @Column(name = "fecha_nacimiento", nullable = false)
     private Date fechaNacimiento;
 
