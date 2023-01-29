@@ -45,13 +45,9 @@ public class RetoServiceImpl implements RetoService {
 
     @Override
     public String registrar(Reto reto) throws Exception {
-        try{
-            validacionesCrear(reto);
-            retoDAO.save(reto);
-            return "Se creo exitosamente el reto.";
-        }catch (Exception e){
-            throw new Exception("EL reto no se creo.");
-        }
+        validacionesCrear(reto);
+        retoDAO.save(reto);
+        return "Se creo exitosamente el reto.";
     }
 
     @Override
