@@ -20,8 +20,6 @@ public class MisionDTO implements Serializable {
     private String usuarioModificador;
     private Date fechaCreacion;
     private Date fechaModificacion;
-    private Long idNivelMision;
     private Long idCurso;
-    private Long idTipoMision;
-    private Long idMonedas;
+
 }

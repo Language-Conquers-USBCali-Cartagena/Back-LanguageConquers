@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.mapper.MisionMapper;
 import com.example.demo.model.Mision;
-import com.example.demo.model.dto.AvatarDTO;
 import com.example.demo.model.dto.MisionDTO;
 import com.example.demo.service.MisionService;
 import io.swagger.v3.oas.annotations.Operation;

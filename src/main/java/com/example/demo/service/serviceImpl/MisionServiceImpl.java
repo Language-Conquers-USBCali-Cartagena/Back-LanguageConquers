@@ -20,17 +20,12 @@ public class MisionServiceImpl implements MisionService {
     @Autowired
     MisionDAO misionDAO;
 
-    @Autowired
-    NivelMisionDAO nivelMisionDAO;
+
 
     @Autowired
     CursoDAO cursoDAO;
 
-    @Autowired
-    TipoMisionDAO tipoMisionDAO;
 
-    @Autowired
-    MonedasDAO monedasDAO;
     @Override
     public List<Mision> ListarMisiones() throws Exception {
         return misionDAO.findAll();
@@ -49,10 +44,7 @@ public class MisionServiceImpl implements MisionService {
         validacionActualizar(misionDTO);
         mision = misionDAO.findById(misionDTO.getIdMision()).orElse(null);
         mision.setNombre(misionDTO.getNombre());
-        mision.setNivelMision(nivelMisionDAO.findById(misionDTO.getIdMision()).orElse(null));
         mision.setCurso(cursoDAO.findById(misionDTO.getIdCurso()).orElse(null));
-        mision.setTipoMision(tipoMisionDAO.findById(misionDTO.getIdTipoMision()).orElse(null));
-        mision.setMonedas(monedasDAO.findById(misionDTO.getIdMonedas()).orElse(null));
         mision.setUsuarioModificador(misionDTO.getUsuarioModificador());
         mision.setFechaModificacion(misionDTO.getFechaModificacion());
         misionDAO.save(mision);
@@ -103,33 +95,8 @@ public class MisionServiceImpl implements MisionService {
         if(cursoDAO.findById(mision.getCurso().getIdCurso()).toString().equals("Optional.empty")){
             throw new Exception("Se debe ingresar un id del curso que exista.");
         }
-        if(mision.getMonedas().getIdMoneda() == null){
-            throw new Exception("Se debe ingresar un id de la moneda.");
-        }
-        if(mision.getMonedas().getIdMoneda()<0){
-            throw new Exception("Se debe ingresar un id de la moneda válido.");
-        }
-        if(monedasDAO.findById(mision.getMonedas().getIdMoneda()).toString().equals("Optional.empty")){
-            throw new Exception("Se debe ingresar un id de la moneda que exista.");
-        }
-        if(mision.getTipoMision().getIdTipoMision() == null){
-            throw new Exception("Se debe ingresar un id del tipo misión.");
-        }
-        if(mision.getTipoMision().getIdTipoMision()<0){
-            throw new Exception("Se debe ingresar un id del tipo misión válido.");
-        }
-        if(tipoMisionDAO.findById(mision.getTipoMision().getIdTipoMision()).toString().equals("Optional.empty")){
-            throw new Exception("Se debe ingresar un id del tipo misión que exista.");
-        }
-        if(mision.getNivelMision().getIdNivelMision() == null){
-            throw new Exception("Se debe ingresar un id del nivel misión.");
-        }
-        if(mision.getNivelMision().getIdNivelMision()<0){
-            throw new Exception("Se debe ingresar un id del nivel misión válido.");
-        }
-        if(nivelMisionDAO.findById(mision.getNivelMision().getIdNivelMision()).toString().equals("Optional.empty")){
-            throw new Exception("Se debe ingresar un id del nivel misión que exista.");
-        }
+
+
         Date fechaActual = new Date();
         if(mision.getUsuarioCreador()==null || mision.getUsuarioCreador().equals("")){
             throw new Exception("Debe ingresar el usuario creador.");
@@ -148,18 +115,11 @@ public class MisionServiceImpl implements MisionService {
         if(!misionDAO.existsById(misionDTO.getIdMision())){
             throw new Exception("No se encontró la misión con ese id.");
         }
-        if(!tipoMisionDAO.existsById(misionDTO.getIdTipoMision())){
-            throw new Exception("No existe un tipo misión con ese id.");
-        }
-        if(!nivelMisionDAO.existsById(misionDTO.getIdNivelMision())){
-            throw new Exception("No existe un nivel misión con ese id.");
-        }
+
         if(!cursoDAO.existsById(misionDTO.getIdCurso())){
             throw new Exception("No existe un curso con ese id.");
         }
-        if(!monedasDAO.existsById(misionDTO.getIdMonedas())){
-            throw new Exception("No existe una moneda con ese id.");
-        }
+
         if(misionDTO.getNombre() == null || misionDTO.getNombre().trim().equals("")){
             throw new Exception("Se debe ingresar el nombre de la misión.");
         }
@@ -179,33 +139,7 @@ public class MisionServiceImpl implements MisionService {
         if(cursoDAO.findById(misionDTO.getIdCurso()).toString().equals("Optional.empty")){
             throw new Exception("Se debe ingresar un id del curso que exista.");
         }
-        if(misionDTO.getIdMonedas() == null){
-            throw new Exception("Se debe ingresar un id de la moneda.");
-        }
-        if(misionDTO.getIdMonedas()<0){
-            throw new Exception("Se debe ingresar un id de la moneda válido.");
-        }
-        if(monedasDAO.findById(misionDTO.getIdMonedas()).toString().equals("Optional.empty")){
-            throw new Exception("Se debe ingresar un id de la moneda que exista.");
-        }
-        if(misionDTO.getIdTipoMision()== null){
-            throw new Exception("Se debe ingresar un id del tipo misión.");
-        }
-        if(misionDTO.getIdTipoMision()<0){
-            throw new Exception("Se debe ingresar un id del tipo misión válido.");
-        }
-        if(tipoMisionDAO.findById(misionDTO.getIdTipoMision()).toString().equals("Optional.empty")){
-            throw new Exception("Se debe ingresar un id del tipo misión que exista.");
-        }
-        if(misionDTO.getIdNivelMision() == null){
-            throw new Exception("Se debe ingresar un id del nivel misión.");
-        }
-        if(misionDTO.getIdNivelMision()<0){
-            throw new Exception("Se debe ingresar un id del nivel misión válido.");
-        }
-        if(nivelMisionDAO.findById(misionDTO.getIdNivelMision()).toString().equals("Optional.empty")){
-            throw new Exception("Se debe ingresar un id del nivel misión que exista.");
-        }
+
         Date fechaActual = new Date();
         if(misionDTO.getUsuarioModificador()==null || misionDTO.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el usuario creador.");

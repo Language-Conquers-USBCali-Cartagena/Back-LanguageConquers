@@ -37,20 +37,9 @@ public class Mision {
     private Date fechaModificacion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_nivel_mision", nullable = false)
-    private NivelMision nivelMision;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_curso", nullable = false)
     private Curso curso;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tipo_mision", nullable = false)
-    private TipoMision tipoMision;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_monedas", nullable = false)
-    private Monedas monedas;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mision")
     List<Reto> retos = new ArrayList<>();

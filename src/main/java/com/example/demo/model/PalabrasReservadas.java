@@ -33,6 +33,5 @@ public class PalabrasReservadas {
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "palabrasReservadas")
-    List<OrdenRetoIDE> ordenRetoIDES = new ArrayList<>();
+
 }
