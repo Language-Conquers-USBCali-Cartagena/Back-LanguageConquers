@@ -1,5 +1,6 @@
 package com.example.demo.service.serviceImpl;
 
+import com.example.demo.dao.ArticulosAdquiridosDAO;
 import com.example.demo.dao.ArticulosDAO;
 import com.example.demo.dao.CategoriaDAO;
 import com.example.demo.dao.EstadoDAO;
@@ -29,6 +30,9 @@ public class ArticulosServiceImpl implements ArticulosService {
 
     @Autowired
     CategoriaDAO categoriaDAO;
+
+    @Autowired
+    ArticulosAdquiridosDAO articulosAdquiridosDAO;
 
     @Override
     public String registrar(Articulos articulos) throws Exception {
@@ -69,7 +73,9 @@ public class ArticulosServiceImpl implements ArticulosService {
         if(!articulosDAO.existsById(idArticulo)){
             throw new Exception("El artículo con id: " + idArticulo + " no existe.");
         }
-        //TODO: Falta validacion de si existe en articulo_adquirido
+        if(!articulosAdquiridosDAO.findByIdArticulo(idArticulo).isEmpty()){
+            throw new Exception("No se puede eliminar el artículo porque se encuentra asociado a un articulo adquirido de un estudiante.");
+        }
         articulosDAO.deleteById(idArticulo);
         return "El artículo se ha eliminado exitosamente.";
     }

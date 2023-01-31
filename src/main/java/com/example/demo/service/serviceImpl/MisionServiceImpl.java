@@ -16,14 +16,18 @@ import java.util.List;
 @Service
 public class MisionServiceImpl implements MisionService {
 
-    //TODO: TERMINAR DE CREAR el SERVICIO de ELIMINAR
+
     @Autowired
     MisionDAO misionDAO;
 
-
-
     @Autowired
     CursoDAO cursoDAO;
+
+    @Autowired
+    RetoDAO retoDAO;
+
+    @Autowired
+    MisionEstudianteDAO misionEstudianteDAO;
 
 
     @Override
@@ -59,7 +63,12 @@ public class MisionServiceImpl implements MisionService {
         if(!misionDAO.existsById(idMision)){
             throw new Exception("La misión con id: "+ idMision + " no existe.");
         }
-        //Todo: falta validacion de reto y mision_estudiante
+        if(!misionEstudianteDAO.findByIdMision(idMision).isEmpty()){
+            throw new Exception("No se puede eliminar la misión porque esta siendo utilizada en un reto estudiante.");
+        }
+        if(!retoDAO.findByIdMision(idMision).isEmpty()){
+            throw new Exception("No se puede eliminar la misión porque esta siendo utilizada en un reto.");
+        }
         misionDAO.deleteById(idMision);
         return "La misión se ha eliminado exitosamente.";
     }

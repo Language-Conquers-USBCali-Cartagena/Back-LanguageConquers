@@ -21,8 +21,23 @@ public class Reto {
     @Column(name = "nombre_reto", nullable = false, length = 50)
     private String nombreReto;
 
-    @Column(name = "descripcion", nullable = false, length = 300)
+    @Column(name = "descripcion", nullable = false, length = 1000)
     private String descripcion;
+
+    @Column(name = "urlVideo1", length = 300)
+    private String urlVideo1;
+
+    @Column(name = "urlVideo2", length = 300)
+    private String urlVideo2;
+
+    @Column(name = "imagenTema1", length = 300)
+    private String imagenTema1;
+
+    @Column(name = "imagenTema2", length = 300)
+    private String imagenTema2;
+
+    @Column(name = "descripcionTeoria", length = 1000)
+    private String descripcionTeoria;
 
     @Column(name = "moneda", nullable = false)
     private int moneda;

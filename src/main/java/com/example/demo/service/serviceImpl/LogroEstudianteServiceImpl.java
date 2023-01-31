@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 public class LogroEstudianteServiceImpl implements LogroEstudianteService {
     //TODO:REALIZAR SERVICIO PARA OBTENER LOS LOGROS QUE HA DESBLOQUEADO EL ESTUDIANTE Y LOS QUE LE FALTAN POR DESBLOQUEAR
+    //TODO: SE DEBE HACER METODO PARA DESBLOQUEAR LOS LOGROS EN LOS RETOS
 
     @Autowired
     LogroEstudianteDAO logroEstudianteDAO;

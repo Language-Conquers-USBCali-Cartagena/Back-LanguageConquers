@@ -4,12 +4,14 @@ import com.example.demo.dao.LogroDAO;
 import com.example.demo.model.Logro;
 import com.example.demo.model.dto.LogroDTO;
 import com.example.demo.service.LogroService;
+import com.example.demo.util.Validaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Scope("singleton")
@@ -39,7 +41,7 @@ public class LogroServiceImpl implements LogroService {
 
     @Override
     public String registrar(Logro logro) throws Exception {
-        validaciones(logro);
+        validacionesCrear(logro);
         logroDAO.save(logro);
         return "Se guardo exitosamente el logro.";
     }
@@ -59,12 +61,11 @@ public class LogroServiceImpl implements LogroService {
     @Override
     public String actualizar(LogroDTO logroDTO) throws Exception {
         Logro logro = null;
-        //Todo: Faltan validaciones
+        validacionesActualizar(logroDTO);
         logro = logroDAO.findById(logroDTO.getIdLogro()).orElse(null);
         logro.setNombre(logroDTO.getNombre());
         logro.setImagen(logroDTO.getImagen());
         logro.setDescripcion(logroDTO.getDescripcion());
-        logro.setCategoria(logroDTO.getCategoria());
         logro.setFechaModificacion(logroDTO.getFechaModificacion());
         logro.setUsuarioModificador(logroDTO.getUsuarioModificador());
         logroDAO.save(logro);
@@ -83,20 +84,75 @@ public class LogroServiceImpl implements LogroService {
     }
 
 
-    private void validaciones(Logro logro) throws Exception {
-        //Todo: revisar este metodo no estan todas las validaciones
-        if(logro.getCategoria().equals(null)){
-            throw new Exception("Debe ingresar una categoría.");
-        }
-        if(logro.getDescripcion().equals(null)){
-            throw new Exception("Debe ingresar una descripción.");
-        }
-        if(logro.getImagen().equals(null)){
-            throw new Exception("Debe ingresar una imagen.");
-        }
-        if(logro.getNombre().equals(null)){
+    private void validacionesCrear(Logro logro) throws Exception {
+        if(logro.getNombre() == null || logro.getNombre().equals("")){
             throw new Exception("Debe ingresar el nombre del logro.");
         }
+        if(Validaciones.isStringLenght(logro.getNombre(),50)){
+            throw new Exception("El nombre del logro es muy largo.");
+        }
 
+        if(logro.getDescripcion()== null || logro.getDescripcion().equals("")){
+            throw new Exception("Debe ingresar una descripción del logro.");
+        }
+        if(Validaciones.isStringLenght(logro.getDescripcion(),300)){
+            throw new Exception("La descripción es muy larga.");
+        }
+        if(logro.getImagen() == null || logro.getImagen().equals("")){
+            throw new Exception("Debe ingresar una imagen.");
+        }
+        if(Validaciones.isStringLenght(logro.getImagen(),250)){
+            throw new Exception("El nombre de la imagen o url es muy larga.");
+        }
+        if(logro.getUsuarioCreador()==null || logro.getUsuarioCreador().equals("")){
+            throw new Exception("Debe ingresar el usuario creador.");
+        }
+        if(Validaciones.isStringLenght(logro.getUsuarioCreador(),50)){
+            throw new Exception("El nombre del usuario creador es muy largo, solo puede contener 50 caracteres.");
+        }
+        if(logro.getFechaCreacion()==null || logro.getFechaCreacion().toString().equals("")) {
+            throw new Exception("Debe ingresar una fecha de creación.");
+        }
+    }
+
+    private void validacionesActualizar(LogroDTO logroDTO) throws Exception{
+
+        if(logroDTO.getIdLogro() == null){
+            throw new Exception("Debe ingresar el id del logro que desea actualizar.");
+        }
+        if(!logroDAO.existsById(logroDTO.getIdLogro())){
+            throw new Exception("No se encontró un logro con ese id.");
+        }
+        if(logroDTO.getNombre() == null || logroDTO.getNombre().equals("")){
+            throw new Exception("Debe ingresar el nombre del logro.");
+        }
+        if(Validaciones.isStringLenght(logroDTO.getNombre(),50)){
+            throw new Exception("El nombre del logro es muy largo.");
+        }
+        if(logroDTO.getDescripcion()== null || logroDTO.getDescripcion().equals("")){
+            throw new Exception("Debe ingresar una descripción del logro.");
+        }
+        if(Validaciones.isStringLenght(logroDTO.getDescripcion(),300)){
+            throw new Exception("La descripción es muy larga.");
+        }
+        if(logroDTO.getImagen() == null || logroDTO.getImagen().equals("")){
+            throw new Exception("Debe ingresar una imagen.");
+        }
+        if(Validaciones.isStringLenght(logroDTO.getImagen(),250)){
+            throw new Exception("El nombre de la imagen o url es muy larga.");
+        }
+        Date fechaActual = new Date();
+        if(logroDTO.getUsuarioModificador()==null || logroDTO.getUsuarioModificador().equals("")){
+            throw new Exception("Debe ingresar el usuario modificador.");
+        }
+        if(Validaciones.isStringLenght(logroDTO.getUsuarioModificador(),50)){
+            throw new Exception("El nombre del usuario modificador es muy largo, solo puede contener 50 caracteres.");
+        }
+        if(logroDTO.getFechaModificacion()==null || logroDTO.getFechaModificacion().toString().equals("")){
+            throw new Exception("Debe ingresar una fecha de modificación.");
+        }
+        if(logroDTO.getFechaModificacion().compareTo(fechaActual)>0){
+            throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
+        }
     }
 }

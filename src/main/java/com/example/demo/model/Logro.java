@@ -20,17 +20,14 @@ public class Logro {
     @Column(name = "id_logro", nullable = false)
     private Long idLogro;
 
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre", nullable = false , length = 50)
     private String nombre;
 
     @Column(name = "imagen", nullable = false, length = 250)
     private String imagen;
 
-    @Column(name = "descripcion", nullable = false)
+    @Column(name = "descripcion", nullable = false, length = 300)
     private String descripcion;
-
-    @Column(name = "categoria", nullable = false)
-    private String categoria;//se debe quitar este atributo
 
     @Column(name = "usuario_creador", nullable = false, length = 50)
     private String usuarioCreador;

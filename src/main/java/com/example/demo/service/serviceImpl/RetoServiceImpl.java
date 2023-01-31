@@ -1,13 +1,7 @@
 package com.example.demo.service.serviceImpl;
 
-import com.example.demo.dao.CursoDAO;
-import com.example.demo.dao.EstadoDAO;
-import com.example.demo.dao.MisionDAO;
-import com.example.demo.dao.RetoDAO;
-import com.example.demo.model.Curso;
-import com.example.demo.model.Estado;
-import com.example.demo.model.Mision;
-import com.example.demo.model.Reto;
+import com.example.demo.dao.*;
+import com.example.demo.model.*;
 import com.example.demo.model.dto.RetoDTO;
 import com.example.demo.service.CursoService;
 import com.example.demo.service.EstadoService;
@@ -37,6 +31,12 @@ public class RetoServiceImpl implements RetoService {
 
     @Autowired
     CursoDAO cursoDAO;
+
+    @Autowired
+    RetoEstudianteDAO retoEstudianteDAO;
+
+    @Autowired
+    RolDAO rolDAO;
 
     @Override
     public List<Reto> listReto() throws Exception{
@@ -82,7 +82,12 @@ public class RetoServiceImpl implements RetoService {
         if(!retoDAO.existsById(idReto)){
             throw new Exception("No se encontró un reto con el id: " + idReto+".");
         }
-        //TODO: FALTA VALIDACION DE SI EXISTE EN ORDEN_RETO_IDE, EN RETO_ESTUDIANTE Y EN ROL
+        if(!retoEstudianteDAO.findByIdReto(idReto).isEmpty()){
+            throw new Exception("No se puede eliminar el reto porque esta siendo utilizado por un reto estudiante.");
+        }
+        if(!rolDAO.findByIdReto(idReto).isEmpty()){
+            throw new Exception("No se puede eliminar el reto porque esta siendo utilizado por un rol.");
+        }
         retoDAO.deleteById(idReto);
         return "El reto se elimino exitosamente.";
     }

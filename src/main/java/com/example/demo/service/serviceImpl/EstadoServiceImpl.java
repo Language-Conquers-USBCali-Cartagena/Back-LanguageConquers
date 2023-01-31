@@ -98,7 +98,6 @@ public class EstadoServiceImpl implements EstadoService {
         if(!estadoDAO.existsById(idEstado)){
             throw new Exception("El estado con id: " + idEstado + " no existe.");
         }
-        //Todo: Falta validaciones de misionEstudiante, categoria, articulo, retoEstudiante, estudiante, curso y reto
         return estadoDAO.findById(idEstado).get();
     }
 
