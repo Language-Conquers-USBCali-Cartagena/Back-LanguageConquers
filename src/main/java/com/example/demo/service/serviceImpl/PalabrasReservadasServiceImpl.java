@@ -63,9 +63,8 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
                     //TODO: Metodo condicional
                     break;
                 case "metodo":
-                    //TODO: Metodo que procese los metodos
+                    procesarGrupoMetodos(grupoA);
             }
-
         }
 
         return null;
@@ -134,7 +133,6 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
 
         }else{
             mapVariables =  MetodosPalabras.variable(param1.getNombre(), param2.getNombre(), param3.getNombre());
-
         }
 
 
@@ -142,18 +140,22 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
      }
 
      private String procesarGrupoMetodos(List<PalabrasReservadasDTO> palabrasReservadasDTOS)throws Exception{
-         PalabrasReservadasDTO palabraCalve = palabrasReservadasDTOS.get(0);
+         String palabraCalve = palabrasReservadasDTOS.get(0).getNombre();
          PalabrasReservadasDTO param1 = palabrasReservadasDTOS.get(1);
          String respuesta = "";
-         switch (palabraCalve.getNombre().toLowerCase()){
-             case "buscar":
-                 respuesta = MetodosPalabras.buscar(param1.getNombre());
-                 break;
-             case "cortar":
-                 respuesta = MetodosPalabras.cortar(param1.getNombre());
-                 break;
-             default:
-                 throw new Exception("La palabra no corresponde a ningun metodo");
+
+         if(mapVariables.containsKey(param1.getNombre()) && param1.getCategoria().equalsIgnoreCase("variablecv")) {
+             String variable = mapVariables.get(param1.getNombre());
+             switch (palabraCalve) {
+                 case "buscar":
+                     respuesta = MetodosPalabras.buscar(variable);
+                     break;
+                 case "cortar":
+                     respuesta = MetodosPalabras.cortar(variable);
+                     break;
+                 default:
+                     throw new Exception("La palabra no corresponde a ningun metodo");
+             }
          }
          return respuesta;
      }
@@ -161,17 +163,21 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
     private String procesarGrupoMetodos(PalabrasReservadasDTO palabraCalve, PalabrasReservadasDTO param1)throws Exception{
 
         String respuesta = "";
-        switch (palabraCalve.getNombre().toLowerCase()){
-            case "buscar":
-                respuesta = MetodosPalabras.buscar(param1.getNombre());
-                break;
-            case "cortar":
-                respuesta = MetodosPalabras.cortar(param1.getNombre());
-                break;
-            default:
-                throw new Exception("La palabra no corresponde a ningun metodo");
-            //TODO: Completar los otros metodos posibles
+        if(mapVariables.containsKey(param1.getNombre()) && param1.getCategoria().equalsIgnoreCase("variablecv")) {
+            String variable = mapVariables.get(param1.getNombre());
+            switch (palabraCalve.getCategoria()) {
+                case "buscar":
+                    respuesta = MetodosPalabras.buscar(variable);
+                    break;
+                case "cortar":
+                    respuesta = MetodosPalabras.cortar(variable);
+                    break;
+                default:
+                    throw new Exception("La palabra no corresponde a ningun metodo");
+            }
         }
         return respuesta;
     }
+
+    //TODO: Deben Existir en la bd las siguientes categorias para las palabras reservadas: Metodo, Variable, VariableCV, Bucle, Condicional, logicas
 }

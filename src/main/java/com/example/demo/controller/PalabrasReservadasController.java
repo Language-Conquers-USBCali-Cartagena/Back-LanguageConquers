@@ -45,14 +45,15 @@ public class PalabrasReservadasController {
         }
     }
 
-//    @Operation(summary = "Este método permite procesar la respuesta de un reto")
-//    @PostMapping
-//    public ResponseEntity<String> procesarRespuestaReto(@RequestBody PalabrasReservadasDTO palabrasReservadasDTO){
-//        try{
-//            //TODO: Termina controller con el servicio de palabra resrvada
-//            return null;
-//        }catch (Exception e){
-//            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @Operation(summary = "Este método permite procesar la respuesta de un reto")
+    @PostMapping("/respuesta")
+    public ResponseEntity<String> procesarRespuestaReto(@RequestBody PalabrasReservadasDTO palabrasReservadasDTO){
+        try{
+            //TODO: Termina controller con el servicio de palabra resrvada
+            //TODO: Asignar puntaje y monedas a estudiante
+            return null;
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

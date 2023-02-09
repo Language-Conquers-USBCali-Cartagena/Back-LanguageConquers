@@ -19,6 +19,7 @@ public class PalabrasReservadasDTO implements Serializable {
     private Long padre;
     private Integer lista;
     private String categoria;
+    private Double tiempo;
     private String usuarioCreador;
     private String usuarioModificador;
     private Date fechaCreacion;
