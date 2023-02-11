@@ -28,7 +28,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
     List<PalabrasReservadasDTO> grupoI = new ArrayList<>();
     List<PalabrasReservadasDTO> grupoJ = new ArrayList<>();
     Map<String, String> mapVariables = new HashMap<>();
-
+    String respuesta = new String();
     @Autowired
     PalabrasReservadasDAO palabrasReservadasDAO;
 
@@ -50,11 +50,96 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
 
     @Override
     public String procesarPalabraReservada(List<PalabrasReservadasDTO> palabrasReservadasDTOs) throws Exception {
+
+        //Agrupa las listas segun su orden
         agrupar(palabrasReservadasDTOs);
-        if(!grupoA.isEmpty() ){
-            switch (grupoA.get(0).getCategoria()){
+        //Procesa las listas para ejecutar la accion esperada
+        procesarCategoria(grupoA);
+        procesarCategoria(grupoB);
+        procesarCategoria(grupoC);
+        procesarCategoria(grupoD);
+        procesarCategoria(grupoE);
+        procesarCategoria(grupoF);
+        procesarCategoria(grupoG);
+        procesarCategoria(grupoH);
+        procesarCategoria(grupoI);
+        procesarCategoria(grupoJ);
+
+        limpiar();
+
+
+
+        return this.respuesta;
+
+    }
+
+    private void limpiar() throws Exception{
+        grupoA.clear();
+        grupoB.clear();
+        grupoC.clear();
+        grupoD.clear();
+        grupoE.clear();
+        grupoF.clear();
+        grupoG.clear();
+        grupoH.clear();
+        grupoI.clear();
+        grupoJ.clear();
+    }
+
+    private void agrupar(List<PalabrasReservadasDTO> palabrasReservadasDTOS) throws Exception{
+        for (PalabrasReservadasDTO palabrasReservadasDTO: palabrasReservadasDTOS) {
+            switch (palabrasReservadasDTO.getLista()){
+                case 1:
+                    grupoA.add(palabrasReservadasDTO);
+                    break;
+                case 2:
+                    grupoB.add(palabrasReservadasDTO);
+                    break;
+                case 3:
+                    grupoC.add(palabrasReservadasDTO);
+                    break;
+                case 4:
+                    grupoD.add(palabrasReservadasDTO);
+                    break;
+                case 5:
+                    grupoE.add(palabrasReservadasDTO);
+                    break;
+                case 6:
+                    grupoF.add(palabrasReservadasDTO);
+                    break;
+                case 7:
+                    grupoG.add(palabrasReservadasDTO);
+                    break;
+                case 8:
+                    grupoH.add(palabrasReservadasDTO);
+                    break;
+                case 9:
+                    grupoI.add(palabrasReservadasDTO);
+                    break;
+                case 10:
+                    grupoJ.add(palabrasReservadasDTO);
+                    break;
+                default:
+                    throw new Exception("Orden no valido");
+            }
+            grupoA.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
+            grupoB.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
+            grupoC.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
+            grupoD.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
+            grupoE.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
+            grupoF.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
+            grupoG.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
+            grupoH.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
+            grupoI.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
+            grupoJ.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
+        }
+    }
+    private void procesarCategoria(List<PalabrasReservadasDTO> grupo) throws Exception{
+
+        if(!grupo.isEmpty() ){
+            switch (grupo.get(0).getCategoria().toLowerCase()){
                 case "variable":
-                    procesarGrupoVariables(grupoA);
+                    procesarGrupoVariables(grupo);
                     break;
                 case "bucle":
                     //TODO: Metodo del bucle
@@ -63,60 +148,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
                     //TODO: Metodo condicional
                     break;
                 case "metodo":
-                    procesarGrupoMetodos(grupoA);
-            }
-        }
-
-        return null;
-
-    }
-
-
-    private void agrupar(List<PalabrasReservadasDTO> palabrasReservadasDTOS) throws Exception{
-        for (PalabrasReservadasDTO palabrasReservadasDTO: palabrasReservadasDTOS) {
-            switch (palabrasReservadasDTO.getLista()){
-                case 1:
-                    grupoA.add(palabrasReservadasDTO);
-                    grupoA.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-                    break;
-                case 2:
-                    grupoB.add(palabrasReservadasDTO);
-                    grupoB.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-                    break;
-                case 3:
-                    grupoC.add(palabrasReservadasDTO);
-                    grupoC.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-                    break;
-                case 4:
-                    grupoD.add(palabrasReservadasDTO);
-                    grupoD.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-                    break;
-                case 5:
-                    grupoE.add(palabrasReservadasDTO);
-                    grupoE.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-                    break;
-                case 6:
-                    grupoF.add(palabrasReservadasDTO);
-                    grupoF.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-                    break;
-                case 7:
-                    grupoG.add(palabrasReservadasDTO);
-                    grupoG.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-                    break;
-                case 8:
-                    grupoH.add(palabrasReservadasDTO);
-                    grupoH.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-                    break;
-                case 9:
-                    grupoI.add(palabrasReservadasDTO);
-                    grupoI.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-                    break;
-                case 10:
-                    grupoJ.add(palabrasReservadasDTO);
-                    grupoJ.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-                    break;
-                default:
-                    throw new Exception("Orden no valido");
+                    procesarGrupoMetodos(grupo);
             }
         }
     }
@@ -125,59 +157,60 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         PalabrasReservadasDTO palabraClave = palabrasReservadasDTOS.get(0);
         PalabrasReservadasDTO param1 = palabrasReservadasDTOS.get(1);
         PalabrasReservadasDTO param2 = palabrasReservadasDTOS.get(2);
-        PalabrasReservadasDTO param3 = palabrasReservadasDTOS.get(3);
-
-        if(param3.getCategoria().equalsIgnoreCase("metodo")){
-            PalabrasReservadasDTO param4 = palabrasReservadasDTOS.get(4);
-            procesarGrupoMetodos(param3, param4);
-
-        }else{
-            mapVariables =  MetodosPalabras.variable(param1.getNombre(), param2.getNombre(), param3.getNombre());
+        if(!param1.getCategoria().equalsIgnoreCase("logica")){
+            throw new Exception("Para asignar un valor a una variable debe utilizar un =");
         }
 
+        if(param2.getCategoria().equalsIgnoreCase("metodo")){
+            PalabrasReservadasDTO param3 = palabrasReservadasDTOS.get(3);
+            String respuestaMetodo = procesarGrupoMetodos(param2, param3);
+            mapVariables.put(palabraClave.getNombre(), respuestaMetodo);
 
-
+        }else{
+            mapVariables.put(palabraClave.getNombre(), param2.getNombre());
+        }
      }
 
      private String procesarGrupoMetodos(List<PalabrasReservadasDTO> palabrasReservadasDTOS)throws Exception{
-         String palabraCalve = palabrasReservadasDTOS.get(0).getNombre();
+         PalabrasReservadasDTO palabraCalve = palabrasReservadasDTOS.get(0);
          PalabrasReservadasDTO param1 = palabrasReservadasDTOS.get(1);
-         String respuesta = "";
+         String resp = "";
 
-         if(mapVariables.containsKey(param1.getNombre()) && param1.getCategoria().equalsIgnoreCase("variablecv")) {
-             String variable = mapVariables.get(param1.getNombre());
-             switch (palabraCalve) {
-                 case "buscar":
-                     respuesta = MetodosPalabras.buscar(variable);
-                     break;
-                 case "cortar":
-                     respuesta = MetodosPalabras.cortar(variable);
-                     break;
-                 default:
-                     throw new Exception("La palabra no corresponde a ningun metodo");
-             }
-         }
-         return respuesta;
+         resp = tipoObjeto(palabraCalve, param1);
+         return resp;
      }
 
     private String procesarGrupoMetodos(PalabrasReservadasDTO palabraCalve, PalabrasReservadasDTO param1)throws Exception{
-
-        String respuesta = "";
-        if(mapVariables.containsKey(param1.getNombre()) && param1.getCategoria().equalsIgnoreCase("variablecv")) {
-            String variable = mapVariables.get(param1.getNombre());
-            switch (palabraCalve.getCategoria()) {
-                case "buscar":
-                    respuesta = MetodosPalabras.buscar(variable);
-                    break;
-                case "cortar":
-                    respuesta = MetodosPalabras.cortar(variable);
-                    break;
-                default:
-                    throw new Exception("La palabra no corresponde a ningun metodo");
-            }
-        }
-        return respuesta;
+        String resp = "";
+        resp = tipoObjeto(palabraCalve, param1);
+        return resp;
     }
 
-    //TODO: Deben Existir en la bd las siguientes categorias para las palabras reservadas: Metodo, Variable, VariableCV, Bucle, Condicional, logicas
+    private String tipoObjeto(PalabrasReservadasDTO palabraClave ,PalabrasReservadasDTO param1) throws Exception{
+        String variable = "";
+        String resp = "";
+        if(mapVariables.containsKey(param1.getNombre()) && param1.getCategoria().equalsIgnoreCase("variablecv")){
+            variable = mapVariables.get(param1.getNombre());
+        } else if (param1.getCategoria().equalsIgnoreCase("objeto")) {
+            variable = param1.getNombre();
+        }
+        switch (palabraClave.getNombre().toLowerCase()) {
+            case "buscar":
+                resp = MetodosPalabras.buscar(variable);
+                break;
+            case "cortar":
+                resp = MetodosPalabras.cortar(variable);
+                break;
+            case "escalar":
+                resp = MetodosPalabras.escalar(variable);
+                break;
+            default:
+                throw new Exception("La palabra no corresponde a ningun metodo");
+        }
+        this.respuesta = resp;
+        return resp;
+    }
+    //TODO: Deben Existir en la bd las siguientes categorias para las palabras reservadas: Metodo, Variable, VariableCV, Bucle, Condicional, logicas, objetos
+
+
 }

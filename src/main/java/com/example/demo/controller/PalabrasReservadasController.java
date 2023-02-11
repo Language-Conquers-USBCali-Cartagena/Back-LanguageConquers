@@ -47,11 +47,11 @@ public class PalabrasReservadasController {
 
     @Operation(summary = "Este método permite procesar la respuesta de un reto")
     @PostMapping("/respuesta")
-    public ResponseEntity<String> procesarRespuestaReto(@RequestBody PalabrasReservadasDTO palabrasReservadasDTO){
+    public ResponseEntity<String> procesarRespuestaReto(@RequestBody List<PalabrasReservadasDTO> palabrasReservadasDTOs){
         try{
-            //TODO: Termina controller con el servicio de palabra resrvada
             //TODO: Asignar puntaje y monedas a estudiante
-            return null;
+
+            return new ResponseEntity<>(palabrasReservadasService.procesarPalabraReservada(palabrasReservadasDTOs), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

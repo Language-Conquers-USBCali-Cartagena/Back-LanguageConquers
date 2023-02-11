@@ -7,24 +7,39 @@ import java.util.Map;
 
 public class MetodosPalabras {
 
-    //Metodos que permiten guradar variables
-    public static Map<String, String> variable(String nombre, String condicion, String valor){
-        HashMap<String, String> map = new HashMap<>();
-        map.put(nombre, valor);
-        return map;
-    }
 
     //Metodos que permiten procesar metodos
 
     public static String buscar(String objeto){
-        String respuesta = "Encontro " + objeto;
+        String respuesta = objeto;
         return respuesta;
     }
 
     public static String cortar (String objeto){
-        String respuesta;
-        //TODO: Hacer lista de derivados de objetos
-        return null;
+        String respuesta = derivados(objeto);
+
+        return respuesta;
     }
+    public static String escalar (String objeto){
+        String respuesta = "cima del " + objeto;
+        return respuesta;
+    }
+
     //TODO: Terminar metodos de palabras
+    private static String derivados(String objeto){
+        String respuesta = "";
+        switch (objeto.toLowerCase()){
+            case "arbol":
+                respuesta = "madera";
+                break;
+            case "coco":
+                respuesta = "Coco palmera";
+                break;
+            default:
+                return "";
+            //TODO: Hacer lista de derivados de objetos
+        }
+        return respuesta;
+    }
+
 }
