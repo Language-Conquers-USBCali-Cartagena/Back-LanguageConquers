@@ -1,8 +1,17 @@
 package com.example.demo.util;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.validator.routines.UrlValidator;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,5 +53,19 @@ public class Validaciones {
 
     public static int tiempoEntreFechas(Date fecha1, Date fecha2){
         return fecha2.getMonth() - fecha1.getMonth();
+    }
+
+    public static String validarToken(String idToken) throws FirebaseAuthException, IOException {
+        FileInputStream serviceAccountStream = new FileInputStream("C:\\Users\\juanc\\Documents\\PDG\\BACK\\Back-LanguageConquers\\src\\main\\resources\\Credentials");
+        GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccountStream);
+        Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+
+        FirebaseApp.initializeApp();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseToken decodedToken = auth.verifyIdToken(idToken);
+        String uid = decodedToken.getUid();
+        System.out.println(uid);
+
+        return uid;
     }
 }

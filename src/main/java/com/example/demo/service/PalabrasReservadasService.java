@@ -12,4 +12,5 @@ public interface PalabrasReservadasService {
     String crearPalabraResevada(PalabrasReservadas palabrasReservadas) throws Exception;
 
     String procesarPalabraReservada(List<PalabrasReservadasDTO> palabrasReservadasDTOs) throws Exception;
+
 }

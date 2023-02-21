@@ -5,6 +5,7 @@ import com.example.demo.model.PalabrasReservadas;
 import com.example.demo.model.dto.PalabrasReservadasDTO;
 import com.example.demo.service.PalabrasReservadasService;
 import com.example.demo.util.MetodosPalabras;
+import com.example.demo.util.Validaciones;
 import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

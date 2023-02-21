@@ -92,7 +92,7 @@ public class AvatarServiceImpl implements AvatarService {
     private void validacionesCrear(Avatar avatar) throws Exception {
         if(avatar.getImgAvatar() == null ||
                 avatar.getImgAvatar().trim().equals("") ||
-                Validaciones.isStringLenght(avatar.getImgAvatar(), 80)){
+                Validaciones.isStringLenght(avatar.getImgAvatar(), 250)){
             throw new Exception("Se debe ingresar una dirección de la imagen válida.");
         }
         if(avatar.getNombreAvatar() == null ||
@@ -123,7 +123,7 @@ public class AvatarServiceImpl implements AvatarService {
         }
         if(avatarDTO.getImgAvatar() == null ||
                 avatarDTO.getImgAvatar().trim().equals("") ||
-                Validaciones.isStringLenght(avatarDTO.getImgAvatar(), 80)){
+                Validaciones.isStringLenght(avatarDTO.getImgAvatar(), 250)){
             throw new Exception("Se debe ingresar una dirección de la imagen válida.");
         }
         if(avatarDTO.getNombreAvatar() == null ||
