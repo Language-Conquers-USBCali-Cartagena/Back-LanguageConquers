@@ -125,7 +125,7 @@ public class ProfesorServiceImpl implements ProfesorService {
         if(!Validaciones.formatoCorreoValido(profesor.getCorreo())){
             throw new Exception("Debe ingresar un correo válido.");
         }
-        if(Validaciones.isStringLenght(profesor.getFoto(),80)){
+        if(Validaciones.isStringLenght(profesor.getFoto(),250)){
             throw new Exception("El nombre de la foto es muy largo, se aceptan máximo 80 caracteres.");
         }
         if(!Validaciones.validExtensionImg(profesor.getFoto())){
