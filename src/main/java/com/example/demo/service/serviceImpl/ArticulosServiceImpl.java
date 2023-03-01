@@ -58,7 +58,7 @@ public class ArticulosServiceImpl implements ArticulosService {
         articulo.setNivelValido(articulosDTO.getNivelValido());
         articulo.setImagen(articulosDTO.getImagen());
         articulo.setEstado(estadoDAO.findById(articulosDTO.getIdEstado()).orElse(null));
-        articulo.setCategoria(categoriaDAO.findById(articulosDTO.getIdArticulo()).orElse(null));
+        articulo.setCategoria(categoriaDAO.findById(articulosDTO.getIdCategoria()).orElse(null));
         articulo.setUsuarioModificador(articulosDTO.getUsuarioModificador());
         articulo.setFechaModificacion(articulosDTO.getFechaModificacion());
         articulosDAO.save(articulo);

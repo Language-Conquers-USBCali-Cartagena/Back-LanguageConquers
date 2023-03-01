@@ -16,6 +16,7 @@ public class ValidarToken {
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.getApplicationDefault())
                 .build();
+
         return FirebaseApp.initializeApp(options);
     }
 
