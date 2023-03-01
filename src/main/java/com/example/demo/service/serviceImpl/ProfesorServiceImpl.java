@@ -128,9 +128,6 @@ public class ProfesorServiceImpl implements ProfesorService {
         if(Validaciones.isStringLenght(profesor.getFoto(),250)){
             throw new Exception("El nombre de la foto es muy largo, se aceptan máximo 80 caracteres.");
         }
-        if(!Validaciones.validExtensionImg(profesor.getFoto())){
-            throw new Exception("El formato de la imagen no es válido.");
-        }
         if(profesor.getUsuarioCreador()==null|| profesor.getUsuarioCreador().equals("")){
             throw new Exception("Debe ingresar el nombre del usuario creador.");
         }
@@ -183,11 +180,8 @@ public class ProfesorServiceImpl implements ProfesorService {
         if(!Validaciones.formatoCorreoValido(profesorDTO.getCorreo())){
             throw new Exception("Debe ingresar un correo válido.");
         }
-        if(Validaciones.isStringLenght(profesorDTO.getFoto(),80)){
+        if(Validaciones.isStringLenght(profesorDTO.getFoto(),250)){
             throw new Exception("El nombre de la foto es muy largo, se aceptan máximo 80 caracteres.");
-        }
-        if(!Validaciones.validExtensionImg(profesorDTO.getFoto())){
-            throw new Exception("El formato de la imagen no es válido.");
         }
         if(profesorDTO.getUsuarioModificador()==null|| profesorDTO.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el nombre del usuario modificador.");
