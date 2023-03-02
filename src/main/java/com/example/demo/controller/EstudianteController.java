@@ -118,4 +118,11 @@ public class EstudianteController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Operation(summary = "Este metodo trae la cantidad de estudiantes registrados")
+    @GetMapping("/cantidadEstudiante")
+    public ResponseEntity<Integer> totalEstudiante() throws Exception {
+        int cantidad = estudianteService.cantidadEstudiantes();
+        return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
 }

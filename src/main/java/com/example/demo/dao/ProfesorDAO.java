@@ -15,4 +15,7 @@ public interface ProfesorDAO extends JpaRepository<Profesor,Long> {
     Boolean existsByCorreo(String correo) throws Exception;
 
     Profesor findByCorreo(String correo) throws Exception;
+
+    @Query(value = "SELECT count(*) from profesor", nativeQuery = true)
+    int totalProfesores()throws Exception;
 }

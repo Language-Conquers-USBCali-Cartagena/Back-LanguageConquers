@@ -104,4 +104,11 @@ public class ProfesorController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Operation(summary = "Este método permite visualizar la cantidad de profesores que se encuentran registrados")
+    @GetMapping("/cantidadProfesores")
+    public ResponseEntity<Integer> totalProfesoresRegistrados() throws Exception {
+        int cantidad = profesorService.cantidadProfesores();
+        return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
 }

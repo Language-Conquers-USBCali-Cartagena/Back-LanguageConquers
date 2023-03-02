@@ -14,4 +14,6 @@ public interface EstudianteService {
     Estudiante findByCorreo (String correo) throws Exception;
     Estudiante findById(Long idEstudiante) throws Exception;
     List<Estudiante> rankingEstudiante() throws Exception;
+
+    int cantidadEstudiantes () throws Exception;
 }

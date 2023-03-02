@@ -94,6 +94,12 @@ public class ProfesorServiceImpl implements ProfesorService {
         return profesorDAO.findById(idProfesor).get();
     }
 
+    @Override
+    public int cantidadProfesores() throws Exception {
+        int cantidad = profesorDAO.totalProfesores();
+        return cantidad;
+    }
+
     private void validacionesCrear(Profesor profesor) throws Exception {
         if(profesor.getGenero().getIdGenero()==null){
             throw new Exception("Debe ingresar el id un genero.");

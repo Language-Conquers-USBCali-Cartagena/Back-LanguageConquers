@@ -13,4 +13,6 @@ public interface ProfesorService {
     Boolean existePorCorreo(String correo) throws Exception;
     Profesor findByCorreo(String correo) throws Exception;
     Profesor findById(Long idProfesor) throws Exception;
+
+    int cantidadProfesores() throws Exception;
 }

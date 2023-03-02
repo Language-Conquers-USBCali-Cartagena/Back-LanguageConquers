@@ -138,6 +138,12 @@ public class EstudianteServiceImpl implements EstudianteService {
         return estudiantes;
     }
 
+    @Override
+    public int cantidadEstudiantes() throws Exception {
+        int cantidad = estudianteDAO.totalEstudiante();
+        return cantidad;
+    }
+
     private void validacionesCrear(Estudiante estudiante) throws Exception {
         if(estudiante.getAvatar().getIdAvatar() == null){
             throw new Exception("Debe ingresar un id avatar.");
