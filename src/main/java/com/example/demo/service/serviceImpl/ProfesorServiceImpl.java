@@ -201,7 +201,7 @@ public class ProfesorServiceImpl implements ProfesorService {
         }
         Date fechaActual = new Date();
         if(profesorDTO.getFechaModificacion().compareTo(fechaActual)>0){
-            throw  new Exception("No se puede ingresar una fecha que aun no ha sucedido.");
+            throw  new Exception("No se puede ingresar una fecha que aun no ha sucedido. ok");
         }
 
     }
