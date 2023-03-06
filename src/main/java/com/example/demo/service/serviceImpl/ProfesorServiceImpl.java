@@ -41,6 +41,7 @@ public class ProfesorServiceImpl implements ProfesorService {
         profesor.setApellido(profesorDTO.getApellido());
         profesor.setCorreo(profesorDTO.getCorreo());
         profesor.setFoto(profesorDTO.getFoto());
+        profesor.setGenero(generoDAO.findById(profesorDTO.getIdGenero()).orElse(null));
         profesor.setUsuarioModificador(profesorDTO.getUsuarioModificador());
         profesor.setFechaModificacion(profesorDTO.getFechaModificacion());
         profesorDAO.save(profesor);
