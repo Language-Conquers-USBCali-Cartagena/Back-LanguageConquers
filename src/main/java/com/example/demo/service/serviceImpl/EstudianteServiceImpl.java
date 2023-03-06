@@ -338,9 +338,6 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudianteDTO.getMonedasObtenidas()<0){
             throw new Exception("Las monedas obtenidas no debe ser negativo.");
         }
-        if(estudianteDTO.getMonedasObtenidas()!=0){
-            throw new Exception("Las monedas obtenidas al momento de crear el estudiante son 0.");
-        }
         if(estudianteDTO.getCorreo() == null || estudianteDTO.getCorreo().trim().equals("")){
             throw new Exception("Debe ingresar un correo del estudiante.");
         }
