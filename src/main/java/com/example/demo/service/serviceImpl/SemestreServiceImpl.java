@@ -53,6 +53,18 @@ public class SemestreServiceImpl implements SemestreService {
         semestreDAO.deleteById(idSemestre);
         return "Se elimino exitosamente el semestre.";
     }
+
+    @Override
+    public Semestre findById(Long idSemestre) throws Exception {
+        if(idSemestre == null){
+            throw  new Exception("Debe ingresar el id de un semestre.");
+        }
+        if(!semestreDAO.existsById(idSemestre)){
+            throw new Exception("El semestre con id: " + idSemestre + " no existe.");
+        }
+        return semestreDAO.findById(idSemestre).get();
+    }
+
     @Override
     public List<Semestre> listar() {
         return semestreDAO.findAll();

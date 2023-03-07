@@ -71,4 +71,15 @@ public class GeneroController {
         }
     }
 
+    @Operation(summary = "Este método permite buscar por id un genero.")
+    @GetMapping("/porId/{id}")
+    public ResponseEntity<GeneroDTO> generoPorId (@PathVariable("id") Long idGenero){
+        try{
+            GeneroDTO generoDTO = generoMapper.toDTO(generoService.findById(idGenero));
+            return new ResponseEntity<>(generoDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

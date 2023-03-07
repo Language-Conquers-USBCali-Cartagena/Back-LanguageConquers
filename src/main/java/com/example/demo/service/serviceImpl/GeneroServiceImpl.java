@@ -65,6 +65,17 @@ public class GeneroServiceImpl implements GeneroService {
     }
 
     @Override
+    public Genero findById(Long idGenero) throws Exception {
+        if(idGenero == null){
+            throw new Exception("Debe ingresar el id de un genero.");
+        }
+        if(!generoDAO.existsById(idGenero)){
+            throw new Exception("El genero con id: " + idGenero + " no existe.");
+        }
+        return generoDAO.findById(idGenero).get();
+    }
+
+    @Override
     public List<Genero> listar() {
         return generoDAO.findAll();
     }
