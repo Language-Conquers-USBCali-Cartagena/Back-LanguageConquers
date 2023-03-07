@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.Date;
@@ -229,9 +231,12 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudiante.getFechaNacimiento() == null){
             throw new Exception("Debe ingresar una fecha de nacimiento.");
         }
-        LocalDate fechaActual = LocalDate.now();
-        long edad = ChronoUnit.YEARS.between((Temporal) estudiante.getFechaNacimiento(), fechaActual);
-        if(edad >15){
+        LocalDate fechaNamientoLocalDate = estudiante.getFechaNacimiento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate ahora = LocalDate.now();
+        Period periodo = Period.between(fechaNamientoLocalDate, ahora);
+        int edad = periodo.getYears();
+
+        if(edad < 15){
             throw new Exception("Digite una fecha de nacimiento válida, debe ser mayor de 15 años para poder registrarse.");
         }
         if(estudiante.getUsuarioCreador()==null || estudiante.getUsuarioCreador().equals("")){
@@ -352,8 +357,13 @@ public class EstudianteServiceImpl implements EstudianteService {
             throw new Exception("Debe ingresar una fecha de nacimiento.");
         }
         Date fechaActual = new Date();
-        if(estudianteDTO.getFechaNacimiento().compareTo(fechaActual)>0){
-            throw new Exception("Digite una fecha de nacimiento válida.");
+        LocalDate fechaNamientoLocalDate = estudianteDTO.getFechaNacimiento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate ahora = LocalDate.now();
+        Period periodo = Period.between(fechaNamientoLocalDate, ahora);
+        int edad = periodo.getYears();
+
+        if(edad < 15){
+            throw new Exception("Digite una fecha de nacimiento válida, debe ser mayor de 15 años para poder registrarse.");
         }
         if(estudianteDTO.getUsuarioModificador()==null || estudianteDTO.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el usuario modificador.");
