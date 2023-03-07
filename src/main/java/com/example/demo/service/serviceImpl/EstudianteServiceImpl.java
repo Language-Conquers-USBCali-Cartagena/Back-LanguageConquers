@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.List;
 
@@ -226,9 +229,10 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudiante.getFechaNacimiento() == null){
             throw new Exception("Debe ingresar una fecha de nacimiento.");
         }
-        Date fechaActual = new Date();
-        if(estudiante.getFechaNacimiento().compareTo(fechaActual)>0){
-            throw new Exception("Digite una fecha de nacimiento válida.");
+        LocalDate fechaActual = LocalDate.now();
+        long edad = ChronoUnit.YEARS.between((Temporal) estudiante.getFechaNacimiento(), fechaActual);
+        if(edad >15){
+            throw new Exception("Digite una fecha de nacimiento válida, debe ser mayor de 15 años para poder registrarse.");
         }
         if(estudiante.getUsuarioCreador()==null || estudiante.getUsuarioCreador().equals("")){
             throw new Exception("Debe ingresar el usuario creador.");
