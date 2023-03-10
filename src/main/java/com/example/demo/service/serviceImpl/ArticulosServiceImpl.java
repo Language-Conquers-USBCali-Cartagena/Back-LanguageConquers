@@ -167,7 +167,7 @@ public class ArticulosServiceImpl implements ArticulosService {
         if(estadoDAO.findById(articulosDTO.getIdEstado()).toString().equals("Optional.empty")){
             throw new Exception("Debe ingresar un id de estado que exista.");
         }
-        if(estadoDAO.findById(articulosDTO.getIdCategoria()).toString().equals("Optional.empty")){
+        if(categoriaDAO.findById(articulosDTO.getIdCategoria()).toString().equals("Optional.empty")){
             throw new Exception("Debe ingresar un id de categoría que exista.");
         }
         if(articulosDTO.getNombre().equals(null) || articulosDTO.getNombre().trim().equals("") ||
