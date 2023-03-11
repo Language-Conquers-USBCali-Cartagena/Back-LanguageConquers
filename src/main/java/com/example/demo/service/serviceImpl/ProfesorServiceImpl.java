@@ -81,6 +81,10 @@ public class ProfesorServiceImpl implements ProfesorService {
         if(!Validaciones.formatoCorreoValido(correo)){
             throw new Exception("El formato del correo no es válido.");
         }
+        Profesor profesor = profesorDAO.findByCorreo(correo);
+        if(profesor.getApellido().equals("")){
+            throw new Exception("No existe profesor registrado con este correo");
+        }
         return profesorDAO.findByCorreo(correo);
     }
 

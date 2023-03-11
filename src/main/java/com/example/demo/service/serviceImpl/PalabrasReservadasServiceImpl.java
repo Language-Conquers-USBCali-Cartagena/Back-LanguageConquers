@@ -18,17 +18,9 @@ import java.util.stream.Collectors;
 @Scope("singleton")
 @Service
 public class PalabrasReservadasServiceImpl implements PalabrasReservadasService {
-    List<PalabrasReservadasDTO> grupoA = new ArrayList<>();
-    List<PalabrasReservadasDTO> grupoB = new ArrayList<>();
-    List<PalabrasReservadasDTO> grupoC = new ArrayList<>();
-    List<PalabrasReservadasDTO> grupoD = new ArrayList<>();
-    List<PalabrasReservadasDTO> grupoE = new ArrayList<>();
-    List<PalabrasReservadasDTO> grupoF = new ArrayList<>();
-    List<PalabrasReservadasDTO> grupoG = new ArrayList<>();
-    List<PalabrasReservadasDTO> grupoH = new ArrayList<>();
-    List<PalabrasReservadasDTO> grupoI = new ArrayList<>();
-    List<PalabrasReservadasDTO> grupoJ = new ArrayList<>();
+    List<PalabrasReservadasDTO>[] grupos = new ArrayList[10];
     Map<String, String> mapVariables = new HashMap<>();
+    Map<String, String> mapMetodos = new HashMap<>();
     String respuesta = new String();
     @Autowired
     PalabrasReservadasDAO palabrasReservadasDAO;
@@ -51,21 +43,15 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
 
     @Override
     public String procesarPalabraReservada(List<PalabrasReservadasDTO> palabrasReservadasDTOs) throws Exception {
-
+        //Inicializa las listas
+        inicializar();
         //Agrupa las listas segun su orden
         agrupar(palabrasReservadasDTOs);
         //Procesa las listas para ejecutar la accion esperada
-        procesarCategoria(grupoA);
-        procesarCategoria(grupoB);
-        procesarCategoria(grupoC);
-        procesarCategoria(grupoD);
-        procesarCategoria(grupoE);
-        procesarCategoria(grupoF);
-        procesarCategoria(grupoG);
-        procesarCategoria(grupoH);
-        procesarCategoria(grupoI);
-        procesarCategoria(grupoJ);
-
+        for(List<PalabrasReservadasDTO> grupo: grupos){
+            procesarCategoria(grupo);
+        }
+        //Limpia las listas
         limpiar();
 
 
@@ -73,66 +59,60 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         return this.respuesta;
 
     }
+    private void inicializar(){
+        for(int i = 0; i<10;i++){
+            grupos[i] = new ArrayList<>();
+        }
+    }
 
-    private void limpiar() throws Exception{
-        grupoA.clear();
-        grupoB.clear();
-        grupoC.clear();
-        grupoD.clear();
-        grupoE.clear();
-        grupoF.clear();
-        grupoG.clear();
-        grupoH.clear();
-        grupoI.clear();
-        grupoJ.clear();
+    private void limpiar(){
+        for(List<PalabrasReservadasDTO> grupo: grupos){
+            grupo.clear();
+        }
+        mapVariables.clear();
+        mapMetodos.clear();
     }
 
     private void agrupar(List<PalabrasReservadasDTO> palabrasReservadasDTOS) throws Exception{
+
         for (PalabrasReservadasDTO palabrasReservadasDTO: palabrasReservadasDTOS) {
             switch (palabrasReservadasDTO.getLista()){
                 case 1:
-                    grupoA.add(palabrasReservadasDTO);
+                    grupos[0].add(palabrasReservadasDTO);
                     break;
                 case 2:
-                    grupoB.add(palabrasReservadasDTO);
+                    grupos[1].add(palabrasReservadasDTO);
                     break;
                 case 3:
-                    grupoC.add(palabrasReservadasDTO);
+                    grupos[2].add(palabrasReservadasDTO);
                     break;
                 case 4:
-                    grupoD.add(palabrasReservadasDTO);
+                    grupos[3].add(palabrasReservadasDTO);
                     break;
                 case 5:
-                    grupoE.add(palabrasReservadasDTO);
+                    grupos[4].add(palabrasReservadasDTO);
                     break;
                 case 6:
-                    grupoF.add(palabrasReservadasDTO);
+                    grupos[5].add(palabrasReservadasDTO);
                     break;
                 case 7:
-                    grupoG.add(palabrasReservadasDTO);
+                    grupos[6].add(palabrasReservadasDTO);
                     break;
                 case 8:
-                    grupoH.add(palabrasReservadasDTO);
+                    grupos[7].add(palabrasReservadasDTO);
                     break;
                 case 9:
-                    grupoI.add(palabrasReservadasDTO);
+                    grupos[8].add(palabrasReservadasDTO);
                     break;
                 case 10:
-                    grupoJ.add(palabrasReservadasDTO);
+                    grupos[9].add(palabrasReservadasDTO);
                     break;
                 default:
                     throw new Exception("Orden no valido");
             }
-            grupoA.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-            grupoB.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-            grupoC.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-            grupoD.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-            grupoE.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-            grupoF.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-            grupoG.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-            grupoH.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-            grupoI.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
-            grupoJ.stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
+        }
+        for(int i = 0; i < grupos.length; i++){
+            grupos[i] = grupos[i].stream().sorted(Comparator.comparingInt(PalabrasReservadasDTO::getOrden)).collect(Collectors.toList());
         }
     }
     private void procesarCategoria(List<PalabrasReservadasDTO> grupo) throws Exception{
@@ -150,6 +130,9 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
                     break;
                 case "metodo":
                     procesarGrupoMetodos(grupo);
+                    break;
+                default:
+                    throw new Exception("No puede inciar una linea con un " + grupo.get(0).getCategoria());
             }
         }
     }
@@ -176,14 +159,15 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
          PalabrasReservadasDTO palabraCalve = palabrasReservadasDTOS.get(0);
          PalabrasReservadasDTO param1 = palabrasReservadasDTOS.get(1);
          String resp = "";
-
          resp = tipoObjeto(palabraCalve, param1);
+         mapMetodos.put(param1.getNombre(), resp);
          return resp;
      }
 
     private String procesarGrupoMetodos(PalabrasReservadasDTO palabraCalve, PalabrasReservadasDTO param1)throws Exception{
         String resp = "";
         resp = tipoObjeto(palabraCalve, param1);
+        mapMetodos.put(param1.getNombre(), resp);
         return resp;
     }
 
@@ -197,9 +181,19 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         }
         switch (palabraClave.getNombre().toLowerCase()) {
             case "buscar":
+                if(param1.getNombre().equalsIgnoreCase("coco")){
+                    if(!mapMetodos.get("Arbol").equalsIgnoreCase("cima del arbol")){
+                        throw new Exception("Para buscar un " + param1.getNombre() + " debe estar en una palmera");
+                    }
+                }
                 resp = MetodosPalabras.buscar(variable);
+
                 break;
             case "cortar":
+                System.out.println();
+                if(!mapVariables.containsKey(param1.getNombre())){
+                    throw new Exception("El objeto debe existir para poder cortarlo");
+                }
                 resp = MetodosPalabras.cortar(variable);
                 break;
             case "escalar":

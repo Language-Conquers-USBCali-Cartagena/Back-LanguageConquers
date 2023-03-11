@@ -120,7 +120,11 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(!Validaciones.formatoCorreoValido(correo)){
             throw new Exception("El formato del correo no es válido.");
         }
-        return estudianteDAO.findByCorreo(correo);
+        Estudiante estudiante = estudianteDAO.findByCorreo(correo);
+        if(estudiante.getApellido().equals("")){
+            throw new Exception("No existe estudiante registrado con este correo");
+        }
+        return estudiante;
     }
 
     @Override
