@@ -1,6 +1,7 @@
 package com.example.demo.service.serviceImpl;
 
 import com.example.demo.dao.PalabrasReservadasDAO;
+import com.example.demo.dao.RetoDAO;
 import com.example.demo.model.PalabrasReservadas;
 import com.example.demo.model.dto.PalabrasReservadasDTO;
 import com.example.demo.service.PalabrasReservadasService;
@@ -24,7 +25,8 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
     String respuesta = new String();
     @Autowired
     PalabrasReservadasDAO palabrasReservadasDAO;
-
+    @Autowired
+    RetoDAO retoDAO;
 
     @Override
     public List<PalabrasReservadas> findAll() throws Exception {
@@ -59,6 +61,15 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         return this.respuesta;
 
     }
+
+    @Override
+    public List<PalabrasReservadas> findByIdReto(Long idReto) throws Exception {
+        if(!retoDAO.existsById(idReto)){
+            throw new Exception("El reto no existe");
+        }
+        return palabrasReservadasDAO.findByIdReto(idReto);
+    }
+
     private void inicializar(){
         for(int i = 0; i<10;i++){
             grupos[i] = new ArrayList<>();
@@ -166,7 +177,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
          PalabrasReservadasDTO param1 = palabrasReservadasDTOS.get(1);
          String resp = "";
 
-         if(!palabrasReservadasDTOS.get(2).getNombre().equals("")){
+         if(palabrasReservadasDTOS.size() >= 3){
              resp = tipoObjeto(palabraCalve, param1, palabrasReservadasDTOS.get(2));
              mapMetodos.put(param1.getNombre(), resp);
          }else {

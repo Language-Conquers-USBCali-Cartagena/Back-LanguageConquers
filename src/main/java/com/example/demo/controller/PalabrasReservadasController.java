@@ -56,4 +56,15 @@ public class PalabrasReservadasController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @Operation(summary = "Este metodo permite obtener las palabras reservadas para un reto en especifico")
+    @GetMapping("/palabras-por-reto")
+    public ResponseEntity<List<PalabrasReservadasDTO>> palabrasReservadasReto(@RequestParam Long idReto){
+        try {
+            List<PalabrasReservadas> palabrasReservadas = palabrasReservadasService.findByIdReto(idReto);
+            List<PalabrasReservadasDTO> palabrasReservadasDTOS = palabrasReservadasMapper.toDTOList(palabrasReservadas);
+            return new ResponseEntity<>(palabrasReservadasDTOS, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

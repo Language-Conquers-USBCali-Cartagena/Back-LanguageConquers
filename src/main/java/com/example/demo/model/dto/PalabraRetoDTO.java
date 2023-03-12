@@ -16,5 +16,5 @@ public class PalabraRetoDTO implements Serializable {
 
     private Long idPalabraReto;
     private Long idPalabrasReservadas;
-    private Long idreto;
+    private Long idReto;
 }

@@ -13,4 +13,6 @@ public interface PalabrasReservadasService {
 
     String procesarPalabraReservada(List<PalabrasReservadasDTO> palabrasReservadasDTOs) throws Exception;
 
+    List<PalabrasReservadas> findByIdReto(Long idReto) throws Exception;
+
 }
