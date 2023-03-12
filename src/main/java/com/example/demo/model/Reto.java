@@ -90,4 +90,7 @@ public class Reto {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reto")
     List<Rol> rols = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reto")
+    List<PalabraReto> palabraRetoList = new ArrayList<>();
 }

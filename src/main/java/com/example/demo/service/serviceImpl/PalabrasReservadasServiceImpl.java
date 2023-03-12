@@ -146,10 +146,16 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         }
 
         if(param2.getCategoria().equalsIgnoreCase("metodo")){
-            PalabrasReservadasDTO param3 = palabrasReservadasDTOS.get(3);
-            String respuestaMetodo = procesarGrupoMetodos(param2, param3);
-            mapVariables.put(palabraClave.getNombre(), respuestaMetodo);
-
+            if(palabrasReservadasDTOS.size() != 4){
+                PalabrasReservadasDTO param3 = palabrasReservadasDTOS.get(3);
+                PalabrasReservadasDTO param4 = palabrasReservadasDTOS.get(4);
+                String respuestaMetodo = procesarGrupoMetodos(param2, param3, param4);
+                mapVariables.put(palabraClave.getNombre(), respuestaMetodo);
+            }else{
+                PalabrasReservadasDTO param3 = palabrasReservadasDTOS.get(3);
+                String respuestaMetodo = procesarGrupoMetodos(param2, param3);
+                mapVariables.put(palabraClave.getNombre(), respuestaMetodo);
+            }
         }else{
             mapVariables.put(palabraClave.getNombre(), param2.getNombre());
         }
@@ -159,8 +165,14 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
          PalabrasReservadasDTO palabraCalve = palabrasReservadasDTOS.get(0);
          PalabrasReservadasDTO param1 = palabrasReservadasDTOS.get(1);
          String resp = "";
-         resp = tipoObjeto(palabraCalve, param1);
-         mapMetodos.put(param1.getNombre(), resp);
+
+         if(!palabrasReservadasDTOS.get(2).getNombre().equals("")){
+             resp = tipoObjeto(palabraCalve, param1, palabrasReservadasDTOS.get(2));
+             mapMetodos.put(param1.getNombre(), resp);
+         }else {
+             resp = tipoObjeto(palabraCalve, param1);
+             mapMetodos.put(param1.getNombre(), resp);
+         }
          return resp;
      }
 
@@ -170,14 +182,65 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         mapMetodos.put(param1.getNombre(), resp);
         return resp;
     }
+    private String procesarGrupoMetodos(PalabrasReservadasDTO palabraCalve, PalabrasReservadasDTO param1, PalabrasReservadasDTO param2)throws Exception{
+        String resp = "";
+        resp = tipoObjeto(palabraCalve, param1, param2);
+        mapMetodos.put(param1.getNombre(), resp);
+        return resp;
+    }
 
-    private String tipoObjeto(PalabrasReservadasDTO palabraClave ,PalabrasReservadasDTO param1) throws Exception{
+    private String tipoObjeto(PalabrasReservadasDTO palabraCalve, PalabrasReservadasDTO param1, PalabrasReservadasDTO param2) throws  Exception {
+        String variable = "";
+        String variable2 = "";
+        String resp = "";
+        if (mapVariables.containsKey(param1.getNombre()) && param1.getCategoria().equalsIgnoreCase("variablecv")) {
+            variable = mapVariables.get(param1.getNombre());
+        } else if (param1.getCategoria().equalsIgnoreCase("objeto")) {
+            variable = param1.getNombre();
+        }else{
+            throw new Exception("Parametro " + param1.getNombre()+ " no valido ");
+        }
+        if (mapVariables.containsKey(param2.getNombre()) && param2.getCategoria().equalsIgnoreCase("variablecv")) {
+            variable2 = mapVariables.get(param2.getNombre());
+        } else if (param2.getCategoria().equalsIgnoreCase("objeto")) {
+            variable2 = param2.getNombre();
+        }else{
+            throw new Exception("Parametro " + param2.getNombre()+ " no valido ");
+        }
+        switch (palabraCalve.getNombre().toLowerCase()) {
+            case "encender":
+                if(!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)){
+                    throw new Exception("Los parametros deben existir para poder encender fuego");
+                }
+                resp = MetodosPalabras.encender(variable, variable2);
+                break;
+            case "juntar":
+                if(!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)){
+                    throw new Exception("Los parametros deben existir para poder juntarlos");
+                }
+                resp = MetodosPalabras.juntar(variable, variable2);
+                break;
+            case "construir":
+                if(!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)){
+                    throw new Exception("Los parametros deben existir para poder construir algo");
+                }
+                resp = MetodosPalabras.construir(variable, variable2);
+                break;
+            default:
+                throw new Exception("La palabra " +palabraCalve.getNombre() + " no corresponde a ningun metodo");
+        }
+        this.respuesta = resp;
+        return resp;
+    }
+    private String tipoObjeto(PalabrasReservadasDTO palabraClave, PalabrasReservadasDTO param1) throws Exception{
         String variable = "";
         String resp = "";
         if(mapVariables.containsKey(param1.getNombre()) && param1.getCategoria().equalsIgnoreCase("variablecv")){
             variable = mapVariables.get(param1.getNombre());
         } else if (param1.getCategoria().equalsIgnoreCase("objeto")) {
             variable = param1.getNombre();
+        }else{
+            throw new Exception("Parametro " + param1.getNombre()+ " no valido ");
         }
         switch (palabraClave.getNombre().toLowerCase()) {
             case "buscar":
@@ -197,10 +260,25 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
                 resp = MetodosPalabras.cortar(variable);
                 break;
             case "escalar":
+                if(!mapVariables.containsKey(param1.getNombre())){
+                    throw new Exception("El objeto debe existir para poder escalarlo");
+                }
                 resp = MetodosPalabras.escalar(variable);
                 break;
+            case "golpear":
+                if(!mapVariables.containsKey(param1.getNombre())){
+                    throw new Exception("El objeto debe existir para poder escalarlo");
+                }
+                resp = MetodosPalabras.golpear(variable);
+                break;
+            case "construir":
+                if(!mapVariables.containsKey(param1.getNombre())){
+                    throw new Exception("El objeto debe existir para poder construir algo");
+                }
+                resp = MetodosPalabras.construir(variable);
+                break;
             default:
-                throw new Exception("La palabra no corresponde a ningun metodo");
+                throw new Exception("La palabra " + palabraClave.getNombre() + " no corresponde a ningun metodo");
         }
         this.respuesta = resp;
         return resp;

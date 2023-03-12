@@ -16,9 +16,7 @@ import java.util.List;
 public class Estudiante {
 
 
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuarios_seq")
     @Id
-    //@GenericGenerator(name = "usuarios_seq", strategy = "aurozen.assign.aurozenassign.StringPrefixedSequenceIdGenerator")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuarios_seq")
     @SequenceGenerator(name = "usuarios_seq", sequenceName = "usuarios_seq", allocationSize = 1, initialValue = 1)
     @Column(name = "id_estudiante", nullable = false)

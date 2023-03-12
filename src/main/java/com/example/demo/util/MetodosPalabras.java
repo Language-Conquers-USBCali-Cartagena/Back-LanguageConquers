@@ -24,8 +24,102 @@ public class MetodosPalabras {
         String respuesta = "cima del " + objeto;
         return respuesta;
     }
+    public static String golpear (String objeto){
+        String respuesta = "";
+        if(objeto.equalsIgnoreCase("rocas")){
+            respuesta = "chispas";
+        }
+        return respuesta;
+    }
+    public static String juntar (String objeto1, String objeto2) throws Exception{
+        if(objeto1.contains("fuego") && objeto2.equalsIgnoreCase("madera")) {
+            return "fogata";
+        }else if(objeto1.equalsIgnoreCase("ramas") && objeto2.equalsIgnoreCase("hojas de palma")){
+            return "piso choza";
+        }
+        else{
+            throw  new Exception("No se pueden juntar los objetos");
+        }
+    }
+    public static String encender (String objeto, String medio) throws Exception{
+        if(!medio.equalsIgnoreCase("chispas")){
+            throw new Exception("Necesita chispas para encender el fuego");
+        }
+        return objeto + " con fuego";
 
-    //TODO: Terminar metodos de palabras
+    }
+    public static String construir (String material1, String material2) throws Exception{
+        String resp = "";
+        switch(material1.toLowerCase()) {
+            case "hojas secas con fuego":
+                if(material2.equalsIgnoreCase("madera")) {
+                    resp = "fogata";
+                } else {
+                    throw new Exception("No se pueden juntar los objetos");
+                }
+                break;
+            case "ramas":
+                if(material2.equalsIgnoreCase("hojas de palma")) {
+                    resp = "piso choza";
+                } else {
+                    throw new Exception("No se pueden juntar los objetos");
+                }
+                break;
+            case "hojas de palma":
+                if(material2.equalsIgnoreCase("ramas")) {
+                    resp = "piso choza";
+                } else {
+                    throw new Exception("No se pueden juntar los objetos");
+                }
+                break;
+            case "piso choza":
+                if(material2.equalsIgnoreCase("paredes")){
+                    resp = "base choza";
+                }else{
+                    throw new Exception("No se pueden juntar los objetos");
+                }
+                break;
+            case "paredes":
+                if(material2.equalsIgnoreCase("piso choza")){
+                    resp = "base choza";
+                }else {
+                    throw new Exception("No se pueden juntar los objetos");
+                }
+                break;
+            case "base choza":
+                if(material2.equalsIgnoreCase("techo")){
+                    resp = "choza";
+                }else {
+                    throw new Exception("No se pueden juntar los objetos");
+                }
+                break;
+            case "techo":
+                if(material2.equalsIgnoreCase("base choza")){
+                    resp = "choza";
+                }else {
+                    throw new Exception("No se pueden juntar los objetos");
+                }
+                break;
+            default:
+                throw new Exception("No se pueden juntar los objetos");
+        }
+        return resp;
+    }
+
+    public static String construir (String material) throws Exception{
+        String resp = "";
+        switch (material.toLowerCase()){
+            case "madera":
+                resp = "paredes";
+                break;
+            case "hojas de palma":
+                resp = "techo";
+                break;
+            default:
+                throw new Exception("No se pueden juntar los objetos");
+        }
+        return resp;
+    }
     private static String derivados(String objeto){
         String respuesta = "";
         switch (objeto.toLowerCase()){
@@ -37,7 +131,6 @@ public class MetodosPalabras {
                 break;
             default:
                 return "";
-            //TODO: Hacer lista de derivados de objetos
         }
         return respuesta;
     }
