@@ -107,24 +107,28 @@ public class RetoServiceImpl implements RetoService {
     @Override
     public String habilitarReto(RetoDTO retoDTO) throws Exception {
         Reto reto = null;
-        validacionesActualizar(retoDTO);
+        validacionesHabilitarReto(retoDTO);
         reto = retoDAO.findById(retoDTO.getIdReto()).orElse(null);
-        reto.setNombreReto(retoDTO.getNombreReto());
-        reto.setDescripcion(retoDTO.getDescripcion());
-        reto.setMaximoIntentos(retoDTO.getMaximoIntentos());
         reto.setFechaInicio(retoDTO.getFechaInicio());
         reto.setFechaLimite(retoDTO.getFechaLimite());
-        reto.setEsGrupal(retoDTO.isEsGrupal());
+        reto.setMaximoIntentos(retoDTO.getMaximoIntentos());
         reto.setMoneda(retoDTO.getMoneda());
-        reto.setSolucion(retoDTO.getSolucion());
-        reto.setNrEstudiatesGrupo(retoDTO.getNrEstudiatesGrupo());
-        reto.setMision(misionDAO.findById(retoDTO.getIdMision()).orElse(null));
         reto.setEstado(estadoDAO.findById(retoDTO.getIdEstado()).orElse(null));
-        reto.setCurso(cursoDAO.findById(retoDTO.getIdCurso()).orElse(null));
         reto.setFechaModificacion(retoDTO.getFechaModificacion());
         reto.setUsuarioModificador(retoDTO.getUsuarioModificador());
+        reto.getNombreReto();
+        reto.getDescripcion();
+        reto.getUrlVideo1();
+        reto.getUrlVideo2();
+        reto.getImagenTema1();
+        reto.getImagenTema2();
+        reto.getMision();
+        reto.getDescripcionTeoria();
+        reto.getSolucion();
+        reto.getCurso();
+        reto.getNrEstudiatesGrupo();
         retoDAO.save(reto);
-        return "Se actualizo el reto.";
+        return "Se ha configurado el reto de manera exitosa.";
     }
 
     private void validacionesCrear(Reto reto) throws Exception{

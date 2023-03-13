@@ -90,7 +90,7 @@ public class CursoController {
     }
 
     @Operation(summary = "Este método permite listar los cursos por id del profesor")
-    @GetMapping("/porIdProfesor")
+    @GetMapping("/porIdProfesor/{id}")
     public ResponseEntity<List<CursoDTO>> listarPorIdProfesor(@PathVariable("id") Long idProfesor){
         try{
             List<Curso> cursos = cursoService.findByIdProfesor(idProfesor);
