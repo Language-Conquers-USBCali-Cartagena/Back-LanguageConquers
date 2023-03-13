@@ -88,4 +88,16 @@ public class CursoController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Operation(summary = "Este método permite listar los cursos por id del profesor")
+    @GetMapping("/porIdProfesor")
+    public ResponseEntity<List<CursoDTO>> listarPorIdProfesor(@PathVariable("id") Long idProfesor){
+        try{
+            List<Curso> cursos = cursoService.findByIdProfesor(idProfesor);
+            List<CursoDTO> cursoDTOS = cursoMapper.toDTOList(cursos);
+            return new ResponseEntity<>(cursoDTOS, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

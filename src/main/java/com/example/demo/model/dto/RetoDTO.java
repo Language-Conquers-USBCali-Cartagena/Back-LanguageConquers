@@ -29,4 +29,9 @@ public class RetoDTO implements Serializable {
     private Long idMision;
     private Long idEstado;
     private Long idCurso;
+    private String descripcionTeoria;
+    private String imagen1;
+    private String imagen2;
+    private String urlVideo1;
+    private String urlVideo2;
 }

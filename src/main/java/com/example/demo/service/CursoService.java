@@ -13,5 +13,8 @@ public interface CursoService {
     List<Curso> findByCorreoEstudiante (String correoEstudiante) throws Exception;
     List<Curso> findAll() throws Exception;
     Curso findById(Long idCurso) throws Exception;
+    List<Curso> findByIdProfesor(Long idProfesor) throws Exception;
+
+
 
 }

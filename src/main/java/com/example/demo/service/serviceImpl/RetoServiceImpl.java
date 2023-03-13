@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -103,6 +104,29 @@ public class RetoServiceImpl implements RetoService {
         return retoDAO.findById(idReto).get();
     }
 
+    @Override
+    public String habilitarReto(RetoDTO retoDTO) throws Exception {
+        Reto reto = null;
+        validacionesActualizar(retoDTO);
+        reto = retoDAO.findById(retoDTO.getIdReto()).orElse(null);
+        reto.setNombreReto(retoDTO.getNombreReto());
+        reto.setDescripcion(retoDTO.getDescripcion());
+        reto.setMaximoIntentos(retoDTO.getMaximoIntentos());
+        reto.setFechaInicio(retoDTO.getFechaInicio());
+        reto.setFechaLimite(retoDTO.getFechaLimite());
+        reto.setEsGrupal(retoDTO.isEsGrupal());
+        reto.setMoneda(retoDTO.getMoneda());
+        reto.setSolucion(retoDTO.getSolucion());
+        reto.setNrEstudiatesGrupo(retoDTO.getNrEstudiatesGrupo());
+        reto.setMision(misionDAO.findById(retoDTO.getIdMision()).orElse(null));
+        reto.setEstado(estadoDAO.findById(retoDTO.getIdEstado()).orElse(null));
+        reto.setCurso(cursoDAO.findById(retoDTO.getIdCurso()).orElse(null));
+        reto.setFechaModificacion(retoDTO.getFechaModificacion());
+        reto.setUsuarioModificador(retoDTO.getUsuarioModificador());
+        retoDAO.save(reto);
+        return "Se actualizo el reto.";
+    }
+
     private void validacionesCrear(Reto reto) throws Exception{
         if(reto.getNombreReto() == null || reto.getNombreReto().trim().equals("")){
             throw new Exception("Se debe ingresar el nombre del reto.");
@@ -116,11 +140,39 @@ public class RetoServiceImpl implements RetoService {
         if(Validaciones.isStringLenght(reto.getDescripcion(), 300)){
             throw new Exception("La descripción del reto no debe superar los 300 caracteres.");
         }
+
         if(reto.isEsGrupal() && reto.getNrEstudiatesGrupo()<2){
             throw new Exception("El número de estudiantes por grupo no puede ser menor a 2 si es un reto grupal.");
         }
+        if(reto.getDescripcionTeoria() == null || reto.getDescripcionTeoria().trim().equals("")){
+            throw new Exception("Se debe ingresar una descripción de la teoría referente al reto.");
+        }
+        if(Validaciones.isStringLenght(reto.getDescripcionTeoria(), 10000)){
+            throw new Exception("La descripción de la teoría no debe superar los 1000 caracteres.");
+        }
         if(reto.getMaximoIntentos()<1){
             throw new Exception("El reto debe tener como mínimo 1 intento.");
+        }
+        if(reto.getMoneda()<=0){
+            throw new Exception("Debe asignarle una cantidad de monedas al reto.");
+        }
+        if(reto.getSolucion() == null){
+            throw new Exception("Debe ingresar una solucion al reto.");
+        }
+        if(Validaciones.isStringLenght(reto.getSolucion(),800) ){
+            throw new Exception("La solución no debe superar los 800 caracteres.");
+        }
+        if(reto.getImagenTema1() != null && Validaciones.isStringLenght(reto.getImagenTema1(),300)){
+            throw new Exception("La Url de la imagen 1 es muy larga.");
+        }
+        if(reto.getImagenTema2() != null && Validaciones.isStringLenght(reto.getImagenTema2(),300)){
+            throw new Exception("La Url de la imagen 2 es muy larga.");
+        }
+        if(reto.getUrlVideo1() != null && Validaciones.isStringLenght(reto.getUrlVideo1(), 300)){
+            throw new Exception("La Url del video 1 es muy largo.");
+        }
+        if(reto.getUrlVideo2() != null && Validaciones.isStringLenght(reto.getUrlVideo2(), 300)){
+            throw new Exception("La Url del video 1 es muy largo.");
         }
         if(reto.getEstado().getIdEstado() == null){
             throw new Exception("Se debe ingresar un id estado.");
@@ -159,6 +211,21 @@ public class RetoServiceImpl implements RetoService {
             throw new Exception("Debe ingresar una fecha de creación.");
         }
         Date fechaActual = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -6);
+        Date fechaMaxima = calendar.getTime();
+        if(reto.getFechaInicio().compareTo(fechaActual)<0){
+            throw new Exception("No se puede configurar la fecha de inicio del reto con una fecha que ya paso.");
+        }
+        if(reto.getFechaLimite().compareTo(fechaActual)<0){
+            throw new Exception("No se puede configurar la fecha limite del reto con una fecha que ya paso.");
+        }
+        if(reto.getFechaLimite().before(fechaMaxima)){
+            throw new Exception("La fecha limite no puede superar los 6 meses.");
+        }
+        if(reto.getFechaLimite().before(reto.getFechaInicio())){
+            throw new Exception("La fecha limite no puede ser menor que la fecha de inicio del reto.");
+        }
         if(reto.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
@@ -186,8 +253,35 @@ public class RetoServiceImpl implements RetoService {
         if(retoDTO.isEsGrupal() && retoDTO.getNrEstudiatesGrupo()<2){
             throw new Exception("El número de estudiantes por grupo no puede ser menor a 2 si es un reto grupal.");
         }
+        if(retoDTO.getDescripcionTeoria() == null || retoDTO.getDescripcionTeoria().trim().equals("")){
+            throw new Exception("Se debe ingresar una descripción de la teoría referente al reto.");
+        }
+        if(Validaciones.isStringLenght(retoDTO.getDescripcionTeoria(), 10000)){
+            throw new Exception("La descripción de la teoría no debe superar los 1000 caracteres.");
+        }
         if(retoDTO.getMaximoIntentos()<1){
             throw new Exception("El reto debe tener como mínimo 1 intento.");
+        }
+        if(retoDTO.getMoneda()<=0){
+            throw new Exception("Debe asignarle una cantidad de monedas al reto.");
+        }
+        if(retoDTO.getSolucion() == null){
+            throw new Exception("Debe ingresar una solucion al reto.");
+        }
+        if(Validaciones.isStringLenght(retoDTO.getSolucion(),800) ){
+            throw new Exception("La solución no debe superar los 800 caracteres.");
+        }
+        if(retoDTO.getImagen1() != null && Validaciones.isStringLenght(retoDTO.getImagen1(),300)){
+            throw new Exception("La Url de la imagen 1 es muy larga.");
+        }
+        if(retoDTO.getImagen2() != null && Validaciones.isStringLenght(retoDTO.getImagen2(),300)){
+            throw new Exception("La Url de la imagen 2 es muy larga.");
+        }
+        if(retoDTO.getUrlVideo1() != null && Validaciones.isStringLenght(retoDTO.getUrlVideo1(), 300)){
+            throw new Exception("La Url del video 1 es muy largo.");
+        }
+        if(retoDTO.getUrlVideo2() != null && Validaciones.isStringLenght(retoDTO.getUrlVideo2(), 300)){
+            throw new Exception("La Url del video 1 es muy largo.");
         }
         if(retoDTO.getIdEstado() == null){
             throw new Exception("Se debe ingresar un id estado.");
@@ -226,9 +320,64 @@ public class RetoServiceImpl implements RetoService {
             throw new Exception("Debe ingresar una fecha de creación.");
         }
         Date fechaActual = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -6);
+        Date fechaMaxima = calendar.getTime();
+        if(retoDTO.getFechaInicio().compareTo(fechaActual)<0){
+            throw new Exception("No se puede configurar la fecha de inicio del reto con una fecha que ya paso.");
+        }
+        if(retoDTO.getFechaLimite().compareTo(fechaActual)<0){
+            throw new Exception("No se puede configurar la fecha limite del reto con una fecha que ya paso.");
+        }
+        if(retoDTO.getFechaLimite().before(fechaMaxima)){
+            throw new Exception("La fecha limite no puede superar los 6 meses.");
+        }
+        if(retoDTO.getFechaLimite().before(retoDTO.getFechaInicio())){
+            throw new Exception("La fecha limite no puede ser menor que la fecha de inicio del reto.");
+        }
         if(retoDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
 
+    }
+
+    private void validacionesHabilitarReto(RetoDTO retoDTO)throws Exception{
+        if(retoDTO.getIdReto() == null){
+            throw new Exception("Se debe ingresar el id del reto que se va a actualizar.");
+        }
+        if(!retoDAO.existsById(retoDTO.getIdReto())){
+            throw new Exception("No existe un reto con ese id.");
+        }
+        Date fechaActual = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -6);
+        Date fechaMaxima = calendar.getTime();
+        if(retoDTO.getFechaInicio().compareTo(fechaActual)<0){
+            throw new Exception("No se puede configurar la fecha de inicio del reto con una fecha que ya paso.");
+        }
+        if(retoDTO.getFechaLimite().compareTo(fechaActual)<0){
+            throw new Exception("No se puede configurar la fecha limite del reto con una fecha que ya paso.");
+        }
+        if(retoDTO.getFechaLimite().before(fechaMaxima)){
+            throw new Exception("La fecha limite no puede superar los 6 meses.");
+        }
+        if(retoDTO.getFechaLimite().before(retoDTO.getFechaInicio())){
+            throw new Exception("La fecha limite no puede ser menor que la fecha de inicio del reto.");
+        }
+        if(retoDTO.getMaximoIntentos()<1){
+            throw new Exception("El reto debe tener como mínimo 1 intento.");
+        }
+        if(retoDTO.getMoneda()<=0){
+            throw new Exception("Debe asignarle una cantidad de monedas al reto.");
+        }
+        if(retoDTO.getIdEstado() == null){
+            throw new Exception("Se debe ingresar un id estado.");
+        }
+        if(retoDTO.getIdEstado()<0){
+            throw new Exception("Se debe ingresar un id estado válido.");
+        }
+        if(estadoDAO.findById(retoDTO.getIdEstado()).toString().equals("Optional.empty")){
+            throw new Exception("Se debe ingresar un id estado válido.");
+        }
     }
 }

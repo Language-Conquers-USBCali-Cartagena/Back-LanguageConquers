@@ -115,6 +115,17 @@ public class CursoServiceImpl implements CursoService {
         return cursoDAO.findById(idCurso).get();
     }
 
+    @Override
+    public List<Curso> findByIdProfesor(Long idProfesor) throws Exception {
+        if(idProfesor == null){
+            throw new Exception("Debe ingresar el id del profesor");
+        }
+        if(!profesorDAO.existsById(idProfesor)){
+            throw new Exception("El profesor con id: " + idProfesor + " no existe.");
+        }
+        return cursoDAO.findByIdProfesor(idProfesor);
+    }
+
     public void validacionesCrear(Curso curso) throws Exception{
         if(curso.getNombre() == null || curso.getNombre().trim().equals("")){
             throw new Exception("Debe ingresar el nombre del curso.");
