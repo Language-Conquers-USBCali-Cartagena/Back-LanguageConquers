@@ -104,32 +104,7 @@ public class RetoServiceImpl implements RetoService {
         return retoDAO.findById(idReto).get();
     }
 
-    @Override
-    public String habilitarReto(RetoDTO retoDTO) throws Exception {
-        Reto reto = null;
-        validacionesHabilitarReto(retoDTO);
-        reto = retoDAO.findById(retoDTO.getIdReto()).orElse(null);
-        reto.setFechaInicio(retoDTO.getFechaInicio());
-        reto.setFechaLimite(retoDTO.getFechaLimite());
-        reto.setMaximoIntentos(retoDTO.getMaximoIntentos());
-        reto.setMoneda(retoDTO.getMoneda());
-        reto.setEstado(estadoDAO.findById(retoDTO.getIdEstado()).orElse(null));
-        reto.setFechaModificacion(retoDTO.getFechaModificacion());
-        reto.setUsuarioModificador(retoDTO.getUsuarioModificador());
-        reto.getNombreReto();
-        reto.getDescripcion();
-        reto.getUrlVideo1();
-        reto.getUrlVideo2();
-        reto.getImagenTema1();
-        reto.getImagenTema2();
-        reto.getMision();
-        reto.getDescripcionTeoria();
-        reto.getSolucion();
-        reto.getCurso();
-        reto.getNrEstudiatesGrupo();
-        retoDAO.save(reto);
-        return "Se ha configurado el reto de manera exitosa.";
-    }
+
 
     private void validacionesCrear(Reto reto) throws Exception{
         if(reto.getNombreReto() == null || reto.getNombreReto().trim().equals("")){
@@ -345,43 +320,5 @@ public class RetoServiceImpl implements RetoService {
 
     }
 
-    private void validacionesHabilitarReto(RetoDTO retoDTO)throws Exception{
-        if(retoDTO.getIdReto() == null){
-            throw new Exception("Se debe ingresar el id del reto que se va a actualizar.");
-        }
-        if(!retoDAO.existsById(retoDTO.getIdReto())){
-            throw new Exception("No existe un reto con ese id.");
-        }
-        Date fechaActual = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -6);
-        Date fechaMaxima = calendar.getTime();
-        if(retoDTO.getFechaInicio().compareTo(fechaActual)<0){
-            throw new Exception("No se puede configurar la fecha de inicio del reto con una fecha que ya paso.");
-        }
-        if(retoDTO.getFechaLimite().compareTo(fechaActual)<0){
-            throw new Exception("No se puede configurar la fecha limite del reto con una fecha que ya paso.");
-        }
-        if(retoDTO.getFechaLimite().before(fechaMaxima)){
-            throw new Exception("La fecha limite no puede superar los 6 meses.");
-        }
-        if(retoDTO.getFechaLimite().before(retoDTO.getFechaInicio())){
-            throw new Exception("La fecha limite no puede ser menor que la fecha de inicio del reto.");
-        }
-        if(retoDTO.getMaximoIntentos()<1){
-            throw new Exception("El reto debe tener como mínimo 1 intento.");
-        }
-        if(retoDTO.getMoneda()<=0){
-            throw new Exception("Debe asignarle una cantidad de monedas al reto.");
-        }
-        if(retoDTO.getIdEstado() == null){
-            throw new Exception("Se debe ingresar un id estado.");
-        }
-        if(retoDTO.getIdEstado()<0){
-            throw new Exception("Se debe ingresar un id estado válido.");
-        }
-        if(estadoDAO.findById(retoDTO.getIdEstado()).toString().equals("Optional.empty")){
-            throw new Exception("Se debe ingresar un id estado válido.");
-        }
-    }
+
 }

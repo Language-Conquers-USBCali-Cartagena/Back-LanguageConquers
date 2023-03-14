@@ -15,5 +15,4 @@ public interface RetoService {
     String eliminar (Long idReto) throws Exception;
     Reto findById(Long idReto) throws Exception;
 
-    String habilitarReto(RetoDTO reto) throws  Exception;
 }

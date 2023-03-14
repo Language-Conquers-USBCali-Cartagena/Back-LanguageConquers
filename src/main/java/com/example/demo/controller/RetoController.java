@@ -78,13 +78,5 @@ public class RetoController {
         }
     }
 
-    @Operation(summary = "Este método permite configurar el reto al profesor")
-    @PutMapping("/configurarReto")
-    private ResponseEntity<String> configurarReto(@RequestBody RetoDTO retoDTO){
-        try{
-            return new ResponseEntity<>(retoService.habilitarReto(retoDTO), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
+
 }
