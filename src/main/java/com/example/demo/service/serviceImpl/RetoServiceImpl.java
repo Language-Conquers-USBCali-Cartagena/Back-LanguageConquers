@@ -132,7 +132,7 @@ public class RetoServiceImpl implements RetoService {
         if(reto.getMaximoIntentos()<1){
             throw new Exception("El reto debe tener como mínimo 1 intento.");
         }
-        if(reto.getMoneda()<=0){
+        if(reto.getMoneda()<0){
             throw new Exception("Debe asignarle una cantidad de monedas al reto.");
         }
         if(reto.getSolucion() == null){
@@ -241,7 +241,7 @@ public class RetoServiceImpl implements RetoService {
         if(retoDTO.getMaximoIntentos()<1){
             throw new Exception("El reto debe tener como mínimo 1 intento.");
         }
-        if(retoDTO.getMoneda()<=0){
+        if(retoDTO.getMoneda()<0){
             throw new Exception("Debe asignarle una cantidad de monedas al reto.");
         }
         if(retoDTO.getSolucion() == null){
