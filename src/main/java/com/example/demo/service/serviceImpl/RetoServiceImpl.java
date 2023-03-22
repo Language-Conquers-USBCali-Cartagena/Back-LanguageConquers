@@ -71,6 +71,10 @@ public class RetoServiceImpl implements RetoService {
         reto.setCurso(cursoDAO.findById(retoDTO.getIdCurso()).orElse(null));
         reto.setFechaModificacion(retoDTO.getFechaModificacion());
         reto.setUsuarioModificador(retoDTO.getUsuarioModificador());
+        reto.setImagenTema1(retoDTO.getImagen1());
+        reto.setImagenTema2(retoDTO.getImagen2());
+        reto.setUrlVideo1(retoDTO.getUrlVideo1());
+        reto.setUrlVideo2(retoDTO.getUrlVideo2());
         retoDAO.save(reto);
         return "Se actualizo el reto.";
     }
@@ -141,16 +145,16 @@ public class RetoServiceImpl implements RetoService {
         if(Validaciones.isStringLenght(reto.getSolucion(),800) ){
             throw new Exception("La solución no debe superar los 800 caracteres.");
         }
-        if(reto.getImagenTema1() != null && Validaciones.isStringLenght(reto.getImagenTema1(),300)){
+        if((reto.getImagenTema1() != null || !reto.getImagenTema1().trim().equals("")) && Validaciones.isStringLenght(reto.getImagenTema1(),300)){
             throw new Exception("La Url de la imagen 1 es muy larga.");
         }
-        if(reto.getImagenTema2() != null && Validaciones.isStringLenght(reto.getImagenTema2(),300)){
+        if((reto.getImagenTema2() != null || !reto.getImagenTema2().trim().equals(""))&& Validaciones.isStringLenght(reto.getImagenTema2(),300)){
             throw new Exception("La Url de la imagen 2 es muy larga.");
         }
-        if(reto.getUrlVideo1() != null && Validaciones.isStringLenght(reto.getUrlVideo1(), 300)){
+        if((reto.getUrlVideo1() != null || !reto.getUrlVideo1().trim().equals("")) && Validaciones.isStringLenght(reto.getUrlVideo1(), 300)){
             throw new Exception("La Url del video 1 es muy largo.");
         }
-        if(reto.getUrlVideo2() != null && Validaciones.isStringLenght(reto.getUrlVideo2(), 300)){
+        if((reto.getUrlVideo2() != null || !reto.getUrlVideo2().trim().equals("")) && Validaciones.isStringLenght(reto.getUrlVideo2(), 300)){
             throw new Exception("La Url del video 1 es muy largo.");
         }
         if(reto.getEstado().getIdEstado() == null){
@@ -250,17 +254,17 @@ public class RetoServiceImpl implements RetoService {
         if(Validaciones.isStringLenght(retoDTO.getSolucion(),800) ){
             throw new Exception("La solución no debe superar los 800 caracteres.");
         }
-        if(retoDTO.getImagen1() != null && Validaciones.isStringLenght(retoDTO.getImagen1(),300)){
+        if((retoDTO.getImagen1() != null || !retoDTO.getImagen1().trim().equals(""))&& Validaciones.isStringLenght(retoDTO.getImagen1(),300)){
             throw new Exception("La Url de la imagen 1 es muy larga.");
         }
-        if(retoDTO.getImagen2() != null && Validaciones.isStringLenght(retoDTO.getImagen2(),300)){
+        if((retoDTO.getImagen2() != null || !retoDTO.getImagen2().trim().equals("")) && Validaciones.isStringLenght(retoDTO.getImagen2(),300)){
             throw new Exception("La Url de la imagen 2 es muy larga.");
         }
-        if(retoDTO.getUrlVideo1() != null && Validaciones.isStringLenght(retoDTO.getUrlVideo1(), 300)){
+        if((retoDTO.getUrlVideo1() != null || !retoDTO.getUrlVideo1().trim().equals("")) && Validaciones.isStringLenght(retoDTO.getUrlVideo1(), 300)){
             throw new Exception("La Url del video 1 es muy largo.");
         }
-        if(retoDTO.getUrlVideo2() != null && Validaciones.isStringLenght(retoDTO.getUrlVideo2(), 300)){
-            throw new Exception("La Url del video 1 es muy largo.");
+        if((retoDTO.getUrlVideo2() != null || !retoDTO.getUrlVideo2().trim().equals("")) && Validaciones.isStringLenght(retoDTO.getUrlVideo2(), 300)){
+            throw new Exception("La Url del video 2 es muy largo.");
         }
         if(retoDTO.getIdEstado() == null){
             throw new Exception("Se debe ingresar un id estado.");

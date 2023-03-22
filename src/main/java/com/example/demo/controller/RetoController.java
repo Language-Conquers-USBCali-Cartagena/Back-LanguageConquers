@@ -60,6 +60,7 @@ public class RetoController {
     @PutMapping("/actualizarReto")
     public ResponseEntity<String> modificar(@RequestBody RetoDTO retoDTO){
         try{
+            System.out.println("prueba monedas: "+retoDTO.getMoneda());
             return new ResponseEntity<>(retoService.actualizar(retoDTO), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
