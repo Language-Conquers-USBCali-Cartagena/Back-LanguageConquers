@@ -139,9 +139,6 @@ public class RetoServiceImpl implements RetoService {
         if(reto.getMoneda()<0){
             throw new Exception("Debe asignarle una cantidad de monedas al reto.");
         }
-        if(reto.getSolucion() == null){
-            throw new Exception("Debe ingresar una solucion al reto.");
-        }
         if(Validaciones.isStringLenght(reto.getSolucion(),800) ){
             throw new Exception("La solución no debe superar los 800 caracteres.");
         }
