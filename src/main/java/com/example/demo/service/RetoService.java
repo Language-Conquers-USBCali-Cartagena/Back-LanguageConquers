@@ -11,7 +11,7 @@ public interface RetoService {
 
     String registrar(Reto reto) throws Exception;
 
-    String actualizar (RetoDTO retoDTO) throws Exception;
+    String actualizar (Reto reto) throws Exception;
     String eliminar (Long idReto) throws Exception;
     Reto findById(Long idReto) throws Exception;
 

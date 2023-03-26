@@ -37,10 +37,12 @@ public class RetoController {
     @PostMapping("/guardarReto")
     public ResponseEntity<String> crearReto(@RequestBody  RetoDTO retoDTO){
         try {
+            System.out.println("RetoDTO imagen: " + retoDTO.getImagenTema1());
             Reto reto = retoMapper.toEntity(retoDTO);
+            System.out.println("Reto imagen: " + reto.getImagenTema1());
             return new ResponseEntity<>(retoService.registrar(reto), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -60,8 +62,8 @@ public class RetoController {
     @PutMapping("/actualizarReto")
     public ResponseEntity<String> modificar(@RequestBody RetoDTO retoDTO){
         try{
-            System.out.println("prueba monedas: "+retoDTO.getMoneda());
-            return new ResponseEntity<>(retoService.actualizar(retoDTO), HttpStatus.OK);
+            Reto reto = retoMapper.toEntity(retoDTO);
+            return new ResponseEntity<>(retoService.actualizar(reto), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

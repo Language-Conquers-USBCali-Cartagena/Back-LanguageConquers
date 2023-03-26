@@ -23,6 +23,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
     Map<String, String> mapVariables = new HashMap<>();
     Map<String, String> mapMetodos = new HashMap<>();
     String respuesta = new String();
+    Boolean esBasico = false;
     @Autowired
     PalabrasReservadasDAO palabrasReservadasDAO;
     @Autowired
@@ -44,7 +45,8 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
     }
 
     @Override
-    public String procesarPalabraReservada(List<PalabrasReservadasDTO> palabrasReservadasDTOs) throws Exception {
+    public String procesarPalabraReservada(List<PalabrasReservadasDTO> palabrasReservadasDTOs, Boolean esBasico) throws Exception {
+        this.esBasico = esBasico;
         //Inicializa las listas
         inicializar();
         //Agrupa las listas segun su orden
@@ -55,9 +57,6 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         }
         //Limpia las listas
         limpiar();
-
-
-
         return this.respuesta;
 
     }
@@ -220,7 +219,8 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         }
         switch (palabraCalve.getNombre().toLowerCase()) {
             case "encender":
-                if(!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)){
+//                if((!mapMetodos.))
+                if((!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)) && !esBasico){
                     throw new Exception("Los parametros deben existir para poder encender fuego");
                 }
                 resp = MetodosPalabras.encender(variable, variable2);
@@ -256,7 +256,8 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         switch (palabraClave.getNombre().toLowerCase()) {
             case "buscar":
                 if(param1.getNombre().equalsIgnoreCase("coco")){
-                    if(!mapMetodos.get("Arbol").equalsIgnoreCase("cima del arbol")){
+
+                    if(mapMetodos.get("arbol") == null || !mapMetodos.get("arbol").equalsIgnoreCase("cima del arbol")){
                         throw new Exception("Para buscar un " + param1.getNombre() + " debe estar en una palmera");
                     }
                 }
@@ -264,26 +265,37 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
 
                 break;
             case "cortar":
-                System.out.println();
-                if(!mapVariables.containsKey(param1.getNombre())){
+                if(!mapMetodos.containsValue(param1.getNombre()) && esBasico){
+                    throw new Exception("Debe haber encontrado el objeto para poder cortarlo");
+                }
+                if(!mapVariables.containsValue(param1.getNombre()) && !esBasico){
                     throw new Exception("El objeto debe existir para poder cortarlo");
                 }
                 resp = MetodosPalabras.cortar(variable);
                 break;
             case "escalar":
-                if(!mapVariables.containsKey(param1.getNombre())){
+                if(!mapMetodos.containsValue(param1.getNombre()) && esBasico){
+                    throw new Exception("Debe haber encontrado el objeto para poder escalarlo");
+                }
+                if(!mapVariables.containsValue(param1.getNombre()) && !esBasico){
                     throw new Exception("El objeto debe existir para poder escalarlo");
                 }
                 resp = MetodosPalabras.escalar(variable);
                 break;
             case "golpear":
-                if(!mapVariables.containsKey(param1.getNombre())){
+                if(!mapMetodos.containsValue(param1.getNombre()) && esBasico){
+                    throw new Exception("Debe haber encontrado el objeto para poder golpearlo");
+                }
+                if(!mapVariables.containsValue(param1.getNombre()) && !esBasico){
                     throw new Exception("El objeto debe existir para poder escalarlo");
                 }
                 resp = MetodosPalabras.golpear(variable);
                 break;
             case "construir":
-                if(!mapVariables.containsKey(param1.getNombre())){
+                if(!mapMetodos.containsValue(param1.getNombre()) && esBasico){
+                    throw new Exception("Debe haber encontrado el objeto para poder construir");
+                }
+                if(!mapVariables.containsValue(param1.getNombre()) && !esBasico){
                     throw new Exception("El objeto debe existir para poder construir algo");
                 }
                 resp = MetodosPalabras.construir(variable);
@@ -294,7 +306,10 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         this.respuesta = resp;
         return resp;
     }
-    //TODO: Deben Existir en la bd las siguientes categorias para las palabras reservadas: Metodo, Variable, VariableCV, Bucle, Condicional, logicas, objetos
 
 
+    private String procesarRespuestaBasica(List<PalabrasReservadasDTO> palabrasReservadasDTOS){
+
+        return "Hola";
+    }
 }

@@ -47,11 +47,11 @@ public class PalabrasReservadasController {
 
     @Operation(summary = "Este método permite procesar la respuesta de un reto")
     @PostMapping("/respuesta")
-    public ResponseEntity<String> procesarRespuestaReto(@RequestBody List<PalabrasReservadasDTO> palabrasReservadasDTOs){
+    public ResponseEntity<String> procesarRespuestaReto(@RequestBody List<PalabrasReservadasDTO> palabrasReservadasDTOs, @RequestParam Boolean esBasico){
         try{
             //TODO: Asignar puntaje y monedas a estudiante
 
-            return new ResponseEntity<>(palabrasReservadasService.procesarPalabraReservada(palabrasReservadasDTOs), HttpStatus.OK);
+            return new ResponseEntity<>(palabrasReservadasService.procesarPalabraReservada(palabrasReservadasDTOs, esBasico), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
