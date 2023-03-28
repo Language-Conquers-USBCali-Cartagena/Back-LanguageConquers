@@ -17,6 +17,11 @@ public interface RetoDAO extends JpaRepository<Reto,Long> {
     @Query(value = "select * from reto where id_mision = ?1", nativeQuery = true)
     List<Reto> findByIdMision(Long idMision) throws Exception;
 
+    @Query(value = "SELECT AVG(moneda) FROM reto", nativeQuery = true)
+    int promedioMonedasRetos()throws Exception;
+
+    @Query(value = "select count(*) from reto", nativeQuery = true)
+    int retosRegistrados()throws Exception;
 
 
 

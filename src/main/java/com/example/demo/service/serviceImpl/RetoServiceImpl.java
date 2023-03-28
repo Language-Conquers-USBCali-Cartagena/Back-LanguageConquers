@@ -88,6 +88,17 @@ public class RetoServiceImpl implements RetoService {
         return retoDAO.findById(idReto).get();
     }
 
+    @Override
+    public int promedioMonedasRetos() throws Exception {
+        int promedioMonedasPorReto = retoDAO.promedioMonedasRetos();
+        return promedioMonedasPorReto;
+    }
+
+    @Override
+    public int retosRegistrados() throws Exception {
+        int retosRegistrados = retoDAO.retosRegistrados();
+        return retosRegistrados;
+    }
 
 
     private void validacionesCrear(Reto reto) throws Exception{

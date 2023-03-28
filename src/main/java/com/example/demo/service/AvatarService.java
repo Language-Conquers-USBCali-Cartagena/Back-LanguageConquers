@@ -18,4 +18,5 @@ public interface AvatarService{
     Avatar findById(Long idAvatar) throws Exception;
 
     Page<Avatar> findAllPage(Pageable pageable) throws Exception;
+    int avataresRegistrados()throws Exception;
 }

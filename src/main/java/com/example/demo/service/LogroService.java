@@ -20,4 +20,6 @@ public interface LogroService {
 
     String actualizar (LogroDTO logroDTO) throws Exception;
     Logro findById(Long idLogro) throws Exception;
+
+    int logrosRegistrados()throws Exception;
 }

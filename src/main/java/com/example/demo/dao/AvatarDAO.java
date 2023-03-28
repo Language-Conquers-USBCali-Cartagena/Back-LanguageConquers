@@ -13,4 +13,7 @@ public interface AvatarDAO extends JpaRepository<Avatar,Long> {
     @Query(value = "SELECT * FROM avatar", nativeQuery = true)
     Page<Avatar> findAllPage (Pageable pageable);
 
+    @Query(value = "SELECT COUNT(*) FROM AVATAR", nativeQuery = true)
+    int avataresRegistrados () throws Exception;
+
 }

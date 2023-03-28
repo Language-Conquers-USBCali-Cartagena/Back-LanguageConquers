@@ -83,6 +83,12 @@ public class LogroServiceImpl implements LogroService {
         return logroDAO.findById(idLogro).get();
     }
 
+    @Override
+    public int logrosRegistrados() throws Exception {
+        int cantidadLogros = logroDAO.logrosRegistrados();
+        return cantidadLogros;
+    }
+
 
     private void validacionesCrear(Logro logro) throws Exception {
         if(logro.getNombre() == null || logro.getNombre().equals("")){

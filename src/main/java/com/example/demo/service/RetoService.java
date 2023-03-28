@@ -14,5 +14,7 @@ public interface RetoService {
     String actualizar (Reto reto) throws Exception;
     String eliminar (Long idReto) throws Exception;
     Reto findById(Long idReto) throws Exception;
+    int promedioMonedasRetos()throws Exception;
+    int retosRegistrados()throws Exception;
 
 }

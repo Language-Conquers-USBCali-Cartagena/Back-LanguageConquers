@@ -13,4 +13,7 @@ public interface ArticulosDAO extends JpaRepository<Articulos, Long> {
 
     @Query(value = "select * from articulo where id_categoria = ?1", nativeQuery = true)
     List<Articulos> findByIdCategoria(Long idCategoria)throws Exception;
+
+    @Query(value = "SELECT COUNT(*) FROM ARTICULO", nativeQuery = true)
+    int articulosRegistrados() throws Exception;
 }

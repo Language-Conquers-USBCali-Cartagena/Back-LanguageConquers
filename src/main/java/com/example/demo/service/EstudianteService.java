@@ -16,4 +16,5 @@ public interface EstudianteService {
     List<Estudiante> rankingEstudiante() throws Exception;
 
     int cantidadEstudiantes () throws Exception;
+    int promedioMonedasGanadasEstudiantes()throws Exception;
 }

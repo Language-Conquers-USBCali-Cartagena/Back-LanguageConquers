@@ -98,5 +98,12 @@ public class AvatarController {
         }
     }
 
+    @Operation(summary = "Este metodo trae la cantidad de avatares registrados")
+    @GetMapping("/cantidadAvatares")
+    public ResponseEntity<Integer> totalAvatares() throws Exception {
+        int cantidad = avatarService.avataresRegistrados();
+        return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
+
 
 }

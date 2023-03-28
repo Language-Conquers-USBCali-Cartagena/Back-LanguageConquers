@@ -18,4 +18,5 @@ public interface ProfesorDAO extends JpaRepository<Profesor,Long> {
 
     @Query(value = "SELECT count(*) from profesor", nativeQuery = true)
     int totalProfesores()throws Exception;
+
 }

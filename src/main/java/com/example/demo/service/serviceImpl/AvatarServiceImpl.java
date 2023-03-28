@@ -89,6 +89,12 @@ public class AvatarServiceImpl implements AvatarService {
         return avatarList;
     }
 
+    @Override
+    public int avataresRegistrados() throws Exception {
+        int avataresRegistrados = avatarDAO.avataresRegistrados();
+        return avataresRegistrados;
+    }
+
     private void validacionesCrear(Avatar avatar) throws Exception {
         if(avatar.getImgAvatar() == null ||
                 avatar.getImgAvatar().trim().equals("") ||

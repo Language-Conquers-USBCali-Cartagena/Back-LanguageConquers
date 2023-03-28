@@ -15,4 +15,6 @@ public interface ArticulosService {
 
     Articulos findById(Long idArticulo) throws Exception;
     List<Articulos> findAll() throws Exception;
+
+    int articulosRegistrados()throws Exception;
 }

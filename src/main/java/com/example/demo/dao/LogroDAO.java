@@ -11,5 +11,8 @@ public interface LogroDAO extends JpaRepository<Logro, Long> {
     @Query(value = "SELECT * FROM logro", nativeQuery = true)
     Page<Logro> findAll(Pageable pageable);
 
+    @Query(value = "SELECT COUNT(*) FROM LOGRO", nativeQuery = true)
+    int logrosRegistrados()throws Exception;
+
 
 }

@@ -73,4 +73,11 @@ public class ArticulosController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Operation(summary = "Este metodo trae la cantidad de artículos registrados")
+    @GetMapping("/cantidadArticulos")
+    public ResponseEntity<Integer> totalArticulos() throws Exception {
+        int cantidad = articulosService.articulosRegistrados();
+        return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
 }

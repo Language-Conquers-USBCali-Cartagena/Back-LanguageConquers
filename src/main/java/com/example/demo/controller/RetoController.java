@@ -81,5 +81,19 @@ public class RetoController {
         }
     }
 
+    @Operation(summary = "Este método trae el promedio de monedas asignadas a los retos")
+    @GetMapping("/promedioMonedasRetos")
+    public ResponseEntity<Integer> promedioMonedasRetos() throws Exception {
+        int cantidad = retoService.promedioMonedasRetos();
+        return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Este método trae la cantidad de retos registrados")
+    @GetMapping("/cantidadRetos")
+    public ResponseEntity<Integer> totalRetos() throws Exception {
+        int cantidad = retoService.retosRegistrados();
+        return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
+
 
 }

@@ -153,6 +153,12 @@ public class EstudianteServiceImpl implements EstudianteService {
         return cantidad;
     }
 
+    @Override
+    public int promedioMonedasGanadasEstudiantes() throws Exception {
+        int monedasGanadas = estudianteDAO.promedioMonedasGanadasEstudiantes();
+        return monedasGanadas;
+    }
+
     private void validacionesCrear(Estudiante estudiante) throws Exception {
         if(estudiante.getAvatar().getIdAvatar() == null){
             throw new Exception("Debe ingresar un id avatar.");

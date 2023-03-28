@@ -91,4 +91,11 @@ public class LogroController {
         }
     }
 
+    @Operation(summary = "Este método trae la cantidad de logros registrados")
+    @GetMapping("/cantidadLogros")
+    public ResponseEntity<Integer> totalLogros() throws Exception {
+        int cantidad = logroService.logrosRegistrados();
+        return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
+
 }

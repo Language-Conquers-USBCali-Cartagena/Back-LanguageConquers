@@ -31,4 +31,7 @@ public interface EstudianteDAO extends JpaRepository<Estudiante,Long> {
     List<Estudiante> rankingEstudiantes () throws Exception;
     @Query(value = "SELECT COUNT(*) From estudiante", nativeQuery = true)
     int totalEstudiante()throws Exception;
+
+    @Query(value = "select avg(monedas_obtenidas) from estudiante", nativeQuery = true)
+    int promedioMonedasGanadasEstudiantes()throws Exception;
 }

@@ -94,6 +94,12 @@ public class ArticulosServiceImpl implements ArticulosService {
         return articulos;
     }
 
+    @Override
+    public int articulosRegistrados() throws Exception {
+        int cantidadArticulos = articulosDAO.articulosRegistrados();
+        return cantidadArticulos;
+    }
+
     private void validacionesCrear (Articulos articulos) throws Exception{
 
         if(articulos.getNombre().equals(null) || articulos.getNombre().trim().equals("") ||

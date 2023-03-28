@@ -119,10 +119,17 @@ public class EstudianteController {
         }
     }
 
-    @Operation(summary = "Este metodo trae la cantidad de estudiantes registrados")
+    @Operation(summary = "Este método trae la cantidad de estudiantes registrados")
     @GetMapping("/cantidadEstudiante")
     public ResponseEntity<Integer> totalEstudiante() throws Exception {
         int cantidad = estudianteService.cantidadEstudiantes();
         return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Este método trae el promedio de monedas ganadas de los estudiantes")
+    @GetMapping("/promedioMonedasEstudiantes")
+    public ResponseEntity<Integer> promedioMonedas() throws Exception {
+        int promedio = estudianteService.promedioMonedasGanadasEstudiantes();
+        return new ResponseEntity<>(promedio, HttpStatus.OK);
     }
 }
