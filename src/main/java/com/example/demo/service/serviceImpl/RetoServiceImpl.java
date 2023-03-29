@@ -130,19 +130,23 @@ public class RetoServiceImpl implements RetoService {
         if(reto.getMoneda()<0){
             throw new Exception("Debe asignarle una cantidad de monedas al reto.");
         }
+        if(reto.getSolucion() == null){
+            throw new Exception("Se debe ingresar la solución del reto.");
+        }
         if(Validaciones.isStringLenght(reto.getSolucion(),800) ){
             throw new Exception("La solución no debe superar los 800 caracteres.");
         }
-        if((reto.getImagenTema1() != null || !reto.getImagenTema1().trim().equals("")) && Validaciones.isStringLenght(reto.getImagenTema1(),300)){
+
+        if(reto.getImagenTema1() != null && Validaciones.isStringLenght(reto.getImagenTema1(),300)){
             throw new Exception("La Url de la imagen 1 es muy larga.");
         }
-        if((reto.getImagenTema2() != null || !reto.getImagenTema2().trim().equals(""))&& Validaciones.isStringLenght(reto.getImagenTema2(),300)){
+        if(reto.getImagenTema2() != null && Validaciones.isStringLenght(reto.getImagenTema2(),300)){
             throw new Exception("La Url de la imagen 2 es muy larga.");
         }
-        if((reto.getUrlVideo1() != null || !reto.getUrlVideo1().trim().equals("")) && Validaciones.isStringLenght(reto.getUrlVideo1(), 300)){
+        if(reto.getUrlVideo1() != null  && Validaciones.isStringLenght(reto.getUrlVideo1(), 300)){
             throw new Exception("La Url del video 1 es muy largo.");
         }
-        if((reto.getUrlVideo2() != null || !reto.getUrlVideo2().trim().equals("")) && Validaciones.isStringLenght(reto.getUrlVideo2(), 300)){
+        if(reto.getUrlVideo2() != null  && Validaciones.isStringLenght(reto.getUrlVideo2(), 300)){
             throw new Exception("La Url del video 1 es muy largo.");
         }
         if(reto.getEstado().getIdEstado() == null){
@@ -242,16 +246,16 @@ public class RetoServiceImpl implements RetoService {
         if(Validaciones.isStringLenght(reto.getSolucion(),800) ){
             throw new Exception("La solución no debe superar los 800 caracteres.");
         }
-        if((reto.getImagenTema1() != null || !reto.getImagenTema1().trim().equals(""))&& Validaciones.isStringLenght(reto.getImagenTema1(),300)){
+        if(reto.getImagenTema1() != null && Validaciones.isStringLenght(reto.getImagenTema1(),300)){
             throw new Exception("La Url de la imagen 1 es muy larga.");
         }
-        if((reto.getImagenTema2() != null || !reto.getImagenTema2().trim().equals("")) && Validaciones.isStringLenght(reto.getImagenTema2(),300)){
+        if(reto.getImagenTema2() != null  && Validaciones.isStringLenght(reto.getImagenTema2(),300)){
             throw new Exception("La Url de la imagen 2 es muy larga.");
         }
-        if((reto.getUrlVideo1() != null || !reto.getUrlVideo1().trim().equals("")) && Validaciones.isStringLenght(reto.getUrlVideo1(), 300)){
+        if(reto.getUrlVideo1() != null  && Validaciones.isStringLenght(reto.getUrlVideo1(), 300)){
             throw new Exception("La Url del video 1 es muy largo.");
         }
-        if((reto.getUrlVideo2() != null || !reto.getUrlVideo2().trim().equals("")) && Validaciones.isStringLenght(reto.getUrlVideo2(), 300)){
+        if(reto.getUrlVideo2() != null  && Validaciones.isStringLenght(reto.getUrlVideo2(), 300)){
             throw new Exception("La Url del video 2 es muy largo.");
         }
         if(reto.getEstado() == null){

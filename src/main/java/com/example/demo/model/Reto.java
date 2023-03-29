@@ -42,7 +42,7 @@ public class Reto {
     @Column(name = "moneda", nullable = false)
     private int moneda;
 
-    @Column(name = "solucion", length = 800)
+    @Column(name = "solucion", nullable = false, length = 800)
     private String solucion;
 
     @Column(name = "maximo_intentos", nullable = false)

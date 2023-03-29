@@ -37,12 +37,11 @@ public class RetoController {
     @PostMapping("/guardarReto")
     public ResponseEntity<String> crearReto(@RequestBody  RetoDTO retoDTO){
         try {
-            System.out.println("RetoDTO imagen: " + retoDTO.getImagenTema1());
+
             Reto reto = retoMapper.toEntity(retoDTO);
-            System.out.println("Reto imagen: " + reto.getImagenTema1());
             return new ResponseEntity<>(retoService.registrar(reto), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

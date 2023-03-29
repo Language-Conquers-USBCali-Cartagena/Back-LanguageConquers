@@ -73,7 +73,7 @@ public class ProgramaServiceImpl implements ProgramaService {
     }
 
     private void validacionesCrear(Programa programa)throws Exception{
-        if(programa.getNombre() == null || programa.getNombre().trim().equals("")){
+        if(programa.getNombre() == null || programa.getNombre().equals("")){
             throw new Exception("Se debe ingresar un nombre del programa.");
         }
         if(Validaciones.isStringLenght(programa.getNombre(),50)){

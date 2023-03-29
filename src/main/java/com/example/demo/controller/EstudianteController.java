@@ -45,7 +45,7 @@ public class EstudianteController {
     public ResponseEntity<String> crear(@RequestBody EstudianteDTO estudianteDTO){
         try {
            Estudiante estudiante =  estudianteMapper.toEntity(estudianteDTO);
-            return new ResponseEntity<>(estudianteService.crearEstudiante(estudiante), HttpStatus.OK);
+            return new ResponseEntity<>(estudianteService.crearEstudiante(estudiante), HttpStatus.CREATED);
         }catch (Exception e){
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
@@ -60,7 +60,6 @@ public class EstudianteController {
             return new ResponseEntity<>(estudianteService.actualizar(estudianteDTO), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
-            System.out.println(mensaje);
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }
