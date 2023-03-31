@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.mapper.ArticulosAdquiridosMapper;
+import com.example.demo.model.Articulos;
 import com.example.demo.model.ArticulosAdquiridos;
 import com.example.demo.model.dto.ArticulosAdquiridosDTO;
 import com.example.demo.model.dto.ArticulosDTO;
@@ -38,7 +39,8 @@ public class ArticulosAdquiridosController {
     @PutMapping("/actualizarArticuloAdquirido")
     public ResponseEntity<String> actualizarArticuloAdquirido(@RequestBody ArticulosAdquiridosDTO articulosAdquiridosDTO){
         try{
-            return new ResponseEntity<>(articulosAdquiridosService.actualizar(articulosAdquiridosDTO), HttpStatus.OK);
+            ArticulosAdquiridos articulosAdquiridos = articulosAdquiridosMapper.toEntity(articulosAdquiridosDTO);
+            return new ResponseEntity<>(articulosAdquiridosService.actualizar(articulosAdquiridos), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

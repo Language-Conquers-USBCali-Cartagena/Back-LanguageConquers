@@ -98,4 +98,29 @@ public class LogroController {
         return new ResponseEntity<>(cantidad, HttpStatus.OK);
     }
 
+    @Operation(summary = "Este metodo retorna los logros obtenidos por estudiante")
+    @GetMapping("/logrosObtenidos")
+    public ResponseEntity<List<LogroDTO>> logrosObtenidos(@RequestParam Long idEstudiante){
+        try {
+            List<Logro> logros = logroService.logrosObtenidos(idEstudiante);
+            List<LogroDTO> logroDTOS = logroMapper.toDTOList(logros);
+            return new ResponseEntity<>(logroDTOS, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este metodo retorna los logros no obtenidos de un estudiante")
+    @GetMapping("/logrosNoObtenidos")
+    public ResponseEntity<List<LogroDTO>> logrosNoObtenidosEstudiante(@RequestParam Long idEstudiante){
+        try {
+            List<Logro> logroes = logroService.logrosNoObtenidos(idEstudiante);
+            List<LogroDTO> logroDTOS = logroMapper.toDTOList(logroes);
+            return new ResponseEntity<>(logroDTOS, HttpStatus.OK);
+
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

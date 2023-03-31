@@ -22,6 +22,16 @@ public class LogroServiceImpl implements LogroService {
     LogroDAO logroDAO;
 
     @Override
+    public List<Logro> logrosObtenidos(Long idEstudiante) throws Exception {
+        return logroDAO.logrosObtenidos(idEstudiante);
+    }
+
+    @Override
+    public List<Logro> logrosNoObtenidos(Long idEstudiante) throws Exception {
+        return logroDAO.logrosNoObtenidos(idEstudiante);
+    }
+
+    @Override
     public List<Logro> listarLogros() throws Exception {
         List<Logro> logros = logroDAO.findAll();
         if(logros.isEmpty()){

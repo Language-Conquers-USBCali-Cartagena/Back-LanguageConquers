@@ -80,4 +80,27 @@ public class ArticulosController {
         int cantidad = articulosService.articulosRegistrados();
         return new ResponseEntity<>(cantidad, HttpStatus.OK);
     }
+
+    @Operation(summary = "Este metodo permite traer los articulos obtenidos por el estudiante")
+    @GetMapping("/articulosObtenidos")
+    public ResponseEntity<List<ArticulosDTO>> articulosObtenidos(@RequestParam Long idEstudiante){
+        try {
+            List<Articulos> articulos = articulosService.articulosObtenidos(idEstudiante);
+            List<ArticulosDTO> articulosDTOS = articulosMapper.toDTOList(articulos);
+            return new ResponseEntity<>(articulosDTOS, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @Operation(summary = "Este metodo permite traer los articulos no obtenidos por el estudiante")
+    @GetMapping("/articulosNoObtenidos")
+    public ResponseEntity<List<ArticulosDTO>> articulosNoObtenidos(@RequestParam Long idEstudiante){
+        try {
+            List<Articulos> articulos = articulosService.articulosNoObtenidos(idEstudiante);
+            List<ArticulosDTO> articulosDTOS = articulosMapper.toDTOList(articulos);
+            return new ResponseEntity<>(articulosDTOS, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

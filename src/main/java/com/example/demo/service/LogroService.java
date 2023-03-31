@@ -10,6 +10,9 @@ import java.util.List;
 public interface LogroService {
 
 
+    List<Logro> logrosObtenidos(Long idEstudiante) throws Exception;
+
+    List<Logro> logrosNoObtenidos(Long idEstudiante) throws Exception;
     List<Logro> listarLogros() throws Exception;
 
     Page<Logro> pageLogros(Pageable pageable) throws Exception;
