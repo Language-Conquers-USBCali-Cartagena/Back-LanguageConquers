@@ -124,18 +124,21 @@ public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosServic
     }
 
     private void validacionesCrear(ArticulosAdquiridos articulosAdquiridos) throws Exception{
-        if(articulosAdquiridos.getArticulos().equals(null) || articulosAdquiridos.getArticulos().getIdArticulo() <0){
-            throw new Exception("Debe ingresar un artículo válido.");
-        }
-        if(articulosDAO.findById(articulosAdquiridos.getArticulos().getIdArticulo()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id Articulo válido.");
-        }
-        if(articulosAdquiridos.getEstudiante().equals(null) || articulosAdquiridos.getEstudiante().getIdEstudiante()<0){
+
+        if(articulosAdquiridos.getEstudiante().getIdEstudiante() == null || articulosAdquiridos.getEstudiante().getIdEstudiante()<0){
             throw new Exception("Debe ingresar un estudiante válido.");
         }
-        if(estudianteDAO.findById(articulosAdquiridos.getEstudiante().getIdEstudiante()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar el id de un estudiante válido.");
+        if(!estudianteDAO.findById(articulosAdquiridos.getEstudiante().getIdEstudiante()).isPresent()){
+            throw new Exception("Debe ingresar el id de un estudiante que este registrado.");
         }
+
+        if(articulosAdquiridos.getArticulos().getIdArticulo() == null || articulosAdquiridos.getArticulos().getIdArticulo() <0){
+            throw new Exception("Debe ingresar un artículo válido.");
+        }
+        if(!articulosDAO.findById(articulosAdquiridos.getArticulos().getIdArticulo()).isPresent()){
+            throw new Exception("Debe ingresar un id Articulo que este registrado.");
+        }
+
         if(articulosAdquiridos.getUsuarioCreador() == null
                 || articulosAdquiridos.getUsuarioCreador().trim().equals("")
                 || Validaciones.isStringLenght(articulosAdquiridos.getUsuarioCreador(),50)){
@@ -175,10 +178,11 @@ public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosServic
         if(articulosAdquiridos.getEstudiante().getIdEstudiante()<0){
             throw new Exception("Debe ingresar un id de estudiante válido.");
         }
-        if(articulosDAO.findById(articulosAdquiridos.getArticulos().getIdArticulo()).toString().equals("Optional.empty")){
+        if(!articulosDAO.findById(articulosAdquiridos.getArticulos().getIdArticulo()).isPresent()){
             throw new Exception("Debe ingresar un id de un articulo que exista.");
         }
-        if(estudianteDAO.findById(articulosAdquiridos.getEstudiante().getIdEstudiante()).toString().equals("Optional.empty")){
+        if(!estudianteDAO.findById(articulosAdquiridos.getEstudiante().getIdEstudiante()).isPresent()){
+
             throw new Exception("Debe ingresar un id de un estudiante que exista.");
         }
         Date fechaActual = new Date();

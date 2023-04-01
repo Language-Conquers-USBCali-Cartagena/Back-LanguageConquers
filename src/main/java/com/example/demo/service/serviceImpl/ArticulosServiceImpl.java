@@ -75,7 +75,7 @@ public class ArticulosServiceImpl implements ArticulosService {
             throw new Exception("Se debe ingresar el id del artículo.");
         }
         if(!articulosDAO.existsById(idArticulo)){
-            throw new Exception("El artículo con id: " + idArticulo + " no existe.");
+            throw new Exception("El artículo con ese id no existe.");
         }
         if(!articulosAdquiridosDAO.findByIdArticulo(idArticulo).isEmpty()){
             throw new Exception("No se puede eliminar el artículo porque se encuentra asociado a un articulo adquirido de un estudiante.");
@@ -90,7 +90,7 @@ public class ArticulosServiceImpl implements ArticulosService {
             throw new Exception("Se debe ingresar el id del artículo.");
         }
         if(!articulosDAO.existsById(idArticulo)){
-            throw new Exception("El articulo con id: " + idArticulo + " no existe.");
+            throw new Exception("El articulo con ese id no existe.");
         }
         return articulosDAO.findById(idArticulo).get();
     }
@@ -112,42 +112,44 @@ public class ArticulosServiceImpl implements ArticulosService {
 
     private void validacionesCrear (Articulos articulos) throws Exception{
 
-        if(articulos.getNombre().equals(null) || articulos.getNombre().trim().equals("") ||
+        if(articulos.getNombre()==null || articulos.getNombre().trim().equals("") ||
                 Validaciones.isStringLenght(articulos.getNombre(), 50)){
             throw new Exception("Debe ingresar un nombre para el artículo.");
         }
         if(articulos.getPrecio()<0){
             throw new Exception("Se debe ingresar el precio del artículo.");
         }
-        if(articulos.getDescripcion().equals(null)|| articulos.getDescripcion().trim().equals("") ||
+        if(articulos.getDescripcion() == null|| articulos.getDescripcion().trim().equals("") ||
                 Validaciones.isStringLenght(articulos.getDescripcion(), 200)){
             throw new Exception("Debe ingresar una descripción para el artículo.");
         }
-        if(articulos.getNivelValido()<0){
+        if(articulos.getNivelValido()<=0){
             throw new Exception("Se debe ingresar el nivel válido del artículo.");
         }
-        if(articulos.getImagen().equals(null) || articulos.getImagen().trim().equals("")){
+        if(articulos.getImagen() == null || articulos.getImagen().trim().equals("")){
             throw new Exception("Debe ingresar una imagen para el artículo.");
         }
-        if(articulos.getCategoria().equals(null) || articulos.getCategoria().getIdCategoria() <0){
-            throw new Exception("Debe ingresar una categoría válida.");
+        if(Validaciones.isStringLenght(articulos.getImagen(),250)){
+            throw new Exception("La url de la imagen es muy larga, máximo 250 caracteres.");
         }
-        if(articulos.getEstado().equals(null) || articulos.getEstado().getIdEstado() <0){
-            throw new Exception("Debe ingresar un estado válido.");
+        if(articulos.getCategoria().getIdCategoria() == null || articulos.getCategoria().getIdCategoria() <=0){
+            throw new Exception("Debe ingresar un idCategoría válido.");
         }
-        if(categoriaDAO.findById(articulos.getCategoria().getIdCategoria()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id categoría válido.");
+        if(!categoriaDAO.findById(articulos.getCategoria().getIdCategoria()).isPresent()){
+            throw new Exception("Debe ingresar un idCategoría que este registrada.");
         }
-        if(estadoDAO.findById(articulos.getEstado().getIdEstado()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id estado válido.");
+        if(articulos.getEstado().getIdEstado() ==null || articulos.getEstado() ==null || articulos.getEstado().getIdEstado() <=0){
+            throw new Exception("Debe ingresar un idEstado válido.");
+        }
+        if(!estadoDAO.findById(articulos.getEstado().getIdEstado()).isPresent()){
+            throw new Exception("Debe ingresar un idEstado que este registrado.");
         }
         if(articulos.getUsuarioCreador() == null
                 || articulos.getUsuarioCreador().trim().equals("")
                 || Validaciones.isStringLenght(articulos.getUsuarioCreador(),50)){
             throw new Exception("Se debe ingresar un usuario creador del artículo válido.");
         }
-        if(articulos.getFechaCreacion() == null
-                || articulos.getFechaCreacion().toString().equals("")){
+        if(articulos.getFechaCreacion() == null){
             throw new Exception("Se debe ingresar una fecha válida.");
         }
         Date fechaActual = new Date();
@@ -157,51 +159,48 @@ public class ArticulosServiceImpl implements ArticulosService {
     }
     private void validacionesActualizar(ArticulosDTO articulosDTO) throws Exception{
         if(articulosDTO.getIdArticulo() == null ){
-            throw new Exception("Debe ingresar el id del artículo que desea actualizar. ");
+            throw new Exception("Debe ingresar el id del artículo que desea actualizar.");
         }
         if(!articulosDAO.existsById(articulosDTO.getIdArticulo())){
             throw new Exception("No se encontró un artículo con ese id.");
         }
-        if(!categoriaDAO.existsById(articulosDTO.getIdCategoria())){
-            throw new Exception("No existe una categoría con ese id.");
-        }
-        if(!estadoDAO.existsById(articulosDTO.getIdEstado())){
-            throw new Exception("No existe un estado con ese id.");
-        }
-        if(articulosDTO.getIdEstado().toString().equals("")){
-            throw new Exception("Debe ingresar un id estado.");
-        }
-        if(articulosDTO.getIdCategoria().toString().equals("")){
-            throw new Exception("Debe ingresar un id de categoría.");
-        }
-        if(articulosDTO.getIdEstado()<0){
-            throw new Exception("Debe ingresar un id de estado válido.");
-        }
-        if(articulosDTO.getIdCategoria()<0){
-            throw new Exception("Debe ingresar un id de categoría válido.");
-        }
-        if(estadoDAO.findById(articulosDTO.getIdEstado()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id de estado que exista.");
-        }
-        if(categoriaDAO.findById(articulosDTO.getIdCategoria()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id de categoría que exista.");
-        }
-        if(articulosDTO.getNombre().equals(null) || articulosDTO.getNombre().trim().equals("") ||
+        if(articulosDTO.getNombre()== null || articulosDTO.getNombre().trim().equals("") ||
                 Validaciones.isStringLenght(articulosDTO.getNombre(), 50)){
             throw new Exception("Debe ingresar un nombre para el artículo.");
+        }
+        if(articulosDTO.getDescripcion() == null|| articulosDTO.getDescripcion().trim().equals("") ||
+                Validaciones.isStringLenght(articulosDTO.getDescripcion(), 200)){
+            throw new Exception("Debe ingresar una descripción para el artículo.");
+        }
+        if(articulosDTO.getImagen()==null || articulosDTO.getImagen().trim().equals("")){
+            throw new Exception("Debe ingresar una imagen para el artículo.");
+        }
+        if(Validaciones.isStringLenght(articulosDTO.getImagen(),250)){
+            throw new Exception("La url de la imagen es muy larga, máximo 250 caracteres.");
         }
         if(articulosDTO.getPrecio()<0){
             throw new Exception("Se debe ingresar el precio del artículo.");
         }
-        if(articulosDTO.getDescripcion().equals(null)|| articulosDTO.getDescripcion().trim().equals("") ||
-                Validaciones.isStringLenght(articulosDTO.getDescripcion(), 200)){
-            throw new Exception("Debe ingresar una descripción para el artículo.");
+        if(articulosDTO.getIdCategoria() == null){
+            throw new Exception("Debe ingresar un id de categoría.");
+        }
+        if(articulosDTO.getIdCategoria()<0){
+            throw new Exception("Debe ingresar un id de categoría válido.");
+        }
+        if(!categoriaDAO.existsById(articulosDTO.getIdCategoria())){
+            throw new Exception("No existe una categoría con ese id.");
         }
         if(articulosDTO.getNivelValido()<0){
             throw new Exception("Se debe ingresar el nivel válido del artículo.");
         }
-        if(articulosDTO.getImagen().equals(null) || articulosDTO.getImagen().trim().equals("")){
-            throw new Exception("Debe ingresar una imagen para el artículo.");
+        if(articulosDTO.getIdEstado() == null){
+            throw new Exception("Debe ingresar un id estado.");
+        }
+        if(articulosDTO.getIdEstado()<0){
+            throw new Exception("Debe ingresar un id de estado válido.");
+        }
+        if(!estadoDAO.existsById(articulosDTO.getIdEstado())){
+            throw new Exception("No existe un estado con ese id.");
         }
         Date fechaActual = new Date();
         if(articulosDTO.getUsuarioModificador()==null || articulosDTO.getUsuarioModificador().equals("")){
@@ -210,7 +209,7 @@ public class ArticulosServiceImpl implements ArticulosService {
         if(Validaciones.isStringLenght(articulosDTO.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario modificador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(articulosDTO.getFechaModificacion()==null || articulosDTO.getFechaModificacion().toString().equals("")){
+        if(articulosDTO.getFechaModificacion()==null){
             throw new Exception("Debe ingresar una fecha de modificación.");
         }
         if(articulosDTO.getFechaModificacion().compareTo(fechaActual)>0){

@@ -91,9 +91,8 @@ public class GeneroServiceImpl implements GeneroService {
                 || Validaciones.isStringLenght(genero.getUsuarioCreador(),50)){
             throw new Exception("Se debe ingresar un usuario creador del genero válido.");
         }
-        if(genero.getFechaCreacion() == null
-                || genero.getFechaCreacion().toString().equals("")){
-            throw new Exception("Se debe ingresar una fecha válida.");
+        if(genero.getFechaCreacion() == null){
+            throw new Exception("Se debe ingresar una fecha de creación válida.");
         }
         Date fechaActual = new Date();
         if(genero.getFechaCreacion().compareTo(fechaActual)>0){
@@ -118,9 +117,8 @@ public class GeneroServiceImpl implements GeneroService {
                 || Validaciones.isStringLenght(generoDTO.getUsuarioModificador(),50)){
             throw new Exception("Se debe ingresar un usuario modificador del genero válido.");
         }
-        if(generoDTO.getFechaModificacion() == null
-                || generoDTO.getFechaModificacion().toString().equals("")){
-            throw new Exception("Se debe ingresar una fecha válida.");
+        if(generoDTO.getFechaModificacion() == null){
+            throw new Exception("Se debe ingresar una fecha de modificación válida.");
         }
         Date fechaActual = new Date();
         if(generoDTO.getFechaModificacion().compareTo(fechaActual)>0){
