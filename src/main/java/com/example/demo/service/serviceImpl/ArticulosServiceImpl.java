@@ -35,6 +35,16 @@ public class ArticulosServiceImpl implements ArticulosService {
     ArticulosAdquiridosDAO articulosAdquiridosDAO;
 
     @Override
+    public List<Articulos> articulosObtenidos(Long idEstudiante) throws Exception {
+        return articulosDAO.articulosObtenidos(idEstudiante);
+    }
+
+    @Override
+    public List<Articulos> articulosNoObtenidos(Long idEstudiante) throws Exception {
+        return articulosDAO.articulosNoObtenidos(idEstudiante);
+    }
+
+    @Override
     public String registrar(Articulos articulos) throws Exception {
         validacionesCrear(articulos);
         articulosDAO.save(articulos);

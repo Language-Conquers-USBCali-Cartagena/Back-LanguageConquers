@@ -16,4 +16,14 @@ public interface ArticulosDAO extends JpaRepository<Articulos, Long> {
 
     @Query(value = "SELECT COUNT(*) FROM ARTICULO", nativeQuery = true)
     int articulosRegistrados() throws Exception;
+
+    @Query(value = "SELECT * FROM articulo WHERE id_articulo NOT IN(SELECT id_articulo FROM articulo_adquirido WHERE id_estudiante = ?1 )",
+            nativeQuery = true)
+    List<Articulos> articulosNoObtenidos(Long idEstudiante) throws Exception;
+
+    @Query(value = "SELECT a.id_articulo, a.usuario_modificador, a.imagen, a.fecha_creacion, a.fecha_modificacion, \n" +
+            "a.usuario_creador, a.descripcion, a.nombre, a.nivel_valido, a.precio, a.id_categoria, a.id_estado from articulo a\n" +
+            "INNER JOIN articulo_adquirido aa on (a.id_articulo = aa.id_articulo)\n" +
+            "WHERE id_estudiante = ?1", nativeQuery = true)
+    List<Articulos> articulosObtenidos(Long idEstudiante) throws Exception;
 }

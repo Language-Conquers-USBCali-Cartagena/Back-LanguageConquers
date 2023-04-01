@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EstudianteService {
     String crearEstudiante(Estudiante estudiante) throws Exception;
-    String actualizar(EstudianteDTO estudianteDTO) throws Exception;
+    String actualizar(Estudiante estudiante) throws Exception;
     String eliminar(Long idEstudiante) throws Exception;
     List<Estudiante> listar()throws Exception;
     Boolean existePorCorreo (String correo) throws Exception;

@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface ArticulosService {
 
+    List<Articulos> articulosObtenidos(Long idEstudiante) throws Exception;
+
+    List<Articulos> articulosNoObtenidos(Long idEstudiante) throws Exception;
     String registrar(Articulos articulos) throws Exception;
 
     String actualizar(ArticulosDTO articulosDTO) throws Exception;

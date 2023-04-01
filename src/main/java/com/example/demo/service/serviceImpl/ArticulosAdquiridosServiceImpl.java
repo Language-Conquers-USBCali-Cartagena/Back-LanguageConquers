@@ -3,9 +3,12 @@ package com.example.demo.service.serviceImpl;
 import com.example.demo.dao.ArticulosAdquiridosDAO;
 import com.example.demo.dao.ArticulosDAO;
 import com.example.demo.dao.EstudianteDAO;
+import com.example.demo.model.Articulos;
 import com.example.demo.model.ArticulosAdquiridos;
+import com.example.demo.model.Estudiante;
 import com.example.demo.model.dto.ArticulosAdquiridosDTO;
 import com.example.demo.service.ArticulosAdquiridosService;
+import com.example.demo.service.EstudianteService;
 import com.example.demo.util.Validaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -27,6 +30,9 @@ public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosServic
     @Autowired
     EstudianteDAO estudianteDAO;
 
+    @Autowired
+    EstudianteService estudianteService;
+
     @Override
     public String registrar(ArticulosAdquiridos articulosAdquiridos) throws Exception {
         validacionesCrear(articulosAdquiridos);
@@ -35,14 +41,9 @@ public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosServic
     }
 
     @Override
-    public String actualizar(ArticulosAdquiridosDTO articulosAdquiridosDTO) throws Exception {
-        ArticulosAdquiridos articulosAdquiridos = null;
-        validacionesActualizar(articulosAdquiridosDTO);
-        articulosAdquiridos = articulosAdquiridosDAO.findById(articulosAdquiridosDTO.getIdArticuloAdquirido()).orElse(null);
-        articulosAdquiridos.setEstudiante(estudianteDAO.findById(articulosAdquiridosDTO.getIdEstudiante()).orElse(null));
-        articulosAdquiridos.setArticulos((articulosDAO.findById(articulosAdquiridosDTO.getIdArticulos()).orElse(null)));
-        articulosAdquiridos.setUsuarioModificador(articulosAdquiridosDTO.getUsuarioModificador());
-        articulosAdquiridos.setFechaModificacion(articulosAdquiridosDTO.getFechaModificacion());
+    public String actualizar(ArticulosAdquiridos articulosAdquiridos) throws Exception {
+        validacionesActualizar(articulosAdquiridos);
+
         articulosAdquiridosDAO.save(articulosAdquiridos);
         return "Se actualizo correctamente el artículo adquirido.";
     }
@@ -57,6 +58,19 @@ public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosServic
         }
         articulosAdquiridosDAO.deleteById(idArticuloA);
         return "El artículo adquirido se ha eliminado exitosamente.";
+    }
+
+    @Override
+    public String eliminarPorIds(Long idEstudiante, Long idArticulo) throws Exception {
+        if(!estudianteDAO.existsById(idEstudiante)){
+            throw new Exception("El estudiante con ese id no existe en la bd.");
+        }
+        if(!articulosDAO.existsById(idArticulo)){
+            throw new Exception("El articulo con ese id no existe en la bd.");
+        }
+        ArticulosAdquiridos articulosAdquiridos = articulosAdquiridosDAO.findByIdArticuloAndIdEstudiante(idEstudiante, idArticulo);
+        articulosAdquiridosDAO.deleteById(articulosAdquiridos.getIdArticuloAdquirido());
+        return "Se elimino el articulo correctamente";
     }
 
     @Override
@@ -77,6 +91,36 @@ public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosServic
             throw new Exception("No hay artículos adquiridos disponibles.");
         }
         return articulosAdquiridos;
+    }
+
+    @Override
+    public Integer comprar(Long idEstudiante, Long idArticulo) throws Exception {
+        Estudiante estudiante = estudianteDAO.findById(idEstudiante).get();
+        Articulos articulo = articulosDAO.findById(idArticulo).get();
+
+        if(articulo.getIdArticulo() == null){
+            throw new Exception("El articulo con ese id no existe.");
+        }
+        if(estudiante.getIdEstudiante() == null){
+            throw new Exception("El estudiante con ese id no existe.");
+        }
+        Double monedasEstudiante = Double.valueOf(estudiante.getMonedasObtenidas());
+        Double precio = articulo.getPrecio();
+
+        if(monedasEstudiante < precio){
+            throw new Exception("No tiene monedas suficientes para comprae este articulo.");
+        }
+        monedasEstudiante = monedasEstudiante - precio;
+        ArticulosAdquiridos articulosAdquiridos = new ArticulosAdquiridos();
+        articulosAdquiridos.setArticulos(articulo);
+        articulosAdquiridos.setEstudiante(estudiante);
+        articulosAdquiridos.setFechaCreacion(new Date());
+        articulosAdquiridos.setUsuarioCreador(estudiante.getNombre());
+        estudiante.setMonedasObtenidas(monedasEstudiante.intValue());
+        estudianteService.actualizar(estudiante);
+        registrar(articulosAdquiridos);
+
+        return monedasEstudiante.intValue();
     }
 
     private void validacionesCrear(ArticulosAdquiridos articulosAdquiridos) throws Exception{
@@ -109,48 +153,49 @@ public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosServic
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
     }
-    private void validacionesActualizar(ArticulosAdquiridosDTO articulosAdquiridosDTO) throws Exception{
-        if(articulosAdquiridosDTO.getIdArticuloAdquirido() == null){
+    private void validacionesActualizar(ArticulosAdquiridos articulosAdquiridos) throws Exception{
+        if(articulosAdquiridos.getIdArticuloAdquirido() == null){
             throw new Exception("Debe ingresar el id del artículo que desea actualizar.");
         }
-        if(!articulosAdquiridosDAO.existsById(articulosAdquiridosDTO.getIdArticuloAdquirido())){
+        if(!articulosAdquiridosDAO.existsById(articulosAdquiridos.getIdArticuloAdquirido())){
             throw new Exception("No se encontró un artículo adquirido con ese id.");
         }
-        if(!articulosDAO.existsById(articulosAdquiridosDTO.getIdArticulos())){
+        if(!articulosDAO.existsById(articulosAdquiridos.getArticulos().getIdArticulo())){
             throw new Exception("No se encontró un artículo con ese id.");
         }
-        if(!estudianteDAO.existsById(articulosAdquiridosDTO.getIdEstudiante())){
+        if(!estudianteDAO.existsById(articulosAdquiridos.getEstudiante().getIdEstudiante())){
             throw new Exception("No se encontró un estudiante con ese id.");
         }
-        if(articulosAdquiridosDTO.getIdArticulos().toString().equals("")){
+        if(articulosAdquiridos.getArticulos().getIdArticulo().toString().equals("")){
             throw new Exception("Debe ingresar un id de artículo.");
         }
-        if(articulosAdquiridosDTO.getIdEstudiante().toString().equals("")){
+        if(articulosAdquiridos.getEstudiante().getIdEstudiante().toString().equals("")){
             throw new Exception("Debe ingresar un id de un estudiante.");
         }
-        if(articulosAdquiridosDTO.getIdArticulos()<0){
+        if(articulosAdquiridos.getArticulos().getIdArticulo()<0){
             throw new Exception("Debe ingresar un id de artículo válido.");
         }
-        if(articulosAdquiridosDTO.getIdEstudiante()<0){
+        if(articulosAdquiridos.getEstudiante().getIdEstudiante()<0){
             throw new Exception("Debe ingresar un id de estudiante válido.");
         }
-        if(!articulosDAO.findById(articulosAdquiridosDTO.getIdArticulos()).isPresent()){
+        if(!articulosDAO.findById(articulosAdquiridos.getArticulos().getIdArticulo()).isPresent()){
             throw new Exception("Debe ingresar un id de un articulo que exista.");
         }
-        if(!estudianteDAO.findById(articulosAdquiridosDTO.getIdEstudiante()).isPresent()){
+        if(!estudianteDAO.findById(articulosAdquiridos.getEstudiante().getIdEstudiante()).isPresent()){
+
             throw new Exception("Debe ingresar un id de un estudiante que exista.");
         }
         Date fechaActual = new Date();
-        if(articulosAdquiridosDTO.getUsuarioModificador() == null || articulosAdquiridosDTO.getUsuarioModificador().equals("")){
+        if(articulosAdquiridos.getUsuarioModificador() == null || articulosAdquiridos.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el usuario modificador.");
         }
-        if(Validaciones.isStringLenght(articulosAdquiridosDTO.getUsuarioModificador(),50)){
+        if(Validaciones.isStringLenght(articulosAdquiridos.getUsuarioModificador(),50)){
             throw new Exception("El nombre de usuario modifcador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(articulosAdquiridosDTO.getFechaModificacion() == null || articulosAdquiridosDTO.getFechaModificacion().toString().equals("")){
+        if(articulosAdquiridos.getFechaModificacion() == null || articulosAdquiridos.getFechaModificacion().toString().equals("")){
             throw new Exception("Debe ingresar una fecha de modificación.");
         }
-        if(articulosAdquiridosDTO.getFechaModificacion().compareTo(fechaActual)>0){
+        if(articulosAdquiridos.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
     }

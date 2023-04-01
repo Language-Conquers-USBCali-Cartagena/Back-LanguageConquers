@@ -13,4 +13,7 @@ public interface ArticulosAdquiridosDAO extends JpaRepository<ArticulosAdquirido
 
     @Query(value = "select * from articulo_adquirido where id_articulo = ?1", nativeQuery = true)
     List<ArticulosAdquiridos> findByIdArticulo(Long idArticulo) throws Exception;
+
+    @Query(value = "SELECT * FROM articulo_adquirido WHERE id_estudiante = ?1 AND id_articulo = ?2", nativeQuery = true)
+    ArticulosAdquiridos findByIdArticuloAndIdEstudiante(Long idEstudiante, Long idArticulo) throws Exception;
 }
