@@ -96,7 +96,7 @@ public class EstadoServiceImpl implements EstadoService {
             throw new Exception("Debe ingresar el id de un estado.");
         }
         if(!estadoDAO.existsById(idEstado)){
-            throw new Exception("El estado con id: " + idEstado + " no existe.");
+            throw new Exception("El estado con el id ingresado no existe.");
         }
         return estadoDAO.findById(idEstado).get();
     }
@@ -110,9 +110,9 @@ public class EstadoServiceImpl implements EstadoService {
         }
         if(estado.getUsuarioCreador() == null || estado.getUsuarioCreador().trim().equals("")
                 || Validaciones.isStringLenght(estado.getUsuarioCreador(),50)){
-            throw new Exception("Se debe ingresar un usuario creador.");
+            throw new Exception("Se debe ingresar un usuario creador válido.");
         }
-        if(estado.getFechaCreacion() == null || estado.getFechaCreacion().toString().equals("")){
+        if(estado.getFechaCreacion() == null){
             throw new Exception("Debe ingresar una fecha de creación.");
         }
         Date fechaActual = new Date();
@@ -135,10 +135,10 @@ public class EstadoServiceImpl implements EstadoService {
         }
         if(estadoDTO.getUsuarioModificador() == null || estadoDTO.getUsuarioModificador().trim().equals("")
                 || Validaciones.isStringLenght(estadoDTO.getUsuarioModificador(),50)){
-            throw new Exception("Se debe ingresar un usuario creador.");
+            throw new Exception("Se debe ingresar un usuario modificador válido.");
         }
-        if(estadoDTO.getFechaModificacion() == null || estadoDTO.getFechaModificacion().toString().equals("")){
-            throw new Exception("Debe ingresar una fecha de creación.");
+        if(estadoDTO.getFechaModificacion() == null ){
+            throw new Exception("Debe ingresar una fecha de modificación.");
         }
         Date fechaActual = new Date();
         if(estadoDTO.getFechaModificacion().compareTo(fechaActual)>0){

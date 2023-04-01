@@ -41,6 +41,7 @@ public class RetoEstudianteController {
     public ResponseEntity<String> crear(@RequestBody RetoEstudianteDTO retoEstudianteDTO){
         try{
             RetoEstudiante retoEstudiante = retoEstudianteMapper.toEntity(retoEstudianteDTO);
+            System.out.println(retoEstudiante.getFechaEntrega());
             return new ResponseEntity<>(retoEstudianteService.crearRetoEstudiante(retoEstudiante), HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

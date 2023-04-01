@@ -286,13 +286,13 @@ public class RetoServiceImpl implements RetoService {
             throw new Exception("Se debe ingresar un id misión válido.");
         }
         if(reto.getUsuarioModificador()==null || reto.getUsuarioModificador().equals("")){
-            throw new Exception("Debe ingresar el usuario creador.");
+            throw new Exception("Debe ingresar el usuario modificador.");
         }
         if(Validaciones.isStringLenght(reto.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario creador es muy largo, solo puede contener 50 caracteres.");
         }
         if(reto.getFechaModificacion()==null ||reto.getFechaModificacion().toString().equals("")){
-            throw new Exception("Debe ingresar una fecha de creación.");
+            throw new Exception("Debe ingresar una fecha de modificación.");
         }
         Date fechaActual = new Date();
         Calendar calendar = Calendar.getInstance();
