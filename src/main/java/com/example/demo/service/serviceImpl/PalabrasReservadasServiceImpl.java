@@ -257,7 +257,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
             case "buscar":
                 if(param1.getNombre().equalsIgnoreCase("coco")){
 
-                    if(mapMetodos.get("arbol") == null || !mapMetodos.get("arbol").equalsIgnoreCase("cima del arbol")){
+                    if(mapMetodos.get("Arbol") == null || !mapMetodos.get("Arbol").equalsIgnoreCase("cima del arbol")){
                         throw new Exception("Para buscar un " + param1.getNombre() + " debe estar en una palmera");
                     }
                 }

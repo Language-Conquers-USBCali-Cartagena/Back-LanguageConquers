@@ -18,6 +18,7 @@ public class RetoEstudianteDTO implements Serializable {
     private Date fechaEntrega;
     private String usuarioCreador;
     private String usuarioModificador;
+    private Integer intentos;
     private Date fechaCreacion;
     private Date fechaModificacion;
     private Long idReto;

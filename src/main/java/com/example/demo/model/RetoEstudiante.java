@@ -35,6 +35,8 @@ public class RetoEstudiante {
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
 
+    @Column(name = "intentos")
+    private Integer intentos;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_reto", nullable = false)
     private Reto reto;

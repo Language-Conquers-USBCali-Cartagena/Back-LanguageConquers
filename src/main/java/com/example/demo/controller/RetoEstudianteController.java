@@ -52,7 +52,8 @@ public class RetoEstudianteController {
     @PutMapping("/actualizarRetoEstudiante")
     public ResponseEntity<String> modificar(@RequestBody RetoEstudianteDTO retoEstudianteDTO){
         try{
-            return new ResponseEntity<>(retoEstudianteService.actualizar(retoEstudianteDTO), HttpStatus.OK);
+            RetoEstudiante retoEstudiante = retoEstudianteMapper.toEntity(retoEstudianteDTO);
+            return new ResponseEntity<>(retoEstudianteService.actualizar(retoEstudiante), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

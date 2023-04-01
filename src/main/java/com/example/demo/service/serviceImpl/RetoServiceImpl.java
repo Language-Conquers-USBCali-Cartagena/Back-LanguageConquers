@@ -2,11 +2,9 @@ package com.example.demo.service.serviceImpl;
 
 import com.example.demo.dao.*;
 import com.example.demo.model.*;
+import com.example.demo.model.dto.PalabrasReservadasDTO;
 import com.example.demo.model.dto.RetoDTO;
-import com.example.demo.service.CursoService;
-import com.example.demo.service.EstadoService;
-import com.example.demo.service.MisionService;
-import com.example.demo.service.RetoService;
+import com.example.demo.service.*;
 import com.example.demo.util.Validaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -38,6 +36,12 @@ public class RetoServiceImpl implements RetoService {
 
     @Autowired
     RolDAO rolDAO;
+
+    @Autowired
+    PalabrasReservadasService palabrasReservadasService;
+
+    @Autowired
+    RetoEstudianteService retoEstudianteService;
 
     @Override
     public List<Reto> listReto() throws Exception{
@@ -98,6 +102,33 @@ public class RetoServiceImpl implements RetoService {
     public int retosRegistrados() throws Exception {
         int retosRegistrados = retoDAO.retosRegistrados();
         return retosRegistrados;
+    }
+
+    @Override
+    public String completarReto(List<PalabrasReservadasDTO> palabrasReservadas, Boolean esBasico, Long retoId, Long estudianteId) throws Exception {
+        Integer intentos = 0;
+        String respuesta = palabrasReservadasService.procesarPalabraReservada(palabrasReservadas, esBasico);
+        RetoEstudiante retoEstudiante = retoEstudianteService.findByIdRetoAndIdEstudiante(retoId, estudianteId);
+        Reto reto = retoDAO.findById(retoId).get();
+        retoEstudiante.setFechaEntrega(new Date(2023, 04, 1));
+        if(!reto.getSolucion().equalsIgnoreCase(respuesta)){
+            if(retoEstudiante.getIntentos() == null){
+                intentos = 1;
+            }else{
+                intentos = retoEstudiante.getIntentos() +1;
+            }
+
+            if(intentos >= reto.getMaximoIntentos()){
+                retoEstudiante.setEstado(estadoDAO.getById(2L));
+                retoEstudianteService.actualizar(retoEstudiante);
+                throw new Exception("Ya excedio el maximo de intentos");
+            }
+            retoEstudiante.setIntentos(intentos);
+            retoEstudianteService.actualizar(retoEstudiante);
+            throw new Exception("Respuesta incorrecto: " + respuesta);
+        }
+        retoEstudianteService.actualizar(retoEstudiante);
+        return respuesta;
     }
 
 
