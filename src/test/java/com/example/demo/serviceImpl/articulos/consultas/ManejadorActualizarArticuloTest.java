@@ -85,7 +85,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(categoriaDAO.existsById(articulosDTO.getIdCategoria())).thenReturn(true);
         Mockito.when(estadoDAO.existsById(articulosDTO.getIdEstado())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
-        String actualizarArticulo = articulosService.actualizar(articulosDTO);
+        String actualizarArticulo = articulosService.actualizar(articulos);
         assertEquals(SE_ACTUALIZO_CORRECTAMENTE_EL_ARTICULO, actualizarArticulo);
 
     }
@@ -106,7 +106,7 @@ public class ManejadorActualizarArticuloTest {
         Articulos articulos = articulosMapper.toEntity(articulosDTO);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_EL_ID_DEL_ARTICULO_QUE_DESEA_ACTUALIZAR);
 
@@ -129,7 +129,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(false);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), NO_SE_ENCONTRO_UN_ARTICULO_CON_ESE_ID);
 
@@ -152,7 +152,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UN_NOMBRE_PARA_EL_ARTICULO);
 
@@ -176,7 +176,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UN_NOMBRE_PARA_EL_ARTICULO);
 
@@ -199,7 +199,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UN_NOMBRE_PARA_EL_ARTICULO);
 
@@ -223,7 +223,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UNA_DESCRIPCION_PARA_EL_ARTICULO);
 
@@ -247,7 +247,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UNA_DESCRIPCION_PARA_EL_ARTICULO);
 
@@ -271,7 +271,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UNA_DESCRIPCION_PARA_EL_ARTICULO);
 
@@ -295,7 +295,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UNA_IMAGEN_PARA_EL_ARTICULO);
 
@@ -318,7 +318,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UNA_IMAGEN_PARA_EL_ARTICULO);
 
@@ -342,7 +342,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), LA_URL_DE_LA_IMAGEN_ES_MUY_LARGA_MAXIMO_250_CARACTERES);
 
@@ -366,7 +366,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_EL_PRECIO_DEL_ARTICULO);
 
@@ -390,7 +390,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UN_ID_DE_CATEGORIA);
 
@@ -414,7 +414,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(articulosDAO.existsById(articulosDTO.getIdArticulo())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UN_ID_DE_CATEGORIA_VALIDO);
 
@@ -438,7 +438,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(categoriaDAO.existsById(articulosDTO.getIdCategoria())).thenReturn(false);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), NO_EXISTE_UNA_CATEGORIA_CON_ESE_ID);
 
@@ -463,7 +463,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(categoriaDAO.existsById(articulosDTO.getIdCategoria())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_EL_NIVEL_VALIDO_DEL_ARTICULO);
 
@@ -488,7 +488,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(categoriaDAO.existsById(articulosDTO.getIdCategoria())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UN_ID_ESTADO);
 
@@ -513,7 +513,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(categoriaDAO.existsById(articulosDTO.getIdCategoria())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), DEBE_INGRESAR_UN_ID_DE_ESTADO_VALIDO);
 
@@ -538,7 +538,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(estadoDAO.existsById(articulosDTO.getIdEstado())).thenReturn(false);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), NO_EXISTE_UN_ESTADO_CON_ESE_ID);
 
@@ -563,7 +563,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(estadoDAO.existsById(articulosDTO.getIdEstado())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UN_USUARIO_MODIFICADOR_DEL_ARTICULO_VALIDO);
 
@@ -589,7 +589,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(estadoDAO.existsById(articulosDTO.getIdEstado())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UN_USUARIO_MODIFICADOR_DEL_ARTICULO_VALIDO);
 
@@ -615,7 +615,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(estadoDAO.existsById(articulosDTO.getIdEstado())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), EL_NOMBRE_DEL_USUARIO_MODIFICADOR_ES_MUY_LARGO_SOLO_PUEDE_CONTENER_50_CARACTERES);
 
@@ -641,7 +641,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(estadoDAO.existsById(articulosDTO.getIdEstado())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UNA_FECHA_DE_MODIFICACION);
 
@@ -666,7 +666,7 @@ public class ManejadorActualizarArticuloTest {
         Mockito.when(estadoDAO.existsById(articulosDTO.getIdEstado())).thenReturn(true);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
-            articulosService.actualizar(articulosDTO);
+            articulosService.actualizar(articulos);
         });
         assertEquals(exception.getMessage(), NO_SE_PUEDE_INGRESAR_UNA_FECHA_QUE_AUN_NO_HA_SUCEDIDO);
 
