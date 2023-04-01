@@ -56,6 +56,17 @@ public class ArticulosAdquiridosController {
         }
     }
 
+    @Operation(summary = "Este metodo permite eliminar un registro por el idEstudiante y el idArticulo")
+    @DeleteMapping("/eliminarArticuloPorIds")
+    public ResponseEntity<String> eliminarArticulosPorIds(@RequestParam Long idEstudiante, @RequestParam Long idArticulo){
+        try {
+            String respuesta = articulosAdquiridosService.eliminarPorIds(idEstudiante, idArticulo);
+            return new ResponseEntity<>(respuesta, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @Operation(summary = "Este método permite listar todos los articulos adquiridos.")
     @GetMapping
     public ResponseEntity<List<ArticulosAdquiridosDTO>> listarArticulosAdquiridos(){
@@ -78,5 +89,14 @@ public class ArticulosAdquiridosController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
+    @Operation(summary = "Este método permite comprar un artículo.")
+    @GetMapping("/comprar")
+    public ResponseEntity<Integer> comprarArticulo(@RequestParam Long idEstudiante, @RequestParam Long idArticulo){
+        try {
+            Integer monedas = articulosAdquiridosService.comprar(idEstudiante, idArticulo);
+            return new ResponseEntity<>(monedas, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

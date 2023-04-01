@@ -3,9 +3,12 @@ package com.example.demo.service.serviceImpl;
 import com.example.demo.dao.ArticulosAdquiridosDAO;
 import com.example.demo.dao.ArticulosDAO;
 import com.example.demo.dao.EstudianteDAO;
+import com.example.demo.model.Articulos;
 import com.example.demo.model.ArticulosAdquiridos;
+import com.example.demo.model.Estudiante;
 import com.example.demo.model.dto.ArticulosAdquiridosDTO;
 import com.example.demo.service.ArticulosAdquiridosService;
+import com.example.demo.service.EstudianteService;
 import com.example.demo.util.Validaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -26,6 +29,9 @@ public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosServic
 
     @Autowired
     EstudianteDAO estudianteDAO;
+
+    @Autowired
+    EstudianteService estudianteService;
 
     @Override
     public String registrar(ArticulosAdquiridos articulosAdquiridos) throws Exception {
@@ -55,6 +61,19 @@ public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosServic
     }
 
     @Override
+    public String eliminarPorIds(Long idEstudiante, Long idArticulo) throws Exception {
+        if(!estudianteDAO.existsById(idEstudiante)){
+            throw new Exception("El estudiante con ese id no existe en la bd.");
+        }
+        if(!articulosDAO.existsById(idArticulo)){
+            throw new Exception("El articulo con ese id no existe en la bd.");
+        }
+        ArticulosAdquiridos articulosAdquiridos = articulosAdquiridosDAO.findByIdArticuloAndIdEstudiante(idEstudiante, idArticulo);
+        articulosAdquiridosDAO.deleteById(articulosAdquiridos.getIdArticuloAdquirido());
+        return "Se elimino el articulo correctamente";
+    }
+
+    @Override
     public ArticulosAdquiridos findById(Long idArticuloA) throws Exception {
         if(idArticuloA == null){
             throw new Exception("Se debe ingresar el id del artículo adquirido.");
@@ -72,6 +91,36 @@ public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosServic
             throw new Exception("No hay artículos adquiridos disponibles.");
         }
         return articulosAdquiridos;
+    }
+
+    @Override
+    public Integer comprar(Long idEstudiante, Long idArticulo) throws Exception {
+        Estudiante estudiante = estudianteDAO.findById(idEstudiante).get();
+        Articulos articulo = articulosDAO.findById(idArticulo).get();
+
+        if(articulo.getIdArticulo() == null){
+            throw new Exception("El articulo con ese id no existe.");
+        }
+        if(estudiante.getIdEstudiante() == null){
+            throw new Exception("El estudiante con ese id no existe.");
+        }
+        Double monedasEstudiante = Double.valueOf(estudiante.getMonedasObtenidas());
+        Double precio = articulo.getPrecio();
+
+        if(monedasEstudiante < precio){
+            throw new Exception("No tiene monedas suficientes para comprae este articulo.");
+        }
+        monedasEstudiante = monedasEstudiante - precio;
+        ArticulosAdquiridos articulosAdquiridos = new ArticulosAdquiridos();
+        articulosAdquiridos.setArticulos(articulo);
+        articulosAdquiridos.setEstudiante(estudiante);
+        articulosAdquiridos.setFechaCreacion(new Date());
+        articulosAdquiridos.setUsuarioCreador(estudiante.getNombre());
+        estudiante.setMonedasObtenidas(monedasEstudiante.intValue());
+        estudianteService.actualizar(estudiante);
+        registrar(articulosAdquiridos);
+
+        return monedasEstudiante.intValue();
     }
 
     private void validacionesCrear(ArticulosAdquiridos articulosAdquiridos) throws Exception{
