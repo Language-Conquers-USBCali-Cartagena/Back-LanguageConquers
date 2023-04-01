@@ -12,7 +12,7 @@ public interface ArticulosService {
     List<Articulos> articulosNoObtenidos(Long idEstudiante) throws Exception;
     String registrar(Articulos articulos) throws Exception;
 
-    String actualizar(ArticulosDTO articulosDTO) throws Exception;
+    String actualizar(Articulos articulos) throws Exception;
 
     String eliminar(Long idArticulo) throws Exception;
 

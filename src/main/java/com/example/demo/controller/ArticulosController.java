@@ -36,8 +36,8 @@ public class ArticulosController {
     @PutMapping("/actualizarArticulo")
     public ResponseEntity<String> actualizarArticulo(@RequestBody ArticulosDTO articulosDTO){
         try{
-
-            return new ResponseEntity<>(articulosService.actualizar(articulosDTO), HttpStatus.OK);
+            Articulos articulo = articulosMapper.toEntity(articulosDTO);
+            return new ResponseEntity<>(articulosService.actualizar(articulo), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

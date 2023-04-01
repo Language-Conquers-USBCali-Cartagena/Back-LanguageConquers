@@ -52,19 +52,9 @@ public class ArticulosServiceImpl implements ArticulosService {
     }
 
     @Override
-    public String actualizar(ArticulosDTO articulosDTO) throws Exception {
+    public String actualizar(Articulos articulos) throws Exception {
         Articulos articulo = null;
-        validacionesActualizar(articulosDTO);
-        articulo = articulosDAO.findById(articulosDTO.getIdArticulo()).orElse(null);
-        articulo.setNombre(articulosDTO.getNombre());
-        articulo.setDescripcion(articulosDTO.getDescripcion());
-        articulo.setPrecio(articulosDTO.getPrecio());
-        articulo.setNivelValido(articulosDTO.getNivelValido());
-        articulo.setImagen(articulosDTO.getImagen());
-        articulo.setEstado(estadoDAO.findById(articulosDTO.getIdEstado()).orElse(null));
-        articulo.setCategoria(categoriaDAO.findById(articulosDTO.getIdCategoria()).orElse(null));
-        articulo.setUsuarioModificador(articulosDTO.getUsuarioModificador());
-        articulo.setFechaModificacion(articulosDTO.getFechaModificacion());
+        validacionesActualizar(articulos);
         articulosDAO.save(articulo);
         return "Se actualizo correctamente el artículo.";
     }
@@ -157,62 +147,62 @@ public class ArticulosServiceImpl implements ArticulosService {
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
     }
-    private void validacionesActualizar(ArticulosDTO articulosDTO) throws Exception{
-        if(articulosDTO.getIdArticulo() == null ){
+    private void validacionesActualizar(Articulos articulos) throws Exception{
+        if(articulos.getIdArticulo() == null ){
             throw new Exception("Debe ingresar el id del artículo que desea actualizar.");
         }
-        if(!articulosDAO.existsById(articulosDTO.getIdArticulo())){
+        if(!articulosDAO.existsById(articulos.getIdArticulo())){
             throw new Exception("No se encontró un artículo con ese id.");
         }
-        if(articulosDTO.getNombre()== null || articulosDTO.getNombre().trim().equals("") ||
-                Validaciones.isStringLenght(articulosDTO.getNombre(), 50)){
+        if(articulos.getNombre()== null || articulos.getNombre().trim().equals("") ||
+                Validaciones.isStringLenght(articulos.getNombre(), 50)){
             throw new Exception("Debe ingresar un nombre para el artículo.");
         }
-        if(articulosDTO.getDescripcion() == null|| articulosDTO.getDescripcion().trim().equals("") ||
-                Validaciones.isStringLenght(articulosDTO.getDescripcion(), 200)){
+        if(articulos.getDescripcion() == null|| articulos.getDescripcion().trim().equals("") ||
+                Validaciones.isStringLenght(articulos.getDescripcion(), 200)){
             throw new Exception("Debe ingresar una descripción para el artículo.");
         }
-        if(articulosDTO.getImagen()==null || articulosDTO.getImagen().trim().equals("")){
+        if(articulos.getImagen()==null || articulos.getImagen().trim().equals("")){
             throw new Exception("Debe ingresar una imagen para el artículo.");
         }
-        if(Validaciones.isStringLenght(articulosDTO.getImagen(),250)){
+        if(Validaciones.isStringLenght(articulos.getImagen(),250)){
             throw new Exception("La url de la imagen es muy larga, máximo 250 caracteres.");
         }
-        if(articulosDTO.getPrecio()<0){
+        if(articulos.getPrecio()<0){
             throw new Exception("Se debe ingresar el precio del artículo.");
         }
-        if(articulosDTO.getIdCategoria() == null){
+        if(articulos.getCategoria().getIdCategoria() == null){
             throw new Exception("Debe ingresar un id de categoría.");
         }
-        if(articulosDTO.getIdCategoria()<0){
+        if(articulos.getCategoria().getIdCategoria()<0){
             throw new Exception("Debe ingresar un id de categoría válido.");
         }
-        if(!categoriaDAO.existsById(articulosDTO.getIdCategoria())){
+        if(!categoriaDAO.existsById(articulos.getCategoria().getIdCategoria())){
             throw new Exception("No existe una categoría con ese id.");
         }
-        if(articulosDTO.getNivelValido()<0){
+        if(articulos.getNivelValido()<0){
             throw new Exception("Se debe ingresar el nivel válido del artículo.");
         }
-        if(articulosDTO.getIdEstado() == null){
+        if(articulos.getEstado().getIdEstado() == null){
             throw new Exception("Debe ingresar un id estado.");
         }
-        if(articulosDTO.getIdEstado()<0){
+        if(articulos.getEstado().getIdEstado()<0){
             throw new Exception("Debe ingresar un id de estado válido.");
         }
-        if(!estadoDAO.existsById(articulosDTO.getIdEstado())){
+        if(!estadoDAO.existsById(articulos.getEstado().getIdEstado())){
             throw new Exception("No existe un estado con ese id.");
         }
         Date fechaActual = new Date();
-        if(articulosDTO.getUsuarioModificador()==null || articulosDTO.getUsuarioModificador().equals("")){
+        if(articulos.getUsuarioModificador()==null || articulos.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el usuario modificador.");
         }
-        if(Validaciones.isStringLenght(articulosDTO.getUsuarioModificador(),50)){
+        if(Validaciones.isStringLenght(articulos.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario modificador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(articulosDTO.getFechaModificacion()==null){
+        if(articulos.getFechaModificacion()==null){
             throw new Exception("Debe ingresar una fecha de modificación.");
         }
-        if(articulosDTO.getFechaModificacion().compareTo(fechaActual)>0){
+        if(articulos.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
 
