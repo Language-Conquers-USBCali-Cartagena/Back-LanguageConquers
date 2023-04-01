@@ -74,8 +74,8 @@ public class ManejadorCrearArticulosAdquiridosTest {
     }
 
     @Test
-    @DisplayName("Debería fallar por idEstudiante null ")
-    void deberiaFallarPorIdEstudiante()throws Exception{
+    @DisplayName("Debería fallar por idEstudiante negativo")
+    void deberiaFallarPorIdEstudianteNegativo()throws Exception{
 
         ArticulosAdquiridosDTO articulosAdquiridosDTO = new ArticulosAdquiridosTestDataBuilder()
                 .conIdEstudiante(-739L).build();
@@ -88,19 +88,23 @@ public class ManejadorCrearArticulosAdquiridosTest {
     }
 
 
-//    @Test
-//    @DisplayName("Debería fallar por idArticulo null ")
-//    void deberiaFallarPorIdArticuloNull()throws Exception{
-//
-//        ArticulosAdquiridosDTO articulosAdquiridosDTO = new ArticulosAdquiridosTestDataBuilder()
-//                .conIdArticulos(null).build();
-//        ArticulosAdquiridos articulosAdquiridos = articulosAdquiridosMapper.toEntity(articulosAdquiridosDTO);
-//        Mockito.when(articulosAdquiridosDAO.save(Mockito.any())).thenReturn(articulosAdquiridos);
-//        Exception exception = assertThrows(Exception.class, ()->{
-//            articulosAdquiridosService.registrar(articulosAdquiridos);
-//        });
-//        assertEquals(exception.getMessage(),DEBE_INGRESAR_UN_ARTICULO_VALIDO );
-//    }
+    @Test
+    @DisplayName("Debería fallar por idEstudiante no existe ")
+    void deberiaFallarPorIdEstudianteNoExiste()throws Exception{
+
+        ArticulosAdquiridosDTO articulosAdquiridosDTO = new ArticulosAdquiridosTestDataBuilder()
+                .conIdEstudiante(8523L).build();
+        ArticulosAdquiridos articulosAdquiridos = articulosAdquiridosMapper.toEntity(articulosAdquiridosDTO);
+        Mockito.when(articulosDAO.existsById(articulosAdquiridosDTO.getIdArticulos())).thenReturn(true);
+        Mockito.when(articulosDAO.findById(articulosAdquiridosDTO.getIdArticulos())).thenReturn(Optional.of(new Articulos()));
+        Mockito.when(estudianteDAO.existsById(articulosAdquiridosDTO.getIdEstudiante())).thenReturn(false);
+        //Mockito.when(estudianteDAO.findById(articulosAdquiridosDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
+        Mockito.when(articulosAdquiridosDAO.save(Mockito.any())).thenReturn(articulosAdquiridos);
+        Exception exception = assertThrows(Exception.class, ()->{
+            articulosAdquiridosService.registrar(articulosAdquiridos);
+        });
+        assertEquals(exception.getMessage(),DEBE_INGRESAR_EL_ID_DE_UN_ESTUDIANTE_QUE_ESTE_REGISTRADO );
+    }
 //    @Test
 //    @DisplayName("Debería fallar por idArticulo negativo.")
 //    void deberiaFallarPorIdArticuloNegativo()throws Exception{
