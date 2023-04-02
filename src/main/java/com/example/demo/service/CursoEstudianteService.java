@@ -8,4 +8,6 @@ public interface CursoEstudianteService {
 
     String crearCursoEstudiante(CursoEstudiante cursoEstudiante) throws Exception;
     List<CursoEstudiante> listarCursoEstudiante() throws Exception;
+
+    CursoEstudiante findByIdEstudianteAndIdCurso(Long idCurso, Long idEstudiante) throws Exception;
 }

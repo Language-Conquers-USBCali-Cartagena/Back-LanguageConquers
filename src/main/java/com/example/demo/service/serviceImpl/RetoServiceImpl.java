@@ -38,10 +38,16 @@ public class RetoServiceImpl implements RetoService {
     RolDAO rolDAO;
 
     @Autowired
+    EstudianteDAO estudianteDAO;
+
+    @Autowired
     PalabrasReservadasService palabrasReservadasService;
 
     @Autowired
     RetoEstudianteService retoEstudianteService;
+
+    @Autowired
+    EstudianteService estudianteService;
 
     @Override
     public List<Reto> listReto() throws Exception{
@@ -109,8 +115,11 @@ public class RetoServiceImpl implements RetoService {
         Integer intentos = 0;
         String respuesta = palabrasReservadasService.procesarPalabraReservada(palabrasReservadas, esBasico);
         RetoEstudiante retoEstudiante = retoEstudianteService.findByIdRetoAndIdEstudiante(retoId, estudianteId);
+        retoEstudiante.setUsuarioModificador("admin");
+        retoEstudiante.setFechaModificacion(new Date());
+        Estudiante estudiante = estudianteDAO.findById(estudianteId).get();
         Reto reto = retoDAO.findById(retoId).get();
-        retoEstudiante.setFechaEntrega(new Date(2023, 04, 1));
+        retoEstudiante.setFechaEntrega(new Date());
         if(!reto.getSolucion().equalsIgnoreCase(respuesta)){
             if(retoEstudiante.getIntentos() == null){
                 intentos = 1;
@@ -119,7 +128,7 @@ public class RetoServiceImpl implements RetoService {
             }
 
             if(intentos >= reto.getMaximoIntentos()){
-                retoEstudiante.setEstado(estadoDAO.getById(2L));
+                retoEstudiante.setEstado(estadoDAO.getById(4L));
                 retoEstudianteService.actualizar(retoEstudiante);
                 throw new Exception("Ya excedio el maximo de intentos");
             }
@@ -127,8 +136,24 @@ public class RetoServiceImpl implements RetoService {
             retoEstudianteService.actualizar(retoEstudiante);
             throw new Exception("Respuesta incorrecto: " + respuesta);
         }
+        retoEstudiante.setEstado(estadoDAO.getById(3L));
+        Integer puntajeReto = 1000 - (intentos * 100);
+        estudiante.setPuntaje(estudiante.getPuntaje() + puntajeReto);
+        estudiante.setMonedasObtenidas(estudiante.getMonedasObtenidas() + reto.getMoneda());
+        estudiante.setUsuarioModificador("admin");
+        estudiante.setFechaModificacion(new Date());
+        estudianteService.actualizar(estudiante);
         retoEstudianteService.actualizar(retoEstudiante);
         return respuesta;
+    }
+
+    @Override
+    public List<Reto> retosPorEstudiante(Long idEstudiante) throws Exception {
+        if(!estudianteDAO.existsById(idEstudiante)){
+            throw new Exception("El id del estudiante no existe en la bd.");
+        }
+        List<Reto> retos = retoDAO.retoEstudiante(idEstudiante);
+        return retos;
     }
 
 
@@ -146,7 +171,7 @@ public class RetoServiceImpl implements RetoService {
             throw new Exception("La descripción del reto no debe superar los 300 caracteres.");
         }
 
-        if(reto.isEsGrupal() && reto.getNrEstudiatesGrupo()<2){
+        if(reto.getEsGrupal() && reto.getNrEstudiatesGrupo()<2){
             throw new Exception("El número de estudiantes por grupo no puede ser menor a 2 si es un reto grupal.");
         }
         if(reto.getDescripcionTeoria() == null || reto.getDescripcionTeoria().trim().equals("")){
@@ -256,7 +281,7 @@ public class RetoServiceImpl implements RetoService {
         if(Validaciones.isStringLenght(reto.getDescripcion(), 300)){
             throw new Exception("La descripción del reto no debe superar los 300 caracteres.");
         }
-        if(reto.isEsGrupal() && reto.getNrEstudiatesGrupo()<2){
+        if(reto.getEsGrupal() && reto.getNrEstudiatesGrupo()<2){
             throw new Exception("El número de estudiantes por grupo no puede ser menor a 2 si es un reto grupal.");
         }
         if(reto.getDescripcionTeoria() == null || reto.getDescripcionTeoria().trim().equals("")){

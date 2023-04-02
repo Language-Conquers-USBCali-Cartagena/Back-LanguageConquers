@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 public class CursoEstudianteServiceImpl implements CursoEstudianteService {
 
-    //Todo: falta metodos del crud y sus validaciones
     @Autowired
     CursoEstudianteDAO cursoEstudianteDAO;
 
@@ -33,8 +32,23 @@ public class CursoEstudianteServiceImpl implements CursoEstudianteService {
 
     @Override
     public List<CursoEstudiante> listarCursoEstudiante() throws Exception {
-        cursoEstudianteDAO.findAll();
-        return null;
+        return cursoEstudianteDAO.findAll();
+    }
+
+    @Override
+    public CursoEstudiante findByIdEstudianteAndIdCurso(Long idCurso, Long idEstudiante) throws Exception {
+        if(!cursoDAO.existsById(idCurso)){
+            throw new Exception("El curso con ese id no existe.");
+        }
+        if(!estudianteDAO.existsById(idEstudiante)){
+            throw new Exception("El estudiante con ese id no existe");
+        }
+        CursoEstudiante cursoEstudiante =cursoEstudianteDAO.findByIdCursoAndIdEstudiante(idCurso, idEstudiante);
+        if(cursoEstudiante == null){
+            throw new Exception("No existe este curso estudiante.");
+        }
+        return cursoEstudiante;
+
     }
 
     private void validacionesCursoEstudiante(CursoEstudiante cursoEstudiante) throws Exception{

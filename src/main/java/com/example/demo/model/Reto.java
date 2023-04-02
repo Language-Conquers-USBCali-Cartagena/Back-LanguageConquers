@@ -40,13 +40,13 @@ public class Reto {
     private String descripcionTeoria;
 
     @Column(name = "moneda", nullable = false)
-    private int moneda;
+    private Integer moneda;
 
     @Column(name = "solucion", nullable = false, length = 800)
     private String solucion;
 
     @Column(name = "maximo_intentos", nullable = false)
-    private int maximoIntentos;
+    private Integer maximoIntentos;
 
     @Column(name = "fecha_limite", nullable = false)
     private Date fechaLimite;
@@ -55,10 +55,10 @@ public class Reto {
     private Date fechaInicio;
 
     @Column(name = "es_grupal", nullable = false)
-    private boolean esGrupal;
+    private Boolean esGrupal;
 
     @Column(name = "nr_estudiantes_grupo", nullable = false)
-    private int nrEstudiatesGrupo;
+    private Integer nrEstudiatesGrupo;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)
     private String usuarioCreador;

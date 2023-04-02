@@ -5,7 +5,6 @@ import com.example.demo.model.RetoEstudiante;
 import com.example.demo.model.dto.RetoEstudianteDTO;
 import com.example.demo.service.RetoEstudianteService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +40,6 @@ public class RetoEstudianteController {
     public ResponseEntity<String> crear(@RequestBody RetoEstudianteDTO retoEstudianteDTO){
         try{
             RetoEstudiante retoEstudiante = retoEstudianteMapper.toEntity(retoEstudianteDTO);
-            System.out.println(retoEstudiante.getFechaEntrega());
             return new ResponseEntity<>(retoEstudianteService.crearRetoEstudiante(retoEstudiante), HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

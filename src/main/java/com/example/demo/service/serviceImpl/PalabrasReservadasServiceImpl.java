@@ -130,6 +130,9 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         if(!grupo.isEmpty() ){
             switch (grupo.get(0).getCategoria().toLowerCase()){
                 case "variable":
+                    if(grupo.size() < 3){
+                        throw new Exception("La estructura para asignar una variable es la siguiente: Variable = Objeto");
+                    }
                     procesarGrupoVariables(grupo);
                     break;
                 case "bucle":

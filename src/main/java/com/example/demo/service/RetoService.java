@@ -18,7 +18,8 @@ public interface RetoService {
     Reto findById(Long idReto) throws Exception;
     int promedioMonedasRetos()throws Exception;
     int retosRegistrados()throws Exception;
-
     String completarReto(List<PalabrasReservadasDTO> palabrasReservadas, Boolean esBasico, Long retoId, Long estudianteId) throws Exception;
+    List<Reto> retosPorEstudiante(Long idEstudiante) throws Exception;
+
 
 }

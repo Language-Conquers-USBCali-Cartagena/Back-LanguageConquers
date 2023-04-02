@@ -36,6 +36,7 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
 
     @Override
     public String crearRetoEstudiante(RetoEstudiante retoEstudiante) throws Exception {
+        System.out.println(retoEstudiante.getReto().getIdReto());
         validacionesCrear(retoEstudiante);
         retoEstudianteDAO.save(retoEstudiante);
         return "Se creo exitosamente el reto estudiante!";
@@ -124,25 +125,7 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
 
     private void validacionesCrear(RetoEstudiante retoEstudiante)throws Exception{
         Date fechaActual = new Date();
-        if(retoEstudiante.getFechaEntrega() == null){
-            throw new Exception("Se debe ingresar una fecha de entrega.");
-        }
-        if(retoEstudiante.getFechaEntrega().compareTo(fechaActual)>0){
-            throw new Exception("No se puede asignar una fecha de entrega que aun no ha sucedido.");
-        }
-        // Convertir la fecha a validar a Calendar
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(retoEstudiante.getFechaEntrega());
 
-        // Restar 6 meses a la fecha a validar
-        calendar.add(Calendar.MONTH, -6);
-        Date fechaLimite = calendar.getTime();
-
-
-        // no puede haber ocurrido hace mas de 6 meses
-        if(!fechaLimite.after(fechaActual)){
-            throw new Exception("La fecha de entrega no debe ser menor a 6 meses");
-        }
         //TODO: REVISAR LO DEL PUNTAJE
         if(retoEstudiante.getPuntaje() <0){
             throw new Exception("No se puede asignar un puntaje negativo al reto estudiante.");
@@ -194,21 +177,6 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
         if(retoEstudiante.getFechaEntrega() == null){
             throw new Exception("Se debe ingresar una fecha de entrega.");
         }
-//        if(retoEstudiante.getFechaEntrega().compareTo(fechaActual)>0){
-//            throw new Exception("No se puede asignar una fecha de entrega que aun no ha sucedido.");
-//        }
-        // Convertir la fecha a validar a Calendar
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(retoEstudiante.getFechaEntrega());
-
-        // Restar 6 meses a la fecha a validar
-        calendar.add(Calendar.MONTH, -6);
-        Date fechaLimite = calendar.getTime();
-
-        // no puede haber ocurrido hace mas de 6 meses
-//        if(!fechaLimite.after(fechaActual)){
-//            throw new Exception("La fecha de entrega no debe ser menor a 6 meses");
-//        }
         //TODO: REVISAR LO DEL PUNTAJE
         if(retoEstudiante.getPuntaje() <0){
             throw new Exception("No se puede asignar un puntaje negativo al reto estudiante.");

@@ -1,6 +1,8 @@
 package com.example.demo.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -9,8 +11,8 @@ import java.util.Date;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class RetoDTO implements Serializable {
-
 
     private static final long serialVersionUID = -706319021765545474L;
 
@@ -24,7 +26,8 @@ public class RetoDTO implements Serializable {
     private Date fechaLimite;
     private String solucion;
     private boolean esGrupal;
-    private int nrEstudiatesGrupo;
+    private int nivel;
+    private int nrEstudiantesGrupo;
     private String usuarioCreador;
     private String usuarioModificador;
     private Date fechaCreacion;

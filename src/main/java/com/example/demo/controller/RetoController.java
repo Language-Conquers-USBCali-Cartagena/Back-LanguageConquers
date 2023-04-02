@@ -109,5 +109,16 @@ public class RetoController {
         }
     }
 
+    @Operation(summary = "Este metodo permite listar los retos que tiene asignado un estudiante")
+    @GetMapping("/retosPorEstudiante")
+    public ResponseEntity<List<RetoDTO>> retosPorEstudiante(@RequestParam Long idEstudiante){
+        try {
+            List<Reto> retos = retoService.retosPorEstudiante(idEstudiante);
+            List<RetoDTO> retoDTOS = retoMapper.toDTOList(retos);
+            return new ResponseEntity<>(retoDTOS, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

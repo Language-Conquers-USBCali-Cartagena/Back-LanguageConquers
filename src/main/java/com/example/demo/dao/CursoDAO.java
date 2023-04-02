@@ -22,4 +22,5 @@ public interface CursoDAO extends JpaRepository<Curso,Long> {
             "inner join estudiante e on (ce.id_estudiante = e.id_estudiante)\n" +
             "where e.correo = 'juancaro2010@hotmail.com'", nativeQuery = true)
     List<Curso> findByCorreoEstudiante(String correoEstudiante) throws Exception;
+
 }

@@ -19,10 +19,9 @@ public class RetoEstudiante {
     @Column(name = "puntaje", nullable = false)
     private int puntaje;
 
-    @Column(name = "fecha_entrega", nullable = false)
+    @Column(name = "fecha_entrega")
     private Date fechaEntrega;
 
-    //TODO: Agregar atributo de tiempo, intentos
     @Column(name = "usuario_creador", nullable = false, length = 50)
     private String usuarioCreador;
 
