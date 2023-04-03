@@ -246,7 +246,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
     private String tipoObjeto(PalabrasReservadasDTO palabraClave, PalabrasReservadasDTO param1) throws Exception{
         String variable = "";
         String resp = "";
-        if(mapVariables.containsKey(param1.getNombre()) && param1.getCategoria().equalsIgnoreCase("variablecv")){
+        if(mapVariables.containsKey(param1.getNombre()) && param1.getCategoria().equalsIgnoreCase("variable")){
             variable = mapVariables.get(param1.getNombre());
         } else if (param1.getCategoria().equalsIgnoreCase("objeto")) {
             variable = param1.getNombre();

@@ -355,10 +355,10 @@ public class EstudianteServiceImpl implements EstudianteService {
         LocalDate ahora = LocalDate.now();
         Period periodo = Period.between(fechaNamientoLocalDate, ahora);
         int edad = periodo.getYears();
-
+/*
         if(edad < 15){
             throw new Exception("Digite una fecha de nacimiento válida, debe ser mayor de 15 años para poder registrarse.");
-        }
+        }*/
         if(estudiante.getUsuarioModificador()==null || estudiante.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el usuario modificador.");
         }
