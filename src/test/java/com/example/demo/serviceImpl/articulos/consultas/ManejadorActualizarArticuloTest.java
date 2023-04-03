@@ -94,15 +94,6 @@ public class ManejadorActualizarArticuloTest {
     void deberiaFallarPorIdArticuloNulo()throws Exception{
 
         ArticulosDTO articulosDTO = new ArticuloTestDataBuilder().conIdArticulo(null).build();
-        articulosDTO.setNombre("Martillo");
-        articulosDTO.setDescripcion("Este martillo te permite reparar más rápido");
-        articulosDTO.setImagen("martillo.png");
-        articulosDTO.setPrecio(120);
-        articulosDTO.setIdCategoria(1L);
-        articulosDTO.setNivelValido(1);
-        articulosDTO.setIdEstado(2L);
-        articulosDTO.setUsuarioModificador("Angela");
-        articulosDTO.setFechaModificacion(new Date());
         Articulos articulos = articulosMapper.toEntity(articulosDTO);
         Mockito.when(articulosDAO.save(Mockito.any())).thenReturn(articulos);
         Exception exception = assertThrows(Exception.class, ()->{
