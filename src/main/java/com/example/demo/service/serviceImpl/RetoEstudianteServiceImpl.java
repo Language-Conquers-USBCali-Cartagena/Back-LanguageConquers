@@ -42,17 +42,8 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
     }
 
     @Override
-    public String actualizar(RetoEstudianteDTO retoEstudianteDTO) throws Exception {
-        RetoEstudiante retoEstudiante = null;
-        validacionesActualizar(retoEstudianteDTO);
-        retoEstudiante = retoEstudianteDAO.findById(retoEstudianteDTO.getIdRetoEstudiante()).orElse(null);
-        retoEstudiante.setFechaEntrega(retoEstudianteDTO.getFechaEntrega());
-        retoEstudiante.setPuntaje(retoEstudianteDTO.getPuntaje());
-        retoEstudiante.setFechaModificacion(retoEstudianteDTO.getFechaModificacion());
-        retoEstudiante.setUsuarioModificador(retoEstudianteDTO.getUsuarioModificador());
-        retoEstudiante.setEstado(estadoDAO.findById(retoEstudianteDTO.getIdEstado()).orElse(null));
-        retoEstudiante.setEstudiante(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante()).orElse(null));
-        retoEstudiante.setReto(retoDAO.findById(retoEstudianteDTO.getIdReto()).orElse(null));
+    public String actualizar(RetoEstudiante retoEstudiante) throws Exception {
+        validacionesActualizar(retoEstudiante);
         retoEstudianteDAO.save(retoEstudiante);
         return "Se actualizo exitosamente el reto estudiante";
     }
@@ -114,6 +105,18 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
     }
 
     @Override
+    public RetoEstudiante findByIdRetoAndIdEstudiante(Long idReto, Long idEstudiante) throws Exception {
+        if(!retoDAO.existsById(idReto)){
+            throw new Exception("No existe reto con ese id.");
+        }
+        if(!estudianteDAO.existsById(idEstudiante)){
+            throw new Exception("No existe estudiante con ese id.");
+        }
+        return retoEstudianteDAO.findByIdRetoAndIdEstuduante(idReto, idEstudiante);
+
+    }
+
+    @Override
     public int promedioRetosCompletadosEstudiantes() throws Exception {
         int promedioRetos = retoEstudianteDAO.promedioRetosCompletadosEstudiantes();
         return promedioRetos;
@@ -121,25 +124,7 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
 
     private void validacionesCrear(RetoEstudiante retoEstudiante)throws Exception{
         Date fechaActual = new Date();
-        if(retoEstudiante.getFechaEntrega() == null){
-            throw new Exception("Se debe ingresar una fecha de entrega.");
-        }
-        if(retoEstudiante.getFechaEntrega().compareTo(fechaActual)>0){
-            throw new Exception("No se puede asignar una fecha de entrega que aun no ha sucedido.");
-        }
-        // Convertir la fecha a validar a Calendar
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(retoEstudiante.getFechaEntrega());
 
-        // Restar 6 meses a la fecha a validar
-        calendar.add(Calendar.MONTH, -6);
-        Date fechaLimite = calendar.getTime();
-
-
-        // no puede haber ocurrido hace mas de 6 meses
-        if(!fechaLimite.after(fechaActual)){
-            throw new Exception("La fecha de entrega no debe ser menor a 6 meses");
-        }
         //TODO: REVISAR LO DEL PUNTAJE
         if(retoEstudiante.getPuntaje() <0){
             throw new Exception("No se puede asignar un puntaje negativo al reto estudiante.");
@@ -186,67 +171,52 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
 
     }
 
-    private void validacionesActualizar(RetoEstudianteDTO retoEstudianteDTO)throws Exception{
+    private void validacionesActualizar(RetoEstudiante retoEstudiante)throws Exception{
         Date fechaActual = new Date();
-        if(retoEstudianteDTO.getFechaEntrega() == null){
+        if(retoEstudiante.getFechaEntrega() == null){
             throw new Exception("Se debe ingresar una fecha de entrega.");
         }
-        if(retoEstudianteDTO.getFechaEntrega().compareTo(fechaActual)>0){
-            throw new Exception("No se puede asignar una fecha de entrega que aun no ha sucedido.");
-        }
-        // Convertir la fecha a validar a Calendar
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(retoEstudianteDTO.getFechaEntrega());
-
-        // Restar 6 meses a la fecha a validar
-        calendar.add(Calendar.MONTH, -6);
-        Date fechaLimite = calendar.getTime();
-
-        // no puede haber ocurrido hace mas de 6 meses
-        if(!fechaLimite.after(fechaActual)){
-            throw new Exception("La fecha de entrega no debe ser menor a 6 meses");
-        }
         //TODO: REVISAR LO DEL PUNTAJE
-        if(retoEstudianteDTO.getPuntaje() <0){
+        if(retoEstudiante.getPuntaje() <0){
             throw new Exception("No se puede asignar un puntaje negativo al reto estudiante.");
         }
-        if(retoEstudianteDTO.getIdEstado() == null){
+        if(retoEstudiante.getEstado().getIdEstado() == null){
             throw new Exception("Debe ingresar un idEstado.");
         }
-        if(retoEstudianteDTO.getIdEstudiante() == null){
+        if(retoEstudiante.getEstudiante().getIdEstudiante() == null){
             throw new Exception("Debe ingresar un idEstudiante");
         }
-        if(retoEstudianteDTO.getIdReto() == null){
+        if(retoEstudiante.getReto().getIdReto() == null){
             throw new Exception("Debe ingresar un idReto.");
         }
-        if(retoEstudianteDTO.getIdEstado()<0){
+        if(retoEstudiante.getEstado().getIdEstado()<0){
             throw new Exception("Debe ingresar un idEstado válido");
         }
-        if(retoEstudianteDTO.getIdEstudiante()<0){
+        if(retoEstudiante.getEstudiante().getIdEstudiante()<0){
             throw new Exception("Debe ingresar un idEstudiante válido.");
         }
-        if(retoEstudianteDTO.getIdReto()<0){
+        if(retoEstudiante.getReto().getIdReto()<0){
             throw new Exception("Debe ingresar un idReto válido.");
         }
-        if(estadoDAO.findById(retoEstudianteDTO.getIdEstado()).toString().equals("Optional.empty")){
+        if(estadoDAO.findById(retoEstudiante.getEstado().getIdEstado()).toString().equals("Optional.empty")){
             throw new Exception("Debe ingresar un idEstado válido");
         }
-        if(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante()).toString().equals("Optional.empty")){
+        if(estudianteDAO.findById(retoEstudiante.getEstudiante().getIdEstudiante()).toString().equals("Optional.empty")){
             throw new Exception("Debe ingresar un idEstudiante válido.");
         }
-        if(retoDAO.findById(retoEstudianteDTO.getIdReto()).toString().equals("Optional.empty")){
+        if(retoDAO.findById(retoEstudiante.getReto().getIdReto()).toString().equals("Optional.empty")){
             throw new Exception("Debe ingresar un udReto válido.");
         }
-        if(retoEstudianteDTO.getUsuarioModificador() == null || retoEstudianteDTO.getUsuarioModificador().equals("")){
+        if(retoEstudiante.getUsuarioModificador() == null || retoEstudiante.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el nombre del usuario modificador.");
         }
-        if(Validaciones.isStringLenght(retoEstudianteDTO.getUsuarioModificador(),50)){
+        if(Validaciones.isStringLenght(retoEstudiante.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario modificador es muy largo, solo se aceptan 50 caracteres.");
         }
-        if(retoEstudianteDTO.getFechaModificacion() == null || retoEstudianteDTO.getFechaModificacion().equals("")){
+        if(retoEstudiante.getFechaModificacion() == null || retoEstudiante.getFechaModificacion().equals("")){
             throw new Exception("Debe ingresar una fecha de modificación.");
         }
-        if(retoEstudianteDTO.getFechaModificacion().compareTo(fechaActual)>0){
+        if(retoEstudiante.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No se puede asignar una fecha de modificación que aun no ha sucedido.");
         }
 

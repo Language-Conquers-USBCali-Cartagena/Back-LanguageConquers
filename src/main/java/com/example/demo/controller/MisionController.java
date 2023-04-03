@@ -53,7 +53,6 @@ public class MisionController {
             return new ResponseEntity<>(misionService.actualizar(misionDTO), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
-            System.out.println(mensaje);
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }

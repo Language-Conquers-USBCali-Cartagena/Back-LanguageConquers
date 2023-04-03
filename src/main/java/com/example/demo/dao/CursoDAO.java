@@ -22,4 +22,10 @@ public interface CursoDAO extends JpaRepository<Curso,Long> {
             "inner join estudiante e on (ce.id_estudiante = e.id_estudiante)\n" +
             "where e.correo = 'juancaro2010@hotmail.com'", nativeQuery = true)
     List<Curso> findByCorreoEstudiante(String correoEstudiante) throws Exception;
+
+    @Query(value = "SELECT ((SELECT COUNT(*) FROM reto_estudiante re INNER JOIN reto r on (r.id_reto = re.id_reto)\n" +
+            "         WHERE r.id_curso = ?1 AND re.id_estudiante = ?2 AND re.id_estado = 3)*100)/(SELECT COUNT(id_reto) \n" +
+            "                                                                                    FROM reto WHERE id_curso = ?1);", nativeQuery = true)
+    Integer progresoCursosEstudiante(Long idCurso, Long idEstudiante) throws Exception;
+
 }

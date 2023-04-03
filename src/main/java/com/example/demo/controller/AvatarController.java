@@ -69,7 +69,6 @@ public class AvatarController {
             return new ResponseEntity<>(avatarService.actualizar(avatarDTO), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
-            System.out.println(mensaje);
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }

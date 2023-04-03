@@ -56,8 +56,9 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
             procesarCategoria(grupo);
         }
         //Limpia las listas
+        String respuesta = this.respuesta;
         limpiar();
-        return this.respuesta;
+        return respuesta;
 
     }
 
@@ -81,6 +82,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         }
         mapVariables.clear();
         mapMetodos.clear();
+        respuesta = "";
     }
 
     private void agrupar(List<PalabrasReservadasDTO> palabrasReservadasDTOS) throws Exception{
@@ -130,6 +132,9 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         if(!grupo.isEmpty() ){
             switch (grupo.get(0).getCategoria().toLowerCase()){
                 case "variable":
+                    if(grupo.size() < 3){
+                        throw new Exception("La estructura para asignar una variable es la siguiente: Variable = Objeto");
+                    }
                     procesarGrupoVariables(grupo);
                     break;
                 case "bucle":
@@ -217,22 +222,33 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         }else{
             throw new Exception("Parametro " + param2.getNombre()+ " no valido ");
         }
+        variable = variable.toLowerCase();
+        variable2 = variable2.toLowerCase();
         switch (palabraCalve.getNombre().toLowerCase()) {
+
             case "encender":
-//                if((!mapMetodos.))
+                if((!mapMetodos.containsValue(variable) || !mapMetodos.containsValue(variable2) && esBasico)){
+                    throw new Exception("Los parametros deben existir para poder encender fuego");
+                }
                 if((!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)) && !esBasico){
                     throw new Exception("Los parametros deben existir para poder encender fuego");
                 }
                 resp = MetodosPalabras.encender(variable, variable2);
                 break;
             case "juntar":
-                if(!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)){
+                if((!mapMetodos.containsValue(variable) || !mapMetodos.containsValue(variable2) && esBasico)){
+                    throw new Exception("Los parametros deben existir para poder juntarlos");
+                }
+                if((!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)) && !esBasico){
                     throw new Exception("Los parametros deben existir para poder juntarlos");
                 }
                 resp = MetodosPalabras.juntar(variable, variable2);
                 break;
             case "construir":
-                if(!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)){
+                if((!mapMetodos.containsValue(variable) || !mapMetodos.containsValue(variable2) && esBasico)){
+                    throw new Exception("Los parametros deben existir para poder construir algo");
+                }
+                if((!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)) && !esBasico){
                     throw new Exception("Los parametros deben existir para poder construir algo");
                 }
                 resp = MetodosPalabras.construir(variable, variable2);
@@ -253,11 +269,12 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         }else{
             throw new Exception("Parametro " + param1.getNombre()+ " no valido ");
         }
+
         switch (palabraClave.getNombre().toLowerCase()) {
             case "buscar":
                 if(param1.getNombre().equalsIgnoreCase("coco")){
 
-                    if(mapMetodos.get("arbol") == null || !mapMetodos.get("arbol").equalsIgnoreCase("cima del arbol")){
+                    if(mapMetodos.get("Arbol") == null || !mapMetodos.get("Arbol").equalsIgnoreCase("cima del arbol")){
                         throw new Exception("Para buscar un " + param1.getNombre() + " debe estar en una palmera");
                     }
                 }
@@ -265,38 +282,38 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
 
                 break;
             case "cortar":
-                if(!mapMetodos.containsValue(param1.getNombre()) && esBasico){
-                    throw new Exception("Debe haber encontrado el objeto para poder cortarlo");
+                if(!mapMetodos.containsValue(param1.getNombre().toLowerCase()) && esBasico){
+                    throw new Exception("Debe haber encontrado el/la "+param1.getNombre() +" para poder cortarlo");
                 }
-                if(!mapVariables.containsValue(param1.getNombre()) && !esBasico){
-                    throw new Exception("El objeto debe existir para poder cortarlo");
+                if(!mapVariables.containsValue(param1.getNombre().toLowerCase()) && !esBasico){
+                    throw new Exception("El " + param1.getNombre()+" debe existir para poder cortarlo");
                 }
                 resp = MetodosPalabras.cortar(variable);
                 break;
             case "escalar":
-                if(!mapMetodos.containsValue(param1.getNombre()) && esBasico){
-                    throw new Exception("Debe haber encontrado el objeto para poder escalarlo");
+                if(!mapMetodos.containsValue(param1.getNombre().toLowerCase()) && esBasico){
+                    throw new Exception("Debe haber encontrado el/la " +param1.getNombre() +" para poder escalarlo");
                 }
-                if(!mapVariables.containsValue(param1.getNombre()) && !esBasico){
-                    throw new Exception("El objeto debe existir para poder escalarlo");
+                if(!mapVariables.containsValue(param1.getNombre().toLowerCase()) && !esBasico){
+                    throw new Exception("El "+param1.getNombre() +" debe existir para poder escalarlo");
                 }
                 resp = MetodosPalabras.escalar(variable);
                 break;
             case "golpear":
-                if(!mapMetodos.containsValue(param1.getNombre()) && esBasico){
-                    throw new Exception("Debe haber encontrado el objeto para poder golpearlo");
+                if(!mapMetodos.containsValue(param1.getNombre().toLowerCase()) && esBasico){
+                    throw new Exception("Debe haber encontrado el/la "+param1.getNombre()+" para poder golpearlo");
                 }
-                if(!mapVariables.containsValue(param1.getNombre()) && !esBasico){
-                    throw new Exception("El objeto debe existir para poder escalarlo");
+                if(!mapVariables.containsValue(param1.getNombre().toLowerCase()) && !esBasico){
+                    throw new Exception("El "+param1.getNombre()+" debe existir para poder escalarlo");
                 }
                 resp = MetodosPalabras.golpear(variable);
                 break;
             case "construir":
-                if(!mapMetodos.containsValue(param1.getNombre()) && esBasico){
-                    throw new Exception("Debe haber encontrado el objeto para poder construir");
+                if(!mapMetodos.containsValue(param1.getNombre().toLowerCase()) && esBasico){
+                    throw new Exception("Debe haber encontrado el/la "+ param1.getNombre()+" para poder construir");
                 }
-                if(!mapVariables.containsValue(param1.getNombre()) && !esBasico){
-                    throw new Exception("El objeto debe existir para poder construir algo");
+                if(!mapVariables.containsValue(param1.getNombre().toLowerCase()) && !esBasico){
+                    throw new Exception("El "+param1.getNombre()+" debe existir para poder construir algo");
                 }
                 resp = MetodosPalabras.construir(variable);
                 break;
@@ -305,11 +322,5 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         }
         this.respuesta = resp;
         return resp;
-    }
-
-
-    private String procesarRespuestaBasica(List<PalabrasReservadasDTO> palabrasReservadasDTOS){
-
-        return "Hola";
     }
 }

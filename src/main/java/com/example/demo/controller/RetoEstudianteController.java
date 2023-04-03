@@ -5,7 +5,6 @@ import com.example.demo.model.RetoEstudiante;
 import com.example.demo.model.dto.RetoEstudianteDTO;
 import com.example.demo.service.RetoEstudianteService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +40,6 @@ public class RetoEstudianteController {
     public ResponseEntity<String> crear(@RequestBody RetoEstudianteDTO retoEstudianteDTO){
         try{
             RetoEstudiante retoEstudiante = retoEstudianteMapper.toEntity(retoEstudianteDTO);
-            System.out.println(retoEstudiante.getFechaEntrega());
             return new ResponseEntity<>(retoEstudianteService.crearRetoEstudiante(retoEstudiante), HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -52,7 +50,8 @@ public class RetoEstudianteController {
     @PutMapping("/actualizarRetoEstudiante")
     public ResponseEntity<String> modificar(@RequestBody RetoEstudianteDTO retoEstudianteDTO){
         try{
-            return new ResponseEntity<>(retoEstudianteService.actualizar(retoEstudianteDTO), HttpStatus.OK);
+            RetoEstudiante retoEstudiante = retoEstudianteMapper.toEntity(retoEstudianteDTO);
+            return new ResponseEntity<>(retoEstudianteService.actualizar(retoEstudiante), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -108,5 +107,17 @@ public class RetoEstudianteController {
     public ResponseEntity<Integer> retosCompletados() throws Exception {
         int cantidad = retoEstudianteService.promedioRetosCompletadosEstudiantes();
         return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Este metodo permite obtener el reto estudiante por idEstudiantey idReto")
+    @GetMapping("/porRetoyEstudiante")
+    ResponseEntity<RetoEstudianteDTO> retoEstudiantePorEstudianteYReto(@RequestParam Long idEstudiante, Long idReto){
+        try {
+            RetoEstudiante retoEstudiante = retoEstudianteService.findByIdRetoAndIdEstudiante(idReto, idEstudiante);
+            RetoEstudianteDTO retoEstudianteDTO = retoEstudianteMapper.toDTO(retoEstudiante);
+            return new ResponseEntity<>(retoEstudianteDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

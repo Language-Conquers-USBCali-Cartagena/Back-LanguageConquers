@@ -33,7 +33,6 @@ public class MailSenderService {
     //send message to number
     public void sendsms(SmsDTO smsrequest) {
         Sms sms = mapeoSMS(smsrequest);
-        System.out.println(sms.getMessage());
         Twilio.init("ACe72ae580697ef640b622789571ece4b0","f88dd390ca7c9cbbad45578e6f187f0e");
         Message message=Message.creator(
                 new PhoneNumber(sms.getNumber()),
@@ -55,7 +54,6 @@ public class MailSenderService {
             request.setBody(mail.build());
             response = this.sendGrid.api(request);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
         return response;
     }

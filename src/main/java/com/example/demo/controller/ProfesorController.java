@@ -56,7 +56,6 @@ public class ProfesorController {
             return new ResponseEntity<>(profesorService.actualizar(profesorDTO), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
-            System.out.println(mensaje);
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }

@@ -100,4 +100,15 @@ public class CursoController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Operation(summary = "Este metodo permite obtener el porcentaje del curso cumplido")
+    @GetMapping("/progresoCurso")
+    public ResponseEntity<Integer> progresoCurso(@RequestParam Long idCurso, @RequestParam Long idEstudiante){
+        try {
+            Integer respuesta = cursoService.progresoCursoPorEstudiante(idCurso, idEstudiante);
+            return new ResponseEntity<>(respuesta, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

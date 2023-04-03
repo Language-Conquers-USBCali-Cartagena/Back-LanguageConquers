@@ -57,7 +57,6 @@ public class CredencialesController {
             return new ResponseEntity<>(credencialesService.actualizar(credencialesDTO), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
-            System.out.println(mensaje);
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
     }

@@ -27,5 +27,8 @@ public interface RetoEstudianteDAO extends JpaRepository<RetoEstudiante,Long> {
     @Query(value = "SELECT COALESCE(AVG(retos_completados),0) as promedio_retos_completados FROM (select count(*) as retos_completados from reto_estudiante where id_estado = 3 group by id_estudiante) as t", nativeQuery = true)
     int promedioRetosCompletadosEstudiantes()throws Exception;
 
+    @Query(value = "SELECT * FROM reto_estudiante WHERE id_reto = ?1 AND id_estudiante = ?2", nativeQuery = true)
+    RetoEstudiante findByIdRetoAndIdEstuduante(Long idREto, Long idEstudiante) throws Exception;
+
 
 }

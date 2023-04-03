@@ -11,25 +11,25 @@ public class MetodosPalabras {
     //Metodos que permiten procesar metodos
 
     public static String buscar(String objeto){
-        String respuesta = objeto;
+        String respuesta = objeto.toLowerCase();
         return respuesta;
     }
 
     public static String cortar (String objeto){
-        String respuesta = derivados(objeto);
+        String respuesta = derivados(objeto).toLowerCase();
 
         return respuesta;
     }
     public static String escalar (String objeto){
         String respuesta = "cima del " + objeto;
-        return respuesta;
+        return respuesta.toLowerCase();
     }
     public static String golpear (String objeto){
         String respuesta = "";
         if(objeto.equalsIgnoreCase("rocas")){
             respuesta = "chispas";
         }
-        return respuesta;
+        return respuesta.toLowerCase();
     }
     public static String juntar (String objeto1, String objeto2) throws Exception{
         if(objeto1.contains("fuego") && objeto2.equalsIgnoreCase("madera")) {
@@ -45,7 +45,8 @@ public class MetodosPalabras {
         if(!medio.equalsIgnoreCase("chispas")){
             throw new Exception("Necesita chispas para encender el fuego");
         }
-        return objeto + " con fuego";
+        String respuesta =objeto + " con fuego";
+        return respuesta.toLowerCase();
 
     }
     public static String construir (String material1, String material2) throws Exception{
@@ -100,10 +101,23 @@ public class MetodosPalabras {
                     throw new Exception("No se pueden juntar los objetos");
                 }
                 break;
+            case "piso":
+                if(material2.equalsIgnoreCase("pared")){
+                    resp = "base choza";
+                }else {
+                    throw new Exception("No se pueden juntar los objetos");
+                }
+                break;
+            case "pared":
+                if(material2.equalsIgnoreCase("piso")){
+                    resp = "base choza";
+                }else{
+                    throw new Exception("No se pueden juntar los objetos");
+                }
             default:
                 throw new Exception("No se pueden juntar los objetos");
         }
-        return resp;
+        return resp.toLowerCase();
     }
 
     public static String construir (String material) throws Exception{

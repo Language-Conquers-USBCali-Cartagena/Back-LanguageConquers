@@ -30,6 +30,9 @@ public class CursoServiceImpl implements CursoService {
     ProfesorDAO profesorDAO;
 
     @Autowired
+    EstudianteDAO estudianteDAO;
+
+    @Autowired
     RetoDAO retoDAO;
 
     @Autowired
@@ -124,6 +127,17 @@ public class CursoServiceImpl implements CursoService {
             throw new Exception("El profesor con id: " + idProfesor + " no existe.");
         }
         return cursoDAO.findByIdProfesor(idProfesor);
+    }
+
+    @Override
+    public Integer progresoCursoPorEstudiante(Long idCurso, Long idEstudiante) throws Exception {
+        if(!cursoDAO.existsById(idCurso)){
+            throw new Exception("El curso con ese id no existe.");
+        }
+        if(!estudianteDAO.existsById(idEstudiante)){
+            throw new Exception("El estudiante con ese id no existe.");
+        }
+        return cursoDAO.progresoCursosEstudiante(idCurso, idEstudiante);
     }
 
     public void validacionesCrear(Curso curso) throws Exception{

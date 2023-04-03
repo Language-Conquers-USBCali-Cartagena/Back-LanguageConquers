@@ -1,5 +1,6 @@
 package com.example.demo.service.serviceImpl;
 
+import com.example.demo.dao.EstudianteDAO;
 import com.example.demo.dao.LogroDAO;
 import com.example.demo.model.Logro;
 import com.example.demo.model.dto.LogroDTO;
@@ -20,6 +21,9 @@ public class LogroServiceImpl implements LogroService {
 
     @Autowired
     LogroDAO logroDAO;
+
+    @Autowired
+    EstudianteDAO estudianteDAO;
 
     @Override
     public List<Logro> logrosObtenidos(Long idEstudiante) throws Exception {
@@ -97,6 +101,14 @@ public class LogroServiceImpl implements LogroService {
     public int logrosRegistrados() throws Exception {
         int cantidadLogros = logroDAO.logrosRegistrados();
         return cantidadLogros;
+    }
+
+    @Override
+    public Integer progresoLogro(Long idEstudiante) throws Exception {
+        if(!estudianteDAO.existsById(idEstudiante)){
+            throw new Exception("El estudiante con ese id no existe");
+        }
+        return logroDAO.progresoLogros(idEstudiante);
     }
 
 
