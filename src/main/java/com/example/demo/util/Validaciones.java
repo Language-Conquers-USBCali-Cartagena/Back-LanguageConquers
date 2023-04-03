@@ -64,7 +64,6 @@ public class Validaciones {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseToken decodedToken = auth.verifyIdToken(idToken);
         String uid = decodedToken.getUid();
-        System.out.println(uid);
 
         return uid;
     }

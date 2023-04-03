@@ -8,21 +8,14 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface LogroService {
-
-
     List<Logro> logrosObtenidos(Long idEstudiante) throws Exception;
-
     List<Logro> logrosNoObtenidos(Long idEstudiante) throws Exception;
     List<Logro> listarLogros() throws Exception;
-
     Page<Logro> pageLogros(Pageable pageable) throws Exception;
-
     String registrar(Logro logro) throws Exception;
-
     String eliminar(Long idLogro) throws Exception;
-
     String actualizar (LogroDTO logroDTO) throws Exception;
     Logro findById(Long idLogro) throws Exception;
-
     int logrosRegistrados()throws Exception;
+    Integer progresoLogro(Long idEstudiante) throws Exception;
 }

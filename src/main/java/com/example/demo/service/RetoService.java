@@ -19,7 +19,7 @@ public interface RetoService {
     int promedioMonedasRetos()throws Exception;
     int retosRegistrados()throws Exception;
     String completarReto(List<PalabrasReservadasDTO> palabrasReservadas, Boolean esBasico, Long retoId, Long estudianteId) throws Exception;
-    List<Reto> retosPorEstudiante(Long idEstudiante) throws Exception;
+    List<RetoDTO> retosPorEstudiante(Long idEstudiante) throws Exception;
 
 
 }

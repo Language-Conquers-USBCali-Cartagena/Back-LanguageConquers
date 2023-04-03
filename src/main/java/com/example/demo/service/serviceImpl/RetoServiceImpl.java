@@ -10,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Scope("singleton")
 @Service
@@ -113,14 +112,14 @@ public class RetoServiceImpl implements RetoService {
     @Override
     public String completarReto(List<PalabrasReservadasDTO> palabrasReservadas, Boolean esBasico, Long retoId, Long estudianteId) throws Exception {
         Integer intentos = 0;
-        String respuesta = palabrasReservadasService.procesarPalabraReservada(palabrasReservadas, esBasico);
+        String respuestaAl = palabrasReservadasService.procesarPalabraReservada(palabrasReservadas, esBasico);
         RetoEstudiante retoEstudiante = retoEstudianteService.findByIdRetoAndIdEstudiante(retoId, estudianteId);
         retoEstudiante.setUsuarioModificador("admin");
         retoEstudiante.setFechaModificacion(new Date());
         Estudiante estudiante = estudianteDAO.findById(estudianteId).get();
         Reto reto = retoDAO.findById(retoId).get();
         retoEstudiante.setFechaEntrega(new Date());
-        if(!reto.getSolucion().equalsIgnoreCase(respuesta)){
+        if(!reto.getSolucion().equalsIgnoreCase(respuestaAl)){
             if(retoEstudiante.getIntentos() == null){
                 intentos = 1;
             }else{
@@ -130,30 +129,69 @@ public class RetoServiceImpl implements RetoService {
             if(intentos >= reto.getMaximoIntentos()){
                 retoEstudiante.setEstado(estadoDAO.getById(4L));
                 retoEstudianteService.actualizar(retoEstudiante);
-                throw new Exception("Ya excedio el maximo de intentos");
+                throw new Exception("Has superado el máximo de intentos.");
             }
             retoEstudiante.setIntentos(intentos);
             retoEstudianteService.actualizar(retoEstudiante);
-            throw new Exception("Respuesta incorrecto: " + respuesta);
+            throw new Exception("¡Revisa tu código! Esto es lo que está respondiendo tu código: " + respuestaAl +
+                    ". Lo que se espera es: " + reto.getSolucion());
         }
         retoEstudiante.setEstado(estadoDAO.getById(3L));
         Integer puntajeReto = 1000 - (intentos * 100);
+        Integer monedas = reto.getMoneda() - (intentos * 5);
+        retoEstudiante.setPuntaje(puntajeReto);
         estudiante.setPuntaje(estudiante.getPuntaje() + puntajeReto);
-        estudiante.setMonedasObtenidas(estudiante.getMonedasObtenidas() + reto.getMoneda());
+        estudiante.setMonedasObtenidas(estudiante.getMonedasObtenidas() + monedas);
         estudiante.setUsuarioModificador("admin");
         estudiante.setFechaModificacion(new Date());
         estudianteService.actualizar(estudiante);
         retoEstudianteService.actualizar(retoEstudiante);
+        String respuesta = "Has ganado " + monedas + " monedas.\nTu puntaje para este reto es " + puntajeReto + ".\n La respuesta fue: " + respuestaAl + ".";
         return respuesta;
     }
 
     @Override
-    public List<Reto> retosPorEstudiante(Long idEstudiante) throws Exception {
+    public List<RetoDTO> retosPorEstudiante(Long idEstudiante) throws Exception {
         if(!estudianteDAO.existsById(idEstudiante)){
             throw new Exception("El id del estudiante no existe en la bd.");
         }
+        List<RetoDTO> retosDTOs = new ArrayList<>();
         List<Reto> retos = retoDAO.retoEstudiante(idEstudiante);
-        return retos;
+        List<Reto> retosOrdenados = retos.stream()
+                .sorted(Comparator.comparingLong(Reto::getIdReto))
+                .collect(Collectors.toList());
+        List<RetoEstudiante> retoEstudiante = retoEstudianteService.listarPorIdEstudiante(idEstudiante);
+        List<RetoEstudiante> retoEstudianteOrdenados = retoEstudiante.stream()
+                .sorted(Comparator.comparingLong(re -> re.getReto().getIdReto()))
+                .collect(Collectors.toList());
+        for (int i = 0; i< retosOrdenados.size(); i++) {
+            RetoDTO retoDTO = new RetoDTO(retosOrdenados.get(i), retoEstudianteOrdenados.get(i));
+//            retoDTO.setIdReto(reto.getIdReto());
+//            retoDTO.setNombreReto(reto.getNombreReto());
+//            retoDTO.setDescripcion(reto.getDescripcion());
+//            retoDTO.setMoneda(reto.getMoneda());
+//            retoDTO.setMaximoIntentos(reto.getMaximoIntentos());
+//            retoDTO.setDescripcionTeoria(reto.getDescripcionTeoria());
+//            retoDTO.setFechaInicio(reto.getFechaInicio());
+//            retoDTO.setFechaLimite(reto.getFechaLimite());
+//            retoDTO.setSolucion(reto.getSolucion());
+//            retoDTO.setEsGrupal(reto.getEsGrupal());
+//            retoDTO.setNrEstudiantesGrupo(reto.getNrEstudiatesGrupo());
+//            retoDTO.setUsuarioCreador(reto.getUsuarioCreador());
+//            retoDTO.setUsuarioModificador(reto.getUsuarioModificador());
+//            retoDTO.setFechaCreacion(reto.getFechaCreacion());
+//            retoDTO.setFechaModificacion(reto.getFechaModificacion());
+//            retoDTO.setUrlVideo1(reto.getUrlVideo1());
+//            retoDTO.setUrlVideo2(reto.getUrlVideo2());
+//            retoDTO.setImagenTema1(reto.getImagenTema1());
+//            retoDTO.setImagenTema2(reto.getImagenTema2());
+//            retoDTO.setIdMision(reto.getMision().getIdMision());
+//            retoDTO.setIdEstado(reto.getEstado().getIdEstado());
+//            retoDTO.setIdCurso(reto.getCurso().getIdCurso());
+//            retoDTO.setIdEstadoRetoEstu(retoEstudiante.getEstado().getIdEstado());
+            retosDTOs.add(retoDTO);
+        }
+        return retosDTOs;
     }
 
 

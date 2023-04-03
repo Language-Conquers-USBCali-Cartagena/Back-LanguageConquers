@@ -113,9 +113,9 @@ public class RetoController {
     @GetMapping("/retosPorEstudiante")
     public ResponseEntity<List<RetoDTO>> retosPorEstudiante(@RequestParam Long idEstudiante){
         try {
-            List<Reto> retos = retoService.retosPorEstudiante(idEstudiante);
-            List<RetoDTO> retoDTOS = retoMapper.toDTOList(retos);
-            return new ResponseEntity<>(retoDTOS, HttpStatus.OK);
+            List<RetoDTO> retos = retoService.retosPorEstudiante(idEstudiante);
+//            List<RetoDTO> retoDTOS = retoMapper.toDTOList(retos);
+            return new ResponseEntity<>(retos, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

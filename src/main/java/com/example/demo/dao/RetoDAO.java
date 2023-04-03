@@ -33,6 +33,4 @@ public interface RetoDAO extends JpaRepository<Reto,Long> {
             "WHERE re.id_estudiante = ?1", nativeQuery = true)
     List<Reto> retoEstudiante(Long idEstudiante) throws Exception;
 
-
-
 }

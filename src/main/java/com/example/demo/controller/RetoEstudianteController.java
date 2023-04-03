@@ -108,4 +108,16 @@ public class RetoEstudianteController {
         int cantidad = retoEstudianteService.promedioRetosCompletadosEstudiantes();
         return new ResponseEntity<>(cantidad, HttpStatus.OK);
     }
+
+    @Operation(summary = "Este metodo permite obtener el reto estudiante por idEstudiantey idReto")
+    @GetMapping("/porRetoyEstudiante")
+    ResponseEntity<RetoEstudianteDTO> retoEstudiantePorEstudianteYReto(@RequestParam Long idEstudiante, Long idReto){
+        try {
+            RetoEstudiante retoEstudiante = retoEstudianteService.findByIdRetoAndIdEstudiante(idReto, idEstudiante);
+            RetoEstudianteDTO retoEstudianteDTO = retoEstudianteMapper.toDTO(retoEstudiante);
+            return new ResponseEntity<>(retoEstudianteDTO, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

@@ -123,4 +123,15 @@ public class LogroController {
         }
     }
 
+    @Operation(summary = "Este metodo permite obtener el progreso de los logros por estudiante")
+    @GetMapping("/progresoLogro")
+    public ResponseEntity<Integer> progresoLogros(Long idEstudiante){
+        try {
+            Integer respuesta = logroService.progresoLogro(idEstudiante);
+            return new ResponseEntity<>(respuesta, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

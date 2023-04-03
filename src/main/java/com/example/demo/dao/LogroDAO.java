@@ -24,4 +24,8 @@ public interface LogroDAO extends JpaRepository<Logro, Long> {
             "WHERE id_estudiante = ?1", nativeQuery = true)
     List<Logro> logrosObtenidos(Long idEstudiante) throws Exception;
 
+    @Query(value = "SELECT ((SELECT COUNT(*) FROM logro_estudiante INNER JOIN logro l on l.id_logro = logro_estudiante.id_logro\n" +
+            "        WHERE id_estudiante = ?1)*100)/(SELECT COUNT(*) FROM logro)", nativeQuery = true)
+    Integer progresoLogros(Long idEstudiante) throws Exception;
+
 }

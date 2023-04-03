@@ -36,7 +36,6 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
 
     @Override
     public String crearRetoEstudiante(RetoEstudiante retoEstudiante) throws Exception {
-        System.out.println(retoEstudiante.getReto().getIdReto());
         validacionesCrear(retoEstudiante);
         retoEstudianteDAO.save(retoEstudiante);
         return "Se creo exitosamente el reto estudiante!";
