@@ -66,4 +66,37 @@ public class LogroEstudianteController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Operation(summary = "Este método permite obtener el logro ahorrador.")
+    @GetMapping("/ahorrador")
+    public ResponseEntity<String> obtenerLogroAhorrador(@RequestParam Long idEstudiante){
+        try{
+            String mensaje = logroEstudianteService.logroAhorrador(idEstudiante);
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @Operation(summary = "Este método permite obtener el logro comprador.")
+    @GetMapping("/ahorrador")
+    public ResponseEntity<String> obtenerLogroComprador(@RequestParam Long idEstudiante){
+        try{
+            String mensaje = logroEstudianteService.logroArticulos(idEstudiante);
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Este método permite obtener el logro perfeccionista.")
+    @GetMapping("/perfeccionista")
+    public ResponseEntity<String> obtenerLogroPerfeccionista(@RequestParam Long idEstudiante, @RequestParam Long idReto){
+        try{
+            String mensaje = logroEstudianteService.logroPerfeccionista(idEstudiante, idReto);
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

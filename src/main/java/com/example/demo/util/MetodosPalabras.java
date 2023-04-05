@@ -59,6 +59,13 @@ public class MetodosPalabras {
                     throw new Exception("No se pueden juntar los objetos");
                 }
                 break;
+            case "madera":
+                if(material2.equalsIgnoreCase("hojas secas con fuego")) {
+                    resp = "fogata";
+                } else {
+                    throw new Exception("No se pueden juntar los objetos");
+                }
+                break;
             case "ramas":
                 if(material2.equalsIgnoreCase("hojas de palma")) {
                     resp = "piso choza";
