@@ -13,6 +13,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class RetoDTO implements Serializable {
 
@@ -27,7 +28,6 @@ public class RetoDTO implements Serializable {
         this.fechaLimite = reto.getFechaLimite();
         this.solucion = reto.getSolucion();
         this.esGrupal = reto.getEsGrupal();
-        this.nrEstudiantesGrupo = reto.getNrEstudiatesGrupo();
         this.usuarioCreador = reto.getUsuarioCreador();
         this.usuarioModificador = reto.getUsuarioModificador();
         this.fechaCreacion = reto.getFechaCreacion();
@@ -54,7 +54,7 @@ public class RetoDTO implements Serializable {
     private Date fechaLimite;
     private String solucion;
     private boolean esGrupal;
-    private int nrEstudiantesGrupo;
+
     private String usuarioCreador;
     private String usuarioModificador;
     private Date fechaCreacion;

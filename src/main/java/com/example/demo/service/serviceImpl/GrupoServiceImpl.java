@@ -69,12 +69,12 @@ public class GrupoServiceImpl implements GrupoService {
             throw new Exception("El nombre del grupo no debe contener más de 50 caracteres.");
         }
         if(grupo.getUsuarioCreador()==null || grupo.getUsuarioCreador().trim().equals("")){
-            throw new Exception("Debe ingresar un usuario creador.");
+            throw new Exception("Debe ingresar un usuario creador válido.");
         }
         if(Validaciones.isStringLenght(grupo.getUsuarioCreador(),50)){
             throw new Exception("El nombre del usuario creador no debe contener más de 50 caracteres.");
         }
-        if(grupo.getFechaCreacion()==null || grupo.getFechaCreacion().toString().equals("")){
+        if(grupo.getFechaCreacion()==null){
             throw new Exception("Debe ingresar una fecha de creación.");
         }
         Date fechaActual = new Date();
@@ -83,6 +83,12 @@ public class GrupoServiceImpl implements GrupoService {
         }
     }
     private void validacionesActualizar(GrupoDTO grupoDTO)throws Exception{
+        if(grupoDTO.getIdGrupo() ==null){
+            throw new Exception("Debe ingresar el id del grupo que desea actualizar");
+        }
+        if(!grupoDAO.existsById(grupoDTO.getIdGrupo())){
+            throw new Exception("No exste el grupo con ese id.");
+        }
         if(grupoDTO.getNombre()==null || grupoDTO.getNombre().trim().equals("")){
             throw new Exception("Debe ingresar el nombre del grupo.");
         }
@@ -90,12 +96,12 @@ public class GrupoServiceImpl implements GrupoService {
             throw new Exception("El nombre del grupo no debe contener más de 50 caracteres.");
         }
         if(grupoDTO.getUsuarioModificador()==null || grupoDTO.getUsuarioModificador().trim().equals("")){
-            throw new Exception("Debe ingresar un usuario modificador.");
+            throw new Exception("Debe ingresar un usuario modificador válido.");
         }
         if(Validaciones.isStringLenght(grupoDTO.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario modificador no debe contener más de 50 caracteres.");
         }
-        if(grupoDTO.getFechaModificacion()==null || grupoDTO.getFechaModificacion().toString().equals("")){
+        if(grupoDTO.getFechaModificacion()==null){
             throw new Exception("Debe ingresar una fecha de modificación.");
         }
         Date fechaActual = new Date();

@@ -80,12 +80,12 @@ public class ProgramaServiceImpl implements ProgramaService {
             throw new Exception("Debe ingresar un nombre del programa no superior a 50 caracteres.");
         }
         if(programa.getUsuarioCreador()==null || programa.getUsuarioCreador().trim().equals("")){
-            throw new Exception("Debe ingresar un usuario creador.");
+            throw new Exception("Debe ingresar un usuario creador válido.");
         }
         if(Validaciones.isStringLenght(programa.getUsuarioCreador(),50)){
             throw new Exception("Debe ingresar un usuario creador no superior a 50 caracteres.");
         }
-        if(programa.getFechaCreacion() == null || programa.getFechaCreacion().toString().equals("")){
+        if(programa.getFechaCreacion() == null){
             throw new Exception("Se debe ingresar una fecha de creación.");
         }
         Date fechaActual = new Date();
@@ -107,12 +107,12 @@ public class ProgramaServiceImpl implements ProgramaService {
             throw new Exception("Debe ingresar un nombre del programa no superior a 50 caracteres.");
         }
         if(programaDTO.getUsuarioModificador()==null || programaDTO.getUsuarioModificador().trim().equals("")){
-            throw new Exception("Debe ingresar un usuario modificador.");
+            throw new Exception("Debe ingresar un usuario modificador válido.");
         }
         if(Validaciones.isStringLenght(programaDTO.getUsuarioModificador(),50)){
             throw new Exception("Debe ingresar un usuario modificador no superior a 50 caracteres.");
         }
-        if(programaDTO.getFechaModificacion() == null || programaDTO.getFechaModificacion().toString().equals("")){
+        if(programaDTO.getFechaModificacion() == null){
             throw new Exception("Se debe ingresar una fecha de modificación.");
         }
         Date fechaActual = new Date();

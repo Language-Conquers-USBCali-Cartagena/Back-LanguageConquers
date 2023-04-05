@@ -63,7 +63,6 @@ public class RetoServiceImpl implements RetoService {
     @Override
     public String actualizar(Reto reto) throws Exception {
         validacionesActualizar(reto);
-
         retoDAO.save(reto);
         return "Se actualizo el reto.";
     }
@@ -209,9 +208,7 @@ public class RetoServiceImpl implements RetoService {
             throw new Exception("La descripción del reto no debe superar los 300 caracteres.");
         }
 
-        if(reto.getEsGrupal() && reto.getNrEstudiatesGrupo()<2){
-            throw new Exception("El número de estudiantes por grupo no puede ser menor a 2 si es un reto grupal.");
-        }
+
         if(reto.getDescripcionTeoria() == null || reto.getDescripcionTeoria().trim().equals("")){
             throw new Exception("Se debe ingresar una descripción de la teoría referente al reto.");
         }
@@ -319,9 +316,7 @@ public class RetoServiceImpl implements RetoService {
         if(Validaciones.isStringLenght(reto.getDescripcion(), 300)){
             throw new Exception("La descripción del reto no debe superar los 300 caracteres.");
         }
-        if(reto.getEsGrupal() && reto.getNrEstudiatesGrupo()<2){
-            throw new Exception("El número de estudiantes por grupo no puede ser menor a 2 si es un reto grupal.");
-        }
+
         if(reto.getDescripcionTeoria() == null || reto.getDescripcionTeoria().trim().equals("")){
             throw new Exception("Se debe ingresar una descripción de la teoría referente al reto.");
         }
@@ -398,15 +393,15 @@ public class RetoServiceImpl implements RetoService {
         if(reto.getFechaLimite().compareTo(fechaActual)<0){
             throw new Exception("No se puede configurar la fecha limite del reto con una fecha que ya paso.");
         }
-        if(reto.getFechaLimite().before(fechaMaxima)){
-            throw new Exception("La fecha limite no puede superar los 6 meses.");
-        }
+        //if(reto.getFechaLimite().before(fechaMaxima)){
+        //    throw new Exception("La fecha limite no puede superar los 6 meses.");
+        //}
         if(reto.getFechaLimite().before(reto.getFechaInicio())){
             throw new Exception("La fecha limite no puede ser menor que la fecha de inicio del reto.");
         }
-        if(reto.getFechaModificacion().compareTo(fechaActual)>0){
-            throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
-        }
+        //if(reto.getFechaModificacion().compareTo(fechaActual)>0){
+        //    throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
+        //}
 
     }
 

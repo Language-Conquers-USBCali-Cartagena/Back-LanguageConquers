@@ -53,9 +53,8 @@ public class ArticulosServiceImpl implements ArticulosService {
 
     @Override
     public String actualizar(Articulos articulos) throws Exception {
-        Articulos articulo = null;
         validacionesActualizar(articulos);
-        articulosDAO.save(articulo);
+        articulosDAO.save(articulos);
         return "Se actualizo correctamente el artículo.";
     }
 
