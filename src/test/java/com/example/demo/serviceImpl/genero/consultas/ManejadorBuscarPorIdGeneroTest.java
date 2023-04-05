@@ -56,7 +56,7 @@ public class ManejadorBuscarPorIdGeneroTest {
     }
 
     @Test
-    @DisplayName("Deberia lanzar una escepcion si el genero no existe")
+    @DisplayName("Deberia lanzar una excepcion si el genero no existe")
     void deberiaFallarSiIdGeneroNoExiste()throws Exception{
 
         GeneroDTO generoDTO = new GeneroTestDataBuilder().conIdGenero(45L).build();

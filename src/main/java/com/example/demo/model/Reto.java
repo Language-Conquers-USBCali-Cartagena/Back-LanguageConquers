@@ -57,8 +57,6 @@ public class Reto {
     @Column(name = "es_grupal", nullable = false)
     private Boolean esGrupal;
 
-    @Column(name = "nr_estudiantes_grupo", nullable = false)
-    private Integer nrEstudiatesGrupo;
 
     @Column(name = "usuario_creador", nullable = false, length = 50)
     private String usuarioCreador;

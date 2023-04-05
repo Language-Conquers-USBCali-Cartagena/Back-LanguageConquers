@@ -27,6 +27,7 @@ public class ArticulosController {
     public ResponseEntity<String> crearArticulo(@RequestBody ArticulosDTO articulosDTO){
         try{
             Articulos articulos = articulosMapper.toEntity(articulosDTO);
+            System.out.println(articulos);
             return new ResponseEntity<>(articulosService.registrar(articulos), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -37,6 +38,7 @@ public class ArticulosController {
     public ResponseEntity<String> actualizarArticulo(@RequestBody ArticulosDTO articulosDTO){
         try{
             Articulos articulo = articulosMapper.toEntity(articulosDTO);
+
             return new ResponseEntity<>(articulosService.actualizar(articulo), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
