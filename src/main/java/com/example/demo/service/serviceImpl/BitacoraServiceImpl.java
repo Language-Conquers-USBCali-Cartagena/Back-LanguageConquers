@@ -115,7 +115,7 @@ public class BitacoraServiceImpl implements BitacoraService {
         if(Validaciones.isStringLenght(bitacoraDTO.getUsuarioModificador(),50)){
             throw new Exception("Debe ingresar un usuario modificador que no supere los 50 caracteres.");
         }
-        if(bitacoraDTO.getFechaModificacion() == null || bitacoraDTO.getFechaModificacion().toString().equals("")){
+        if(bitacoraDTO.getFechaModificacion() == null){
             throw new Exception("Se debe ingresar una fecha de modificación válida.");
         }
         Date fechaActual = new Date();

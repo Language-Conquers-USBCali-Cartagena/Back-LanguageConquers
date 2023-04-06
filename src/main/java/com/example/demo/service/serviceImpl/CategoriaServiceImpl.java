@@ -74,7 +74,7 @@ public class CategoriaServiceImpl implements CategoriaService {
             throw new Exception("Debe ingresar el id de la categoría.");
         }
         if(!categoriaDAO.existsById(idCategoria)){
-            throw new Exception("La categoría con id: " + idCategoria + " no existe.");
+            throw new Exception("La categoría con ese id no existe.");
         }
         return categoriaDAO.findById(idCategoria).get();
     }
@@ -98,7 +98,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         if(categoria.getEstado().getIdEstado()<0){
             throw new Exception("Se debe ingresar un id de estado válido.");
         }
-        if(estadoDAO.findById(categoria.getEstado().getIdEstado()).toString().equals("Optional.empty")){
+        if(!estadoDAO.existsById(categoria.getEstado().getIdEstado())){
             throw new Exception("No existe un estado con el id ingresado, ingrese un id válido.");
         }
         if(categoria.getUsuarioCreador() == null || categoria.getUsuarioCreador().trim().equals("")){
@@ -107,13 +107,13 @@ public class CategoriaServiceImpl implements CategoriaService {
         if(Validaciones.isStringLenght(categoria.getUsuarioCreador(),50 )){
             throw new Exception("El usuario creador no debe contener más de 50 caracteres.");
         }
-        if(categoria.getFechaCreacion() == null || categoria.getFechaCreacion().toString().equals("")){
+        if(categoria.getFechaCreacion() == null ){
             throw new Exception("Se debe ingresar la fecha de creación.");
-        }
+        }/*
         Date fechaActual = new Date();
         if(categoria.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
-        }
+        }*/
     }
 
     private void validacionesActualizar(CategoriaDTO categoriaDTO) throws Exception{
@@ -141,22 +141,23 @@ public class CategoriaServiceImpl implements CategoriaService {
         if(categoriaDTO.getIdEstado()<0){
             throw new Exception("Se debe ingresar un id de estado válido.");
         }
-        if(estadoDAO.findById(categoriaDTO.getIdEstado()).toString().equals("Optional.empty")){
+        if(!estadoDAO.existsById(categoriaDTO.getIdEstado())){
             throw new Exception("No existe un estado con el id ingresado, ingrese un id válido.");
         }
         if(categoriaDTO.getUsuarioModificador() == null || categoriaDTO.getUsuarioModificador().trim().equals("")){
             throw new Exception("Se debe ingresar el usuario modificador.");
         }
         if(Validaciones.isStringLenght(categoriaDTO.getUsuarioModificador(),50 )){
-            throw new Exception("El usuario creador no debe contener más de 50 caracteres.");
+            throw new Exception("El usuario modificador no debe contener más de 50 caracteres.");
         }
         if(categoriaDTO.getFechaModificacion() == null || categoriaDTO.getFechaModificacion().toString().equals("")){
-            throw new Exception("Se debe ingresar la fecha de creación.");
+            throw new Exception("Se debe ingresar la fecha de modificación.");
         }
+        /*
         Date fechaActual = new Date();
         if(categoriaDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
-        }
+        }*/
     }
 
 }

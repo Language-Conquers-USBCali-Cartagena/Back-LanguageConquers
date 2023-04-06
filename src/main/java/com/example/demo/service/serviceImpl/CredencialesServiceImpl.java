@@ -77,9 +77,6 @@ public class CredencialesServiceImpl implements CredencialesService {
         if(Validaciones.isStringLenght(credenciales.getUrl(),150)){
             throw new Exception("La url esta muy larga, se aceptan solo 150 caracteres.");
         }
-        if(!Validaciones.urlValidator(credenciales.getUrl())){
-            throw new Exception("La url no es válida, ingrese una válida.");
-        }
         if(credenciales.getPlataforma() == null || credenciales.getPlataforma().equals("")){
             throw new Exception("Debe ingresar el nombre de la plataforma a la cual pertenece la cuenta.");
         }
@@ -93,7 +90,7 @@ public class CredencialesServiceImpl implements CredencialesService {
             throw new Exception("El nombre del usuario creador solo puede contener 50 caracteres.");
         }
         Date fechaActual = new Date();
-        if(credenciales.getFechaCreacion()==null || credenciales.getFechaCreacion().toString().equals("")){
+        if(credenciales.getFechaCreacion()==null){
             throw new Exception("Debe ingresar la fecha de creación.");
         }
         if(credenciales.getFechaCreacion().compareTo(fechaActual)>0){
@@ -125,9 +122,6 @@ public class CredencialesServiceImpl implements CredencialesService {
         if(Validaciones.isStringLenght(credencialesDTO.getUrl(),150)){
             throw new Exception("La url esta muy larga, se aceptan solo 150 caracteres.");
         }
-        if(!Validaciones.urlValidator(credencialesDTO.getUrl())){
-            throw new Exception("La url no es válida, ingrese una válida.");
-        }
         if(credencialesDTO.getPlataforma() == null || credencialesDTO.getPlataforma().equals("")){
             throw new Exception("Debe ingresar la plataforma a la cual pertenece la cuenta.");
         }
@@ -141,7 +135,7 @@ public class CredencialesServiceImpl implements CredencialesService {
             throw new Exception("El nombre del usuario modificador solo puede contener 50 caracteres.");
         }
         Date fechaActual = new Date();
-        if(credencialesDTO.getFechaModificacion()==null || credencialesDTO.getFechaModificacion().toString().equals("")){
+        if(credencialesDTO.getFechaModificacion()==null){
             throw new Exception("Debe ingresar la fecha de modificación.");
         }
         if(credencialesDTO.getFechaModificacion().compareTo(fechaActual)>0){
