@@ -76,10 +76,10 @@ public class RetoServiceImpl implements RetoService {
             throw new Exception("No se encontró un reto con el id: " + idReto+".");
         }
         if(!retoEstudianteDAO.findByIdReto(idReto).isEmpty()){
-            throw new Exception("No se puede eliminar el reto porque esta siendo utilizado por un reto estudiante.");
+            throw new Exception("No se puede eliminar el reto porque está siendo utilizado por un reto estudiante.");
         }
         if(!rolDAO.findByIdReto(idReto).isEmpty()){
-            throw new Exception("No se puede eliminar el reto porque esta siendo utilizado por un rol.");
+            throw new Exception("No se puede eliminar el reto porque está siendo utilizado por un rol.");
         }
         retoDAO.deleteById(idReto);
         return "El reto se elimino exitosamente.";
@@ -136,7 +136,7 @@ public class RetoServiceImpl implements RetoService {
                     ". Lo que se espera es: " + reto.getSolucion());
         }
         retoEstudiante.setEstado(estadoDAO.getById(3L));
-        Integer puntajeReto = 1000 - (intentos * 100);
+        Integer puntajeReto = 1000 - (intentos * 50);
         Integer monedas = reto.getMoneda() - (intentos * 5);
         retoEstudiante.setPuntaje(puntajeReto);
         estudiante.setPuntaje(estudiante.getPuntaje() + puntajeReto);
@@ -322,7 +322,7 @@ public class RetoServiceImpl implements RetoService {
         if(reto.getUrlVideo2() != null  && Validaciones.isStringLenght(reto.getUrlVideo2(), 300)){
             throw new Exception("La Url del video 2 es muy largo.");
         }
-        if(reto.getEstado() == null){
+        if(reto.getEstado().getIdEstado() == null){
             throw new Exception("Se debe ingresar un id estado.");
         }
         if(reto.getEstado().getIdEstado()<0){
@@ -340,7 +340,7 @@ public class RetoServiceImpl implements RetoService {
         if(reto.getCurso().toString().equals("Optional.empty")){
             throw new Exception("Se debe ingresar un id curso válido.");
         }
-        if(reto.getMision() == null){
+        if(reto.getMision().getIdMision() == null){
             throw new Exception("Se debe ingresar un id misión.");
         }
         if(reto.getMision().getIdMision()<0){

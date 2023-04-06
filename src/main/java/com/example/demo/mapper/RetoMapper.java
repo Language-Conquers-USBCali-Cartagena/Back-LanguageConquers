@@ -20,4 +20,5 @@ public interface RetoMapper {
     @Mapping(target = "idCurso", source = "curso.idCurso")
     RetoDTO toDTO(Reto reto);
     List<RetoDTO> toDTOList(List<Reto> retos);
+    List<Reto> toEntityList(List<RetoDTO> retoDTOS);
 }

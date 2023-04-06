@@ -176,7 +176,6 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
         if(retoEstudiante.getFechaEntrega() == null){
             throw new Exception("Se debe ingresar una fecha de entrega.");
         }
-        //TODO: REVISAR LO DEL PUNTAJE
         if(retoEstudiante.getPuntaje() <0){
             throw new Exception("No se puede asignar un puntaje negativo al reto estudiante.");
         }

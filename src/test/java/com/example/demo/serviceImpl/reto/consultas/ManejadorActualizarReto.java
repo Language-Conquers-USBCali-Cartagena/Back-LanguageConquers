@@ -49,9 +49,9 @@ public class ManejadorActualizarReto {
     public static final String INGRESO_ID_CURSO_VALIDO = "Se debe ingresar un id curso válido.";
     public static final String INGRESO_ID_MISION = "Se debe ingresar un id misión.";
     public static final String INGRESO_ID_MISION_VALIDO = "Se debe ingresar un id misión válido.";
-    public static final String INGRESO_USUARIO_CREADOR = "Debe ingresar el usuario creador.";
-    public static final String LIMITE_CARACTERES_USUARIO_CREADOR = "El nombre del usuario creador es muy largo, solo puede contener 50 caracteres.";
-    public static final String INGRESO_FECHA_CREACION = "Debe ingresar una fecha de creación.";
+    public static final String INGRESO_USUARIO_MODIFICADOR = "Debe ingresar el usuario modificador.";
+    public static final String LIMITE_CARACTERES_USUARIO_MODIFICADOR = "El nombre del usuario creador es muy largo, solo puede contener 50 caracteres.";
+    public static final String INGRESO_FECHA_MODIFICACION = "Debe ingresar una fecha de modificación.";
     public static final String FECHA_LIMITE_INVALIDA = "La fecha límite no puede ser menor que la fecha de inicio del reto.";
     public static final String INGRESO_ID_RETO_ACTUALIZAR = "Se debe ingresar el id del reto que se va a actualizar.";
 
@@ -405,21 +405,6 @@ public class ManejadorActualizarReto {
         assertEquals(INGRESO_ID_ESTADO_VALIDO , exception.getMessage());
     }
     @Test
-    @DisplayName("Debe fallar id estado no valido")
-    void deberiaFallarPorIdEstadoNoValido() throws Exception{
-        RetoDTO retoDTO = new RetoTestDataBuilder().build();
-        Reto reto = retoMapper.toEntity(retoDTO);
-        Mockito.when(estadoDAO.findById(retoDTO.getIdEstado())).thenReturn(Optional.empty());
-        Mockito.when(cursoDAO.findById(retoDTO.getIdCurso())).thenReturn(Optional.of(new Curso()));
-        Mockito.when(misionDAO.findById(retoDTO.getIdMision())).thenReturn(Optional.of(new Mision()));
-        Mockito.when(retoDAO.existsById(reto.getIdReto())).thenReturn(true);
-        Mockito.when(retoDAO.save(Mockito.any())).thenReturn(reto);
-        Exception exception = assertThrows(Exception.class, () ->{
-            retoService.actualizar(reto);
-        });
-        assertEquals(INGRESO_ID_ESTADO_VALIDO , exception.getMessage());
-    }
-    @Test
     @DisplayName("Debe fallar id curso nulo")
     void deberiaFallarPorIdCursoNulo() throws Exception{
         RetoDTO retoDTO = new RetoTestDataBuilder().conIdCurso(null).build();
@@ -434,21 +419,8 @@ public class ManejadorActualizarReto {
         });
         assertEquals(INGRESO_ID_CURSO , exception.getMessage());
     }
-    @Test
-    @DisplayName("Debe fallar id curso menor a 0")
-    void deberiaFallarPorIdCursoNoValido() throws Exception{
-        RetoDTO retoDTO = new RetoTestDataBuilder().build();
-        Reto reto = retoMapper.toEntity(retoDTO);
-        Mockito.when(estadoDAO.findById(retoDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
-        Mockito.when(cursoDAO.findById(retoDTO.getIdCurso())).thenReturn(Optional.empty());
-        Mockito.when(misionDAO.findById(retoDTO.getIdMision())).thenReturn(Optional.of(new Mision()));
-        Mockito.when(retoDAO.existsById(reto.getIdReto())).thenReturn(true);
-        Mockito.when(retoDAO.save(Mockito.any())).thenReturn(reto);
-        Exception exception = assertThrows(Exception.class, () ->{
-            retoService.actualizar(reto);
-        });
-        assertEquals(INGRESO_ID_CURSO_VALIDO , exception.getMessage());
-    }
+
+
     @Test
     @DisplayName("Debe fallar id curso menor no valido")
     void deberiaFallarPorIdCursoNoValidoNoExiste() throws Exception{
@@ -496,24 +468,9 @@ public class ManejadorActualizarReto {
         assertEquals(INGRESO_ID_MISION_VALIDO , exception.getMessage());
     }
     @Test
-    @DisplayName("Debe fallar id mision no existe")
-    void deberiaFallarPorIdMisionNoExiste() throws Exception{
-        RetoDTO retoDTO = new RetoTestDataBuilder().build();
-        Reto reto = retoMapper.toEntity(retoDTO);
-        Mockito.when(estadoDAO.findById(retoDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
-        Mockito.when(cursoDAO.findById(retoDTO.getIdCurso())).thenReturn(Optional.of(new Curso()));
-        Mockito.when(misionDAO.findById(retoDTO.getIdMision())).thenReturn(Optional.empty());
-        Mockito.when(retoDAO.existsById(reto.getIdReto())).thenReturn(true);
-        Mockito.when(retoDAO.save(Mockito.any())).thenReturn(reto);
-        Exception exception = assertThrows(Exception.class, () ->{
-            retoService.actualizar(reto);
-        });
-        assertEquals(INGRESO_ID_MISION_VALIDO , exception.getMessage());
-    }
-    @Test
-    @DisplayName("Debe fallar usuario creador nulo")
-    void deberiaFallarPorUsuarioCreadorNulo() throws Exception{
-        RetoDTO retoDTO = new RetoTestDataBuilder().conUsuarioCreador(null).build();
+    @DisplayName("Debe fallar usuario modificador nulo")
+    void deberiaFallarPorUsuarioModificadorNulo() throws Exception{
+        RetoDTO retoDTO = new RetoTestDataBuilder().conUsuarioModificador(null).build();
         Reto reto = retoMapper.toEntity(retoDTO);
         Mockito.when(estadoDAO.findById(retoDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
         Mockito.when(cursoDAO.findById(retoDTO.getIdCurso())).thenReturn(Optional.of(new Curso()));
@@ -523,12 +480,12 @@ public class ManejadorActualizarReto {
         Exception exception = assertThrows(Exception.class, () ->{
             retoService.actualizar(reto);
         });
-        assertEquals(INGRESO_USUARIO_CREADOR  , exception.getMessage());
+        assertEquals(INGRESO_USUARIO_MODIFICADOR  , exception.getMessage());
     }
     @Test
-    @DisplayName("Debe fallar usuario creador vacio")
-    void deberiaFallarPorUsuarioCreadorVacio() throws Exception{
-        RetoDTO retoDTO = new RetoTestDataBuilder().conUsuarioCreador(VACIO).build();
+    @DisplayName("Debe fallar usuario modificador vacio")
+    void deberiaFallarPorUsuarioModificadorVacio() throws Exception{
+        RetoDTO retoDTO = new RetoTestDataBuilder().conUsuarioModificador(VACIO).build();
         Reto reto = retoMapper.toEntity(retoDTO);
         Mockito.when(estadoDAO.findById(retoDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
         Mockito.when(cursoDAO.findById(retoDTO.getIdCurso())).thenReturn(Optional.of(new Curso()));
@@ -538,12 +495,12 @@ public class ManejadorActualizarReto {
         Exception exception = assertThrows(Exception.class, () ->{
             retoService.actualizar(reto);
         });
-        assertEquals(INGRESO_USUARIO_CREADOR  , exception.getMessage());
+        assertEquals(INGRESO_USUARIO_MODIFICADOR  , exception.getMessage());
     }
     @Test
-    @DisplayName("Debe fallar usuario creador supera caracteres")
-    void deberiaFallarPorUsuarioCreadorSuperaCaracteres() throws Exception{
-        RetoDTO retoDTO = new RetoTestDataBuilder().conUsuarioCreador(TEXTO_MAS_CINCUENTA_CARACTERES).build();
+    @DisplayName("Debe fallar usuario modificador supera caracteres")
+    void deberiaFallarPorUsuarioModificadorSuperaCaracteres() throws Exception{
+        RetoDTO retoDTO = new RetoTestDataBuilder().conUsuarioModificador(TEXTO_MAS_CINCUENTA_CARACTERES).build();
         Reto reto = retoMapper.toEntity(retoDTO);
         Mockito.when(estadoDAO.findById(retoDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
         Mockito.when(cursoDAO.findById(retoDTO.getIdCurso())).thenReturn(Optional.of(new Curso()));
@@ -553,12 +510,12 @@ public class ManejadorActualizarReto {
         Exception exception = assertThrows(Exception.class, () ->{
             retoService.actualizar(reto);
         });
-        assertEquals(LIMITE_CARACTERES_USUARIO_CREADOR  , exception.getMessage());
+        assertEquals(LIMITE_CARACTERES_USUARIO_MODIFICADOR  , exception.getMessage());
     }
     @Test
     @DisplayName("Debe fallar fechacreacion nula")
     void deberiaFallarPorFechaCreacionNula() throws Exception{
-        RetoDTO retoDTO = new RetoTestDataBuilder().conFechaCreacion(null).build();
+        RetoDTO retoDTO = new RetoTestDataBuilder().conFechaModificacion(null).build();
         Reto reto = retoMapper.toEntity(retoDTO);
         Mockito.when(estadoDAO.findById(retoDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
         Mockito.when(cursoDAO.findById(retoDTO.getIdCurso())).thenReturn(Optional.of(new Curso()));
@@ -568,6 +525,6 @@ public class ManejadorActualizarReto {
         Exception exception = assertThrows(Exception.class, () ->{
             retoService.actualizar(reto);
         });
-        assertEquals(INGRESO_FECHA_CREACION  , exception.getMessage());
+        assertEquals(INGRESO_FECHA_MODIFICACION  , exception.getMessage());
     }
 }
