@@ -24,7 +24,6 @@ public class ManejadorCrearAvatarTest {
     private static final String SE_DEBE_INGRESAR_UN_NOMBRE_DEL_AVATAR_VALIDO = "Se debe ingresar un nombre del avatar válido.";
     private static final String SE_DEBE_INGRESAR_UN_USUARIO_CREADOR_DEL_AVATAR_VALIDO = "Se debe ingresar un usuario creador del avatar válido.";
     private static final String SE_DEBE_INGRESAR_UNA_FECHA_VALIDA = "Se debe ingresar una fecha válida.";
-    private static final String NO_SE_PUEDE_INGRESAR_UNA_FECHA_QUE_AUN_NO_HA_SUCEDIDO = "No puede ingresar una fecha que aun no ha sucedido.";
     private static final String IMG_Mala = "https://firebasestorage.googleapis.com/v0/b/languageconquers-740dc.appspot.com/o/articulos%2F59876.png?alt=media&token=6b647e03-62c5-4086-a2a2-6a8f291d5db6https://firebasestorage.googleapis.com/v0/b/languageconquers-740dc.appspot.com/o/articulos%2F59876.png?alt=media&token=6b647e03-62c5-4086-a2a2-6a8f291d5db6";
     private static final String NOMBRE_AVATAR_MALO = "SDHCKSDCKDSK CSKJKSDJCKL SCJKCSD DKS JAS SCAJ KSLKSDCJ";
     private static final String USUARIO_CREADOR_MALO = "KJEFD DFJKDJS SDJLFKJ SJDS CLJSD CJ DJSC LJ DSJF KJDS D";
@@ -50,8 +49,8 @@ public class ManejadorCrearAvatarTest {
     }
 
     @Test
-    @DisplayName("Deberia fallar por nombre avatar null")
-    void deberiaFallarPorNombreAvatarNull()throws Exception{
+    @DisplayName("Deberia fallar por imagen avatar null")
+    void deberiaFallarPorImgNull()throws Exception{
 
         AvatarDTO avatarDTO = new AvatarTestDataBuilder().conImgAvatar(null).build();
         Avatar avatar = avatarMapper.toEntity(avatarDTO);
@@ -63,8 +62,8 @@ public class ManejadorCrearAvatarTest {
     }
 
     @Test
-    @DisplayName("Deberia fallar por nombre avatar vacio")
-    void deberiaFallarPorNombreAvatarVacio()throws Exception{
+    @DisplayName("Deberia fallar por imagen avatar vacio")
+    void deberiaFallarPorImgVacio()throws Exception{
 
         AvatarDTO avatarDTO = new AvatarTestDataBuilder().conImgAvatar("").build();
         Avatar avatar = avatarMapper.toEntity(avatarDTO);
@@ -75,8 +74,8 @@ public class ManejadorCrearAvatarTest {
         assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UNA_DIRECCION_DE_IMAGEN_VALIDA);
     }
     @Test
-    @DisplayName("Deberia fallar por nombre avatar largo")
-    void deberiaFallarPorNombreAvatarLargo()throws Exception{
+    @DisplayName("Deberia fallar por imagen avatar largo")
+    void deberiaFallarPorImagenLargo()throws Exception{
 
         AvatarDTO avatarDTO = new AvatarTestDataBuilder().conImgAvatar(IMG_Mala).build();
         Avatar avatar = avatarMapper.toEntity(avatarDTO);
@@ -85,5 +84,96 @@ public class ManejadorCrearAvatarTest {
             avatarService.registrar(avatar);
         });
         assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UNA_DIRECCION_DE_IMAGEN_VALIDA);
+    }
+
+    @Test
+    @DisplayName("Deberia fallar por nombre avatar null")
+    void deberiaFallarPorNombreAvatarNull()throws Exception{
+
+        AvatarDTO avatarDTO = new AvatarTestDataBuilder().conNombreAvatar(null).build();
+        Avatar avatar = avatarMapper.toEntity(avatarDTO);
+        Mockito.when(avatarDAO.save(Mockito.any())).thenReturn(avatar);
+        Exception exception = assertThrows(Exception.class, ()->{
+            avatarService.registrar(avatar);
+        });
+        assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UN_NOMBRE_DEL_AVATAR_VALIDO);
+    }
+
+    @Test
+    @DisplayName("Deberia fallar por nombre avatar vacio")
+    void deberiaFallarPorNombreAvatarVacio()throws Exception{
+
+        AvatarDTO avatarDTO = new AvatarTestDataBuilder().conNombreAvatar("").build();
+        Avatar avatar = avatarMapper.toEntity(avatarDTO);
+        Mockito.when(avatarDAO.save(Mockito.any())).thenReturn(avatar);
+        Exception exception = assertThrows(Exception.class, ()->{
+            avatarService.registrar(avatar);
+        });
+        assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UN_NOMBRE_DEL_AVATAR_VALIDO);
+    }
+
+    @Test
+    @DisplayName("Deberia fallar por nombre avatar largo")
+    void deberiaFallarPorNombreAvatarLargo()throws Exception{
+
+        AvatarDTO avatarDTO = new AvatarTestDataBuilder().conNombreAvatar(NOMBRE_AVATAR_MALO).build();
+        Avatar avatar = avatarMapper.toEntity(avatarDTO);
+        Mockito.when(avatarDAO.save(Mockito.any())).thenReturn(avatar);
+        Exception exception = assertThrows(Exception.class, ()->{
+            avatarService.registrar(avatar);
+        });
+        assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UN_NOMBRE_DEL_AVATAR_VALIDO);
+    }
+
+    @Test
+    @DisplayName("Deberia fallar por usuario creador null")
+    void deberiaFallarPorUsuarioCreadorNull()throws Exception{
+
+        AvatarDTO avatarDTO = new AvatarTestDataBuilder().conUsuarioCreador(null).build();
+        Avatar avatar = avatarMapper.toEntity(avatarDTO);
+        Mockito.when(avatarDAO.save(Mockito.any())).thenReturn(avatar);
+        Exception exception = assertThrows(Exception.class, ()->{
+            avatarService.registrar(avatar);
+        });
+        assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UN_USUARIO_CREADOR_DEL_AVATAR_VALIDO);
+    }
+
+    @Test
+    @DisplayName("Deberia fallar por usuario creador vacio")
+    void deberiaFallarPorUsuarioCreadorVacio()throws Exception{
+
+        AvatarDTO avatarDTO = new AvatarTestDataBuilder().conUsuarioCreador("").build();
+        Avatar avatar = avatarMapper.toEntity(avatarDTO);
+        Mockito.when(avatarDAO.save(Mockito.any())).thenReturn(avatar);
+        Exception exception = assertThrows(Exception.class, ()->{
+            avatarService.registrar(avatar);
+        });
+        assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UN_USUARIO_CREADOR_DEL_AVATAR_VALIDO);
+    }
+
+    @Test
+    @DisplayName("Deberia fallar por usuario creador largo")
+    void deberiaFallarPorUsuarioCreadorLargo()throws Exception{
+
+        AvatarDTO avatarDTO = new AvatarTestDataBuilder().conUsuarioCreador(USUARIO_CREADOR_MALO).build();
+        Avatar avatar = avatarMapper.toEntity(avatarDTO);
+        Mockito.when(avatarDAO.save(Mockito.any())).thenReturn(avatar);
+        Exception exception = assertThrows(Exception.class, ()->{
+            avatarService.registrar(avatar);
+        });
+        assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UN_USUARIO_CREADOR_DEL_AVATAR_VALIDO);
+    }
+
+    @Test
+    @DisplayName("Deberia fallar por fecha creacion null")
+    void deberiaFallarPorFechaCreacionNull()throws Exception{
+
+        AvatarDTO avatarDTO = new AvatarTestDataBuilder().conFechaCreacion(null).build();
+        Avatar avatar = avatarMapper.toEntity(avatarDTO);
+        Mockito.when(avatarDAO.save(Mockito.any())).thenReturn(avatar);
+        Exception exception = assertThrows(Exception.class, ()->{
+            avatarService.registrar(avatar);
+        });
+        assertEquals(exception.getMessage(), SE_DEBE_INGRESAR_UNA_FECHA_VALIDA);
     }
 }

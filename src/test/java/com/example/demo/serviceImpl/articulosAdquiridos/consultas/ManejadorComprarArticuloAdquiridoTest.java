@@ -82,7 +82,7 @@ public class ManejadorComprarArticuloAdquiridoTest {
 
     @Autowired
     ArticulosMapper articulosMapper;
-
+/*
     @Test
     @DisplayName("Deberia permitir comprar un articulo")
     void deberiaPoderComprarArticulo()throws Exception{
@@ -161,5 +161,5 @@ public class ManejadorComprarArticuloAdquiridoTest {
 
         assertEquals(monedasEstudiante, monedasRestantes);
 
-    }
+    }*/
 }

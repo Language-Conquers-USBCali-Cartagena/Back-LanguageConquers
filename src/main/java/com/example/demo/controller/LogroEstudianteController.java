@@ -78,7 +78,7 @@ public class LogroEstudianteController {
         }
     }
     @Operation(summary = "Este método permite obtener el logro comprador.")
-    @GetMapping("/ahorrador")
+    @GetMapping("/comprador")
     public ResponseEntity<String> obtenerLogroComprador(@RequestParam Long idEstudiante){
         try{
             String mensaje = logroEstudianteService.logroArticulos(idEstudiante);
