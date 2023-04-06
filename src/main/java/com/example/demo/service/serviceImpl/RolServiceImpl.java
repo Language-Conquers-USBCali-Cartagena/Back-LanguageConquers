@@ -34,14 +34,8 @@ public class RolServiceImpl implements RolService {
 
     }
     @Override
-    public String actualizar(RolDTO rolDTO) throws Exception {
-        Rol rol = null;
-        validacionesActualizar(rolDTO);
-        rol = rolDAO.findById(rolDTO.getIdRol()).orElse(null);
-        rol.setNombre(rolDTO.getNombre());
-        rol.setReto(retoDAO.findById(rolDTO.getIdReto()).orElse(null));
-        rol.setUsuarioModificador(rolDTO.getUsuarioModificador());
-        rol.setFechaModificacion(rolDTO.getFechaModificacion());
+    public String actualizar(Rol rol) throws Exception {
+        validacionesActualizar(rol);
         rolDAO.save(rol);
         return "Se actualizo exitosamente el rol.";
     }
@@ -85,7 +79,7 @@ public class RolServiceImpl implements RolService {
         if(Validaciones.isStringLenght(rol.getUsuarioCreador(),50)){
             throw new Exception("El nombre del usuario creador no debe superar los 50 caracteres.");
         }
-        if(rol.getFechaCreacion()==null || rol.getFechaCreacion().toString().equals("")){
+        if(rol.getFechaCreacion()==null){
             throw new Exception("Se debe ingresar una fecha de creación.");
         }
         Date fechaActual = new Date();
@@ -93,36 +87,36 @@ public class RolServiceImpl implements RolService {
             throw new Exception("No se puede ingresar una fecha que aun no ha sucedido.");
         }
     }
-    private void validacionesActualizar(RolDTO rolDTO)throws Exception{
-        if(rolDTO.getIdRol() == null){
+    private void validacionesActualizar(Rol rol)throws Exception{
+        if(rol.getIdRol() == null){
             throw new Exception("Debe ingresar el id del rol que desea modificar.");
         }
-        if(!rolDAO.existsById(rolDTO.getIdRol())){
+        if(!rolDAO.existsById(rol.getIdRol())){
             throw new Exception("No existe el rol con ese id.");
         }
-        if(rolDTO.getNombre()==null || rolDTO.getNombre().equals("")){
+        if(rol.getNombre()==null || rol.getNombre().equals("")){
             throw new Exception("Se debe ingresar el nombre del rol.");
         }
-        if(Validaciones.isStringLenght(rolDTO.getNombre(), 50)){
+        if(Validaciones.isStringLenght(rol.getNombre(), 50)){
             throw new Exception("El nombre del rol no puede superar los 50 caracteres.");
         }
-        if(rolDTO.getIdReto()<0){
+        if(rol.getReto().getIdReto()<0){
             throw new Exception("Debe ingresar un Id reto válido.");
         }
-        if(retoDAO.findById(rolDTO.getIdReto()).toString().equals("Optional.empty")){
+        if(retoDAO.findById(rol.getReto().getIdReto()).toString().equals("Optional.empty")){
             throw new Exception("Debe ingresar un id reto válido.");
         }
-        if(rolDTO.getUsuarioModificador() == null || rolDTO.getUsuarioModificador().trim().equals("")){
+        if(rol.getUsuarioModificador() == null || rol.getUsuarioModificador().trim().equals("")){
             throw new Exception("Se debe ingresar el usuario modificador.");
         }
-        if(Validaciones.isStringLenght(rolDTO.getUsuarioModificador(),50)){
+        if(Validaciones.isStringLenght(rol.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario modificador no debe superar los 50 caracteres.");
         }
-        if(rolDTO.getFechaModificacion()==null || rolDTO.getFechaModificacion().toString().equals("")){
+        if(rol.getFechaModificacion()==null){
             throw new Exception("Se debe ingresar una fecha de modificación.");
         }
         Date fechaActual = new Date();
-        if(rolDTO.getFechaModificacion().compareTo(fechaActual)>0){
+        if(rol.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No se puede ingresar una fecha que aun no ha sucedido.");
         }
     }

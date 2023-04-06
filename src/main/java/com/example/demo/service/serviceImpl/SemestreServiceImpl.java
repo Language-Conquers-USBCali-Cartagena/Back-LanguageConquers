@@ -29,13 +29,8 @@ public class SemestreServiceImpl implements SemestreService {
         return "Se creo exitosamente el semestre.";
     }
     @Override
-    public String actualizar(SemestreDTO semestreDTO) throws Exception {
-        Semestre semestre = null;
-        validacionesActualizar(semestreDTO);
-        semestre = semestreDAO.findById(semestreDTO.getIdSemestre()).orElse(null);
-        semestre.setNombre(semestreDTO.getNombre());
-        semestre.setUsuarioModificador(semestreDTO.getUsuarioModificador());
-        semestre.setFechaModificacion(semestreDTO.getFechaModificacion());
+    public String actualizar(Semestre semestre) throws Exception {
+        validacionesActualizar(semestre);
         semestreDAO.save(semestre);
         return "Se actualizo exitosamente el semestre.";
     }
@@ -83,7 +78,7 @@ public class SemestreServiceImpl implements SemestreService {
         if(Validaciones.isStringLenght(semestre.getUsuarioCreador(),50)){
             throw new Exception("El usuario creador no debe de tener más de 50 caracteres.");
         }
-        if(semestre.getFechaCreacion()==null || semestre.getFechaCreacion().toString().equals("")){
+        if(semestre.getFechaCreacion()==null){
             throw new Exception("Se debe ingresar una fecha válida.");
         }
         Date fechaActual = new Date();
@@ -92,30 +87,30 @@ public class SemestreServiceImpl implements SemestreService {
         }
 
     }
-    private void validacionesActualizar(SemestreDTO semestreDTO)throws Exception{
-        if(semestreDTO.getIdSemestre() == null){
+    private void validacionesActualizar(Semestre semestre)throws Exception{
+        if(semestre.getIdSemestre() == null){
             throw new Exception("Debe ingresar un id del semestre que desea actualizar.");
         }
-        if(!semestreDAO.existsById(semestreDTO.getIdSemestre())){
+        if(!semestreDAO.existsById(semestre.getIdSemestre())){
             throw new Exception("No se encontró el semestre con ese id.");
         }
-        if(semestreDTO.getNombre() == null || semestreDTO.getNombre().trim().equals("")){
+        if(semestre.getNombre() == null || semestre.getNombre().trim().equals("")){
             throw new Exception("Se debe ingresar el nombre del semestre.");
         }
-        if(Validaciones.isStringLenght(semestreDTO.getNombre(),50)){
+        if(Validaciones.isStringLenght(semestre.getNombre(),50)){
             throw new Exception("El nombre del semestre no debe superar los 50 caracteres.");
         }
-        if(semestreDTO.getUsuarioModificador()==null || semestreDTO.getUsuarioModificador().trim().equals("")){
+        if(semestre.getUsuarioModificador()==null || semestre.getUsuarioModificador().trim().equals("")){
             throw new Exception("Se debe ingresar un usuario modificador.");
         }
-        if(Validaciones.isStringLenght(semestreDTO.getUsuarioModificador(),50)){
+        if(Validaciones.isStringLenght(semestre.getUsuarioModificador(),50)){
             throw new Exception("El usuario modificador no debe de tener más de 50 caracteres.");
         }
-        if(semestreDTO.getFechaModificacion()==null || semestreDTO.getFechaModificacion().toString().equals("")){
+        if(semestre.getFechaModificacion()==null){
             throw new Exception("Se debe ingresar una fecha válida.");
         }
         Date fechaActual = new Date();
-        if(semestreDTO.getFechaModificacion().compareTo(fechaActual)>0){
+        if(semestre.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
     }

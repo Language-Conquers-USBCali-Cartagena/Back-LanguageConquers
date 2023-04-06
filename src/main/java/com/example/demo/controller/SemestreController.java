@@ -54,7 +54,8 @@ public class SemestreController {
     @PutMapping("/actualizarSemestre")
     public ResponseEntity<String> modificar(@RequestBody SemestreDTO semestreDTO){
         try{
-            return new ResponseEntity<>(semestreService.actualizar(semestreDTO), HttpStatus.OK);
+            Semestre semestre = semestreMapper.toEntity(semestreDTO);
+            return new ResponseEntity<>(semestreService.actualizar(semestre), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);

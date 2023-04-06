@@ -53,7 +53,8 @@ public class RolController {
     @PutMapping("/actualizarRol")
     public ResponseEntity<String> modificar(@RequestBody RolDTO rolDTO){
         try{
-            return new ResponseEntity<>(rolService.actualizar(rolDTO), HttpStatus.OK);
+            Rol rol = rolMapper.toEntity(rolDTO);
+            return new ResponseEntity<>(rolService.actualizar(rol), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
