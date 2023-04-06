@@ -13,4 +13,5 @@ public interface PalabrasReservadasMapper {
     PalabrasReservadas toEntity(PalabrasReservadasDTO palabrasReservadasDTO);
     PalabrasReservadasDTO toDTO(PalabrasReservadas palabrasReservadas);
     List<PalabrasReservadasDTO> toDTOList(List<PalabrasReservadas> palabrasReservadasList);
+    List<PalabrasReservadas> toEntityList(List<PalabrasReservadasDTO> palabrasReservadasDTOS);
 }

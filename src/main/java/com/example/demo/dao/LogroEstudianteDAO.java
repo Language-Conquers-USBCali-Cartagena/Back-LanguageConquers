@@ -12,6 +12,6 @@ public interface LogroEstudianteDAO extends JpaRepository<LogroEstudiante, Long>
 
     List<LogroEstudiante> findByEstudiante (Estudiante estudiante);
 
-    @Query(value = "SELECT * FROM logro_estudiante WHERE id_estudiante = ?1 AND id_logro =?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM logro_estudiante WHERE id_estudiante = ?1 AND id_logro = ?2", nativeQuery = true)
     LogroEstudiante findByEstudianteAndLogro (Long idEstudiante, Long idLogro);
 }

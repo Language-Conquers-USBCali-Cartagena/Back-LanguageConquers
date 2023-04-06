@@ -25,4 +25,5 @@ public interface RetoEstudianteMapper {
     @Mapping(target = "idEstado", source = "estado.idEstado")
     RetoEstudianteDTO toDTO(RetoEstudiante retoEstudiante);
     List<RetoEstudianteDTO> toDTOList(List<RetoEstudiante> retoEstudianteList);
+    List<RetoEstudiante> toEntityList(List<RetoEstudianteDTO> retoEstudianteDTOS);
 }

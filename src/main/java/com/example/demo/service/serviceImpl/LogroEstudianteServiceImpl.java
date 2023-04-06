@@ -95,7 +95,8 @@ public class LogroEstudianteServiceImpl implements LogroEstudianteService {
     @Override
     public String logroAhorrador(Long idEstudiante) throws Exception {
         Estudiante estudiante = estudianteDAO.findById(idEstudiante).get();
-        if(estudiante.getMonedasObtenidas() >= 800){
+        LogroEstudiante logroEstudiante = findByEstudianteAndLogro(idEstudiante, 11L);
+        if(estudiante.getMonedasObtenidas() >= 800 && logroEstudiante == null){
             LogroEstudianteDTO logroEstudianteDTO = new LogroEstudianteDTO();
             logroEstudianteDTO.setIdEstudiante(idEstudiante);
             logroEstudianteDTO.setIdLogro(11L);
@@ -110,7 +111,14 @@ public class LogroEstudianteServiceImpl implements LogroEstudianteService {
     public String logroPerfeccionista(Long idEstudiante, Long idReto) throws Exception {
         RetoEstudiante retoEstudiante = retoEstudianteDAO.findByIdRetoAndIdEstuduante(idReto, idEstudiante);
         retoEstudiante.getIntentos();
-        if(retoEstudiante.getIntentos() == 0){
+        LogroEstudiante logroEstudiante = findByEstudianteAndLogro(idEstudiante, 7L);
+        if(retoEstudiante.getIntentos() == 0 && logroEstudiante == null){
+            LogroEstudianteDTO logroEstudianteDTO = new LogroEstudianteDTO();
+            logroEstudianteDTO.setIdEstudiante(idEstudiante);
+            logroEstudianteDTO.setIdLogro(7L);
+            logroEstudianteDTO.setFechaCreacion(new Date());
+            logroEstudianteDTO.setUsuarioCreador("admin");
+            saveByDTO(logroEstudianteDTO);
             return "Has conseguido el logro 'Perfeccionista'";
         }
         return null;

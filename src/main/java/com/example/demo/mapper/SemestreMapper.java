@@ -16,4 +16,5 @@ public interface SemestreMapper {
     Semestre toEntity(SemestreDTO semestreDTO);
     SemestreDTO toDTO(Semestre semestre);
     List<SemestreDTO> toDTOList(List<Semestre> semestres);
+    List<Semestre> toEntityList(List<SemestreDTO> semestreDTOS);
 }
