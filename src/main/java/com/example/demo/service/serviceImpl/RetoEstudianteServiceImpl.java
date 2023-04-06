@@ -26,12 +26,6 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
     private EstadoDAO estadoDAO;
 
     @Autowired
-    private GrupoDAO grupoDAO;
-
-    @Autowired
-    private RolDAO rolDAO;
-
-    @Autowired
     private EstudianteDAO estudianteDAO;
 
     @Override
@@ -139,7 +133,7 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
             throw new Exception("Debe ingresar un idReto.");
         }
         if(retoEstudiante.getEstado().getIdEstado()<0){
-            throw new Exception("Debe ingresar un idEstado válido");
+            throw new Exception("Debe ingresar un idEstado válido.");
         }
         if(retoEstudiante.getEstudiante().getIdEstudiante()<0){
             throw new Exception("Debe ingresar un idEstudiante válido.");
@@ -148,13 +142,13 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
             throw new Exception("Debe ingresar un idReto válido.");
         }
         if(estadoDAO.findById(retoEstudiante.getEstado().getIdEstado()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un idEstado válido");
+            throw new Exception("Debe ingresar un idEstado válido.");
         }
         if(estudianteDAO.findById(retoEstudiante.getEstudiante().getIdEstudiante()).toString().equals("Optional.empty")){
             throw new Exception("Debe ingresar un idEstudiante válido.");
         }
         if(retoDAO.findById(retoEstudiante.getReto().getIdReto()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un udReto válido.");
+            throw new Exception("Debe ingresar un idReto válido.");
         }
         if(retoEstudiante.getUsuarioCreador() == null || retoEstudiante.getUsuarioCreador().equals("")){
             throw new Exception("Debe ingresar el nombre del usuario creador.");
@@ -162,7 +156,7 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
         if(Validaciones.isStringLenght(retoEstudiante.getUsuarioCreador(),50)){
             throw new Exception("El nombre del usuario creador es muy largo, solo se aceptan 50 caracteres.");
         }
-        if(retoEstudiante.getFechaCreacion() == null || retoEstudiante.getFechaCreacion().equals("")){
+        if(retoEstudiante.getFechaCreacion() == null){
             throw new Exception("Debe ingresar una fecha de creación.");
         }
         if(retoEstudiante.getFechaCreacion().compareTo(fechaActual)>0){
@@ -204,7 +198,7 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
             throw new Exception("Debe ingresar un idEstudiante válido.");
         }
         if(retoDAO.findById(retoEstudiante.getReto().getIdReto()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un udReto válido.");
+            throw new Exception("Debe ingresar un idReto válido.");
         }
         if(retoEstudiante.getUsuarioModificador() == null || retoEstudiante.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el nombre del usuario modificador.");

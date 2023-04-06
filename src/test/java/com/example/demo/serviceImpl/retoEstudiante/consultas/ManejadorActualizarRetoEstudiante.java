@@ -5,14 +5,13 @@ import com.example.demo.dao.EstudianteDAO;
 import com.example.demo.dao.RetoDAO;
 import com.example.demo.dao.RetoEstudianteDAO;
 import com.example.demo.mapper.RetoEstudianteMapper;
-import com.example.demo.model.*;
-import com.example.demo.model.dto.RetoDTO;
+import com.example.demo.model.Estado;
+import com.example.demo.model.Estudiante;
+import com.example.demo.model.Reto;
+import com.example.demo.model.RetoEstudiante;
 import com.example.demo.model.dto.RetoEstudianteDTO;
-import com.example.demo.model.dto.SemestreDTO;
 import com.example.demo.service.RetoEstudianteService;
-import com.example.demo.serviceImpl.reto.testDataBuilder.RetoTestDataBuilder;
 import com.example.demo.serviceImpl.retoEstudiante.testDataBuilder.RetoEstudianteTestDataBuilder;
-import com.example.demo.serviceImpl.semestre.testDataBuilder.SemestreTestDataBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -27,22 +26,22 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 @SpringBootTest
-public class ManejadorCrearRetoEstudiante {
-    public static final String RETO_ESTUDIANTE_CREADO_EXITOSAMENTE = "Se creo exitosamente el reto estudiante!";
+public class ManejadorActualizarRetoEstudiante {
+    public static final String RETO_ESTUDIANTE_ACTUALIZADO_EXITOSAMENTE = "Se actualizo exitosamente el reto estudiante";
     public static final String PUNTAJE_NEGATIVO = "No se puede asignar un puntaje negativo al reto estudiante.";
     public static final String ID_ESTADO_REQUERIDO = "Debe ingresar un idEstado.";
     public static final String ID_ESTUDIANTE_REQUERIDO = "Debe ingresar un idEstudiante";
     public static final String ID_RETO_REQUERIDO = "Debe ingresar un idReto.";
-    public static final String ID_ESTADO_INVALIDO = "Debe ingresar un idEstado válido.";
+    public static final String ID_ESTADO_INVALIDO = "Debe ingresar un idEstado válido";
     public static final String ID_ESTUDIANTE_NO_VALIDO = "Debe ingresar un idEstudiante válido.";
-    public static final String NOMBRE_USUARIO_CREACION_LARGO = "El nombre del usuario creador es muy largo, solo se aceptan 50 caracteres.";
-    public static final String DEBE_INGRESAR_FECHA_CREACION = "Debe ingresar una fecha de creación.";
+    public static final String NOMBRE_USUARIO_MODIFICACION_LARGO = "El nombre del usuario modificador es muy largo, solo se aceptan 50 caracteres.";
+    public static final String DEBE_INGRESAR_FECHA_MODIFICACION = "Debe ingresar una fecha de modificación.";
     public static final String ID_RETO_NO_VALIDO = "Debe ingresar un idReto válido.";
-    public static final String FECHA_CREACION_INVALIDA = "No se puede asignar una fecha de creación que aun no ha sucedido.";
+    public static final String FECHA_MODIFICACION_INVALIDA = "No se puede asignar una fecha de modificación que aun no ha sucedido.";
     private static final String TEXTO_MAS_CINCUENTA_CARACTERES = "DGSDGSDSDAGSFDGDFGSDFFGDFSGDFGDFGDFGDFGDFGDFGDSGDFDVSDDSBDSBSDBSVDVSDVSDVSDVSDV";
     private static final Date FECHA_FUTURA= new Date(3500, 12, 12);
     private static final String VACIO = "";
-    public static final String DEBE_INGRESAR_NOMBRE_USUARIO_CREADOR = "Debe ingresar el nombre del usuario creador.";
+    public static final String DEBE_INGRESAR_NOMBRE_USUARIO_MODIFICADOR = "Debe ingresar el nombre del usuario modificador.";
     @Autowired
     RetoEstudianteMapper retoEstudianteMapper;
     @Autowired
@@ -57,16 +56,16 @@ public class ManejadorCrearRetoEstudiante {
     RetoDAO retoDAO;
 
     @Test
-    @DisplayName("Deberia crear el retoEstudainte")
-    void deberiaCerarElRetoEstudiante() throws Exception{
+    @DisplayName("Deberia actualizar el retoEstudainte")
+    void deberiaActualizarElRetoEstudiante() throws Exception{
         RetoEstudianteDTO retoEstudianteDTO = new RetoEstudianteTestDataBuilder().build();
         RetoEstudiante retoEstudiante = retoEstudianteMapper.toEntity(retoEstudianteDTO);
         Mockito.when(estadoDAO.findById(retoEstudianteDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
         Mockito.when(retoDAO.findById(retoEstudianteDTO.getIdReto())).thenReturn(Optional.of(new Reto()));
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
-        String crearRetoEstudiante = retoEstudianteService.crearRetoEstudiante(retoEstudiante);
-        assertEquals(RETO_ESTUDIANTE_CREADO_EXITOSAMENTE, crearRetoEstudiante);
+        String crearRetoEstudiante = retoEstudianteService.actualizar(retoEstudiante);
+        assertEquals(RETO_ESTUDIANTE_ACTUALIZADO_EXITOSAMENTE, crearRetoEstudiante);
     }
     @Test
     @DisplayName("Debe fallar por puntaje menor a cero")
@@ -78,7 +77,7 @@ public class ManejadorCrearRetoEstudiante {
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
         assertEquals(exception.getMessage(), PUNTAJE_NEGATIVO);
     }
@@ -92,7 +91,7 @@ public class ManejadorCrearRetoEstudiante {
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
         assertEquals(exception.getMessage(), ID_ESTADO_REQUERIDO);
     }
@@ -106,7 +105,7 @@ public class ManejadorCrearRetoEstudiante {
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
         assertEquals(exception.getMessage(), ID_ESTUDIANTE_REQUERIDO );
     }
@@ -120,7 +119,7 @@ public class ManejadorCrearRetoEstudiante {
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
         assertEquals(exception.getMessage(), ID_RETO_REQUERIDO );
     }
@@ -134,7 +133,7 @@ public class ManejadorCrearRetoEstudiante {
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
         assertEquals(exception.getMessage(), ID_ESTADO_INVALIDO );
     }
@@ -148,7 +147,7 @@ public class ManejadorCrearRetoEstudiante {
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
         assertEquals(exception.getMessage(), ID_ESTUDIANTE_NO_VALIDO );
     }
@@ -162,7 +161,7 @@ public class ManejadorCrearRetoEstudiante {
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
         assertEquals(exception.getMessage(), ID_RETO_NO_VALIDO );
     }
@@ -176,7 +175,7 @@ public class ManejadorCrearRetoEstudiante {
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
         assertEquals(exception.getMessage(), ID_ESTADO_INVALIDO );
     }
@@ -190,7 +189,7 @@ public class ManejadorCrearRetoEstudiante {
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.empty());
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
         assertEquals(exception.getMessage(), ID_ESTUDIANTE_NO_VALIDO );
     }
@@ -204,78 +203,78 @@ public class ManejadorCrearRetoEstudiante {
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
         assertEquals(exception.getMessage(), ID_RETO_NO_VALIDO );
     }
     @Test
     @DisplayName("Debe fallar por usuario creado nulo")
     void debeFallarPorUsuarioCreadorNulo() throws Exception{
-        RetoEstudianteDTO retoEstudianteDTO = new RetoEstudianteTestDataBuilder().conUsuarioCreador(null).build();
+        RetoEstudianteDTO retoEstudianteDTO = new RetoEstudianteTestDataBuilder().conUsuarioModificador(null).build();
         RetoEstudiante retoEstudiante = retoEstudianteMapper.toEntity(retoEstudianteDTO);
         Mockito.when(estadoDAO.findById(retoEstudianteDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
         Mockito.when(retoDAO.findById(retoEstudianteDTO.getIdReto())).thenReturn(Optional.of(new Reto()));
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
-        assertEquals(exception.getMessage(), DEBE_INGRESAR_NOMBRE_USUARIO_CREADOR );
+        assertEquals(exception.getMessage(), DEBE_INGRESAR_NOMBRE_USUARIO_MODIFICADOR );
     }
     @Test
     @DisplayName("Debe fallar por usuario creado vacio")
     void debeFallarPorUsuarioCreadorVacio() throws Exception{
-        RetoEstudianteDTO retoEstudianteDTO = new RetoEstudianteTestDataBuilder().conUsuarioCreador(VACIO).build();
+        RetoEstudianteDTO retoEstudianteDTO = new RetoEstudianteTestDataBuilder().conUsuarioModificador(VACIO).build();
         RetoEstudiante retoEstudiante = retoEstudianteMapper.toEntity(retoEstudianteDTO);
         Mockito.when(estadoDAO.findById(retoEstudianteDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
         Mockito.when(retoDAO.findById(retoEstudianteDTO.getIdReto())).thenReturn(Optional.of(new Reto()));
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
-        assertEquals(exception.getMessage(), DEBE_INGRESAR_NOMBRE_USUARIO_CREADOR );
+        assertEquals(exception.getMessage(), DEBE_INGRESAR_NOMBRE_USUARIO_MODIFICADOR );
     }
     @Test
     @DisplayName("Debe fallar por usuario muchos caracteres")
     void debeFallarPorUsuarioCreadorMuchosCaracteres() throws Exception{
-        RetoEstudianteDTO retoEstudianteDTO = new RetoEstudianteTestDataBuilder().conUsuarioCreador(TEXTO_MAS_CINCUENTA_CARACTERES).build();
+        RetoEstudianteDTO retoEstudianteDTO = new RetoEstudianteTestDataBuilder().conUsuarioModificador(TEXTO_MAS_CINCUENTA_CARACTERES).build();
         RetoEstudiante retoEstudiante = retoEstudianteMapper.toEntity(retoEstudianteDTO);
         Mockito.when(estadoDAO.findById(retoEstudianteDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
         Mockito.when(retoDAO.findById(retoEstudianteDTO.getIdReto())).thenReturn(Optional.of(new Reto()));
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
-        assertEquals(exception.getMessage(), NOMBRE_USUARIO_CREACION_LARGO );
+        assertEquals(exception.getMessage(), NOMBRE_USUARIO_MODIFICACION_LARGO );
     }
     @Test
     @DisplayName("Debe fallar por fecha nula")
     void debeFallarPorfechaNula() throws Exception{
-        RetoEstudianteDTO retoEstudianteDTO = new RetoEstudianteTestDataBuilder().conFechaCreacion(null).build();
+        RetoEstudianteDTO retoEstudianteDTO = new RetoEstudianteTestDataBuilder().conFechaModificacion(null).build();
         RetoEstudiante retoEstudiante = retoEstudianteMapper.toEntity(retoEstudianteDTO);
         Mockito.when(estadoDAO.findById(retoEstudianteDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
         Mockito.when(retoDAO.findById(retoEstudianteDTO.getIdReto())).thenReturn(Optional.of(new Reto()));
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
-        assertEquals(exception.getMessage(), DEBE_INGRESAR_FECHA_CREACION );
+        assertEquals(exception.getMessage(), DEBE_INGRESAR_FECHA_MODIFICACION );
     }
     @Test
     @DisplayName("Debe fallar por fecha futura")
     void debeFallarPorfechaFutura() throws Exception{
-        RetoEstudianteDTO retoEstudianteDTO = new RetoEstudianteTestDataBuilder().conFechaCreacion(FECHA_FUTURA).build();
+        RetoEstudianteDTO retoEstudianteDTO = new RetoEstudianteTestDataBuilder().conFechaModificacion(FECHA_FUTURA).build();
         RetoEstudiante retoEstudiante = retoEstudianteMapper.toEntity(retoEstudianteDTO);
         Mockito.when(estadoDAO.findById(retoEstudianteDTO.getIdEstado())).thenReturn(Optional.of(new Estado()));
         Mockito.when(retoDAO.findById(retoEstudianteDTO.getIdReto())).thenReturn(Optional.of(new Reto()));
         Mockito.when(estudianteDAO.findById(retoEstudianteDTO.getIdEstudiante())).thenReturn(Optional.of(new Estudiante()));
         Mockito.when(retoEstudianteDAO.save(Mockito.any())).thenReturn(retoEstudiante);
         Exception exception = assertThrows(Exception.class, () -> {
-            retoEstudianteService.crearRetoEstudiante(retoEstudiante);
+            retoEstudianteService.actualizar(retoEstudiante);
         });
-        assertEquals(exception.getMessage(), FECHA_CREACION_INVALIDA );
+        assertEquals(exception.getMessage(), FECHA_MODIFICACION_INVALIDA );
     }
 }
