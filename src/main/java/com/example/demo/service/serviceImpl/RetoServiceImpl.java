@@ -165,29 +165,6 @@ public class RetoServiceImpl implements RetoService {
                 .collect(Collectors.toList());
         for (int i = 0; i< retosOrdenados.size(); i++) {
             RetoDTO retoDTO = new RetoDTO(retosOrdenados.get(i), retoEstudianteOrdenados.get(i));
-//            retoDTO.setIdReto(reto.getIdReto());
-//            retoDTO.setNombreReto(reto.getNombreReto());
-//            retoDTO.setDescripcion(reto.getDescripcion());
-//            retoDTO.setMoneda(reto.getMoneda());
-//            retoDTO.setMaximoIntentos(reto.getMaximoIntentos());
-//            retoDTO.setDescripcionTeoria(reto.getDescripcionTeoria());
-//            retoDTO.setFechaInicio(reto.getFechaInicio());
-//            retoDTO.setFechaLimite(reto.getFechaLimite());
-//            retoDTO.setSolucion(reto.getSolucion());
-//            retoDTO.setEsGrupal(reto.getEsGrupal());
-//            retoDTO.setNrEstudiantesGrupo(reto.getNrEstudiatesGrupo());
-//            retoDTO.setUsuarioCreador(reto.getUsuarioCreador());
-//            retoDTO.setUsuarioModificador(reto.getUsuarioModificador());
-//            retoDTO.setFechaCreacion(reto.getFechaCreacion());
-//            retoDTO.setFechaModificacion(reto.getFechaModificacion());
-//            retoDTO.setUrlVideo1(reto.getUrlVideo1());
-//            retoDTO.setUrlVideo2(reto.getUrlVideo2());
-//            retoDTO.setImagenTema1(reto.getImagenTema1());
-//            retoDTO.setImagenTema2(reto.getImagenTema2());
-//            retoDTO.setIdMision(reto.getMision().getIdMision());
-//            retoDTO.setIdEstado(reto.getEstado().getIdEstado());
-//            retoDTO.setIdCurso(reto.getCurso().getIdCurso());
-//            retoDTO.setIdEstadoRetoEstu(retoEstudiante.getEstado().getIdEstado());
             retosDTOs.add(retoDTO);
         }
         return retosDTOs;

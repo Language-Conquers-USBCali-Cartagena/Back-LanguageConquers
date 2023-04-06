@@ -25,7 +25,7 @@ public interface RetoDAO extends JpaRepository<Reto,Long> {
     int retosRegistrados()throws Exception;
 
     @Query(value = "SELECT r.id_reto, r.descripcion, r.es_grupal, r.fecha_creacion, r.fecha_inicio, r.fecha_limite, r.fecha_modificacion,\n" +
-            "       r.maximo_intentos, r.nombre_reto, r.nr_estudiantes_grupo, r.usuario_creador, r.usuario_modificador, r.id_curso,\n" +
+            "       r.maximo_intentos, r.nombre_reto, r.usuario_creador, r.usuario_modificador, r.id_curso,\n" +
             "       r.id_estado, r.id_mision, r.moneda, r.solucion, r.descripcion_teoria, r.imagen_tema1, r.imagen_tema2, r.url_video1,\n" +
             "       r.url_video2, r.nivel\n" +
             "FROM reto r\n" +
