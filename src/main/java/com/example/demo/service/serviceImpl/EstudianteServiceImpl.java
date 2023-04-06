@@ -101,13 +101,15 @@ public class EstudianteServiceImpl implements EstudianteService {
 
     @Override
     public Estudiante findByCorreo(String correo) throws Exception {
+
+
+        if(correo.equals("")){
+            throw new Exception("No existe estudiante registrado con este correo");
+        }
         if(!Validaciones.formatoCorreoValido(correo)){
             throw new Exception("El formato del correo no es válido.");
         }
         Estudiante estudiante = estudianteDAO.findByCorreo(correo);
-        if(estudiante.getApellido().equals("")){
-            throw new Exception("No existe estudiante registrado con este correo");
-        }
         return estudiante;
     }
 
@@ -117,7 +119,7 @@ public class EstudianteServiceImpl implements EstudianteService {
             throw new Exception("Debe ingresar el id de un estudiante.");
         }
         if(!estudianteDAO.existsById(idEstudiante)){
-            throw new Exception("El estudiante con id: " + idEstudiante +" no existe.");
+            throw new Exception("El estudiante con  ese id no existe.");
         }
         return estudianteDAO.findById(idEstudiante).get();
     }
@@ -174,19 +176,19 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudiante.getGenero().getIdGenero()<0){
             throw new Exception("Debe ingresar un id genero válido.");
         }
-        if(avatarDAO.findById(estudiante.getAvatar().getIdAvatar()).toString().equals("Optional.empty")){
+        if(!avatarDAO.existsById(estudiante.getAvatar().getIdAvatar())){
             throw new Exception("Debe ingresar un id avatar válido.");
         }
-        if(generoDAO.findById(estudiante.getGenero().getIdGenero()).toString().equals("Optional.empty")){
+        if(!generoDAO.existsById(estudiante.getGenero().getIdGenero())){
             throw new Exception("Debe ingresar un id genero válido.");
         }
-        if(semestreDAO.findById(estudiante.getSemestre().getIdSemestre()).toString().equals("Optional.empty")){
+        if(!semestreDAO.existsById(estudiante.getSemestre().getIdSemestre())){
             throw new Exception("Debe ingresar un id semestre válido.");
         }
-        if(estadoDAO.findById(estudiante.getEstado().getIdEstado()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id estado válido");
+        if(!estadoDAO.existsById(estudiante.getEstado().getIdEstado())){
+            throw new Exception("Debe ingresar un id estado válido.");
         }
-        if(programaDAO.findById(estudiante.getPrograma().getIdPrograma()).toString().equals("Optional.empty")){
+        if(!programaDAO.existsById(estudiante.getPrograma().getIdPrograma())){
             throw new Exception("Debe ingresar un id programa válido.");
         }
         if(estudiante.getNombre() == null || estudiante.getNombre().equals("")){
@@ -230,16 +232,14 @@ public class EstudianteServiceImpl implements EstudianteService {
         Period periodo = Period.between(fechaNamientoLocalDate, ahora);
         int edad = periodo.getYears();
 
-        if(edad < 15){
-            throw new Exception("Digite una fecha de nacimiento válida, debe ser mayor de 15 años para poder registrarse.");
-        }
+
         if(estudiante.getUsuarioCreador()==null || estudiante.getUsuarioCreador().equals("")){
             throw new Exception("Debe ingresar el usuario creador.");
         }
         if(Validaciones.isStringLenght(estudiante.getUsuarioCreador(),50)){
             throw new Exception("El nombre del usuario creador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(estudiante.getFechaCreacion()==null || estudiante.getFechaCreacion().toString().equals("")){
+        if(estudiante.getFechaCreacion()==null){
             throw new Exception("Debe ingresar una fecha de creación.");
         }
 //        if(estudiante.getFechaCreacion().compareTo(fechaActual)>=0){
@@ -272,21 +272,6 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(!semestreDAO.existsById(estudiante.getSemestre().getIdSemestre())){
             throw new Exception("No existe un semestre con ese id.");
         }
-        if(estudiante.getAvatar().getIdAvatar().toString().equals("")){
-            throw new Exception("Debe ingresar un id avatar.");
-        }
-        if(estudiante.getGenero().getIdGenero().toString().equals("")){
-            throw new Exception("Debe ingresar un id genero.");
-        }
-        if(estudiante.getSemestre().getIdSemestre().toString().equals("")){
-            throw new Exception("Debe ingresar un id semestre.");
-        }
-        if(estudiante.getPrograma().getIdPrograma().toString().equals("")){
-            throw new Exception("Debe ingresar un id programa.");
-        }
-        if(estudiante.getEstado().getIdEstado().toString().equals("")){
-            throw new Exception("Debe ingresar un id estado.");
-        }
         if(estudiante.getAvatar().getIdAvatar()<0){
             throw new Exception("Debe ingresar un id avatar válido.");
         }
@@ -301,21 +286,6 @@ public class EstudianteServiceImpl implements EstudianteService {
         }
         if(estudiante.getGenero().getIdGenero()<0){
             throw new Exception("Debe ingresar un id genero válido.");
-        }
-        if(avatarDAO.findById(estudiante.getAvatar().getIdAvatar()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id avatar que exista.");
-        }
-        if(generoDAO.findById(estudiante.getGenero().getIdGenero()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id genero que exista.");
-        }
-        if(semestreDAO.findById(estudiante.getSemestre().getIdSemestre()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id semestre que exista.");
-        }
-        if(estadoDAO.findById(estudiante.getEstado().getIdEstado()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id estado que exista.");
-        }
-        if(programaDAO.findById(estudiante.getPrograma().getIdPrograma()).toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id programa que exista.");
         }
         if(estudiante.getNombre() == null || estudiante.getNombre().trim().equals("")){
             throw new Exception("Debe ingresar el nombre del estudiante.");
@@ -365,12 +335,12 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(Validaciones.isStringLenght(estudiante.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario modificador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(estudiante.getFechaModificacion()==null || estudiante.getFechaModificacion().toString().equals("")){
+        if(estudiante.getFechaModificacion()==null){
             throw new Exception("Debe ingresar una fecha de modificación.");
         }
-        if(estudiante.getFechaModificacion().compareTo(fechaActual)>0){
+        /*if(estudiante.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
-        }
+        }*/
 
     }
 }

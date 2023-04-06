@@ -65,10 +65,10 @@ public class BitacoraServiceImpl implements BitacoraService {
         return bitacoraDAO.findAll();
     }
     private void validacionesCrear(Bitacora bitacora) throws Exception{
-        if(bitacora.getFechaIngreso() == null || bitacora.getFechaIngreso().toString().equals("")){
+        if(bitacora.getFechaIngreso() == null ){
             throw new Exception("Se debe ingresar una fecha de ingreso válida.");
         }
-        if(bitacora.getFechaSalida() == null || bitacora.getFechaSalida().toString().equals("")){
+        if(bitacora.getFechaSalida() == null ){
             throw new Exception("Se debe ingresar una fecha de salida válida.");
         }
         if(bitacora.getIdUsuario() == null){
@@ -84,9 +84,10 @@ public class BitacoraServiceImpl implements BitacoraService {
         if(Validaciones.isStringLenght(bitacora.getUsuarioCreador(),50)){
             throw new Exception("Debe ingresar un usuario creador que no supere los 50 caracteres.");
         }
-        if(bitacora.getFechaCreacion() == null || bitacora.getFechaCreacion().toString().equals("")){
+        if(bitacora.getFechaCreacion() == null){
             throw new Exception("Se debe ingresar una fecha de creación válida.");
         }
+
         Date fechaActual = new Date();
         if(bitacora.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
@@ -99,10 +100,10 @@ public class BitacoraServiceImpl implements BitacoraService {
         if(!bitacoraDAO.existsById(bitacoraDTO.getIdBitacora())){
             throw new Exception("No existe un registro en la bitácora con ese id.");
         }
-        if(bitacoraDTO.getFechaIngreso() == null || bitacoraDTO.getFechaIngreso().toString().equals("")){
+        if(bitacoraDTO.getFechaIngreso() == null){
             throw new Exception("Se debe ingresar una fecha de ingreso válida.");
         }
-        if(bitacoraDTO.getFechaSalida() == null || bitacoraDTO.getFechaSalida().toString().equals("")){
+        if(bitacoraDTO.getFechaSalida() == null){
             throw new Exception("Se debe ingresar una fecha de salida válida.");
         }
         if(bitacoraDTO.getIdUsuario() == null){
@@ -114,7 +115,7 @@ public class BitacoraServiceImpl implements BitacoraService {
         if(Validaciones.isStringLenght(bitacoraDTO.getUsuarioModificador(),50)){
             throw new Exception("Debe ingresar un usuario modificador que no supere los 50 caracteres.");
         }
-        if(bitacoraDTO.getFechaModificacion() == null || bitacoraDTO.getFechaModificacion().toString().equals("")){
+        if(bitacoraDTO.getFechaModificacion() == null){
             throw new Exception("Se debe ingresar una fecha de modificación válida.");
         }
         Date fechaActual = new Date();

@@ -5,6 +5,7 @@ import com.example.demo.model.dto.SemestreDTO;
 import java.util.Date;
 
 public class SemestreTestDataBuilder {
+
     private Long idSemestre;
     private String nombre;
     private String usuarioCreador;
@@ -54,4 +55,5 @@ public class SemestreTestDataBuilder {
                 fechaCreacion,
                 fechaModificacion);
     }
+
 }

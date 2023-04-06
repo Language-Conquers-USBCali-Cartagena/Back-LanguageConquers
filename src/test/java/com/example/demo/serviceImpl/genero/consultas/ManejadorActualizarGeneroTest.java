@@ -41,10 +41,11 @@ public class ManejadorActualizarGeneroTest {
     @Test
     @DisplayName("Deberia actualizar un genero exitosamente")
     void deberiaActualizarUnGenero() throws Exception {
-        GeneroDTO generoDTO = new GeneroTestDataBuilder().build();
-        generoDTO.setGenero("no binario");
-        generoDTO.setUsuarioModificador("Angela");
-        generoDTO.setFechaModificacion(new Date());
+        GeneroDTO generoDTO = new GeneroTestDataBuilder()
+                .conGenero("no binario")
+                .conUsuarioModificador("Angela")
+                .conFechaModificacion(new Date())
+                .build();
         Genero genero = generoMapper.toEntity(generoDTO);
         Mockito.when(generoDAO.existsById(4343858L)).thenReturn(true);
         Mockito.when(generoDAO.findById(generoDTO.getIdGenero())).thenReturn(Optional.of(genero));

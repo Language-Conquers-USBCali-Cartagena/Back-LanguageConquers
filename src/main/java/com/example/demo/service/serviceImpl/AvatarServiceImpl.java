@@ -73,7 +73,7 @@ public class AvatarServiceImpl implements AvatarService {
              throw new Exception("Debe ingresar el id de un avatar.");
         }
         if(!avatarDAO.existsById(idAvatar)) {
-          throw new Exception ("El avatar con id: "+idAvatar+ " no existe.");
+          throw new Exception ("El avatar con ESE id no existe.");
         }
         return avatarDAO.findById(idAvatar).get();
 
@@ -115,10 +115,10 @@ public class AvatarServiceImpl implements AvatarService {
                 || avatar.getFechaCreacion().toString().equals("")){
             throw new Exception("Se debe ingresar una fecha válida.");
         }
-        Date fechaActual = new Date();
+        /*Date fechaActual = new Date();
         if(avatar.getFechaCreacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
-        }
+        }*/
     }
     private void validacionesActualizar(AvatarDTO avatarDTO) throws Exception{
         if(avatarDTO.getIdAvatar() == null){
@@ -146,9 +146,10 @@ public class AvatarServiceImpl implements AvatarService {
                 || avatarDTO.getFechaModificacion().toString().equals("")){
             throw new Exception("Se debe ingresar una fecha válida.");
         }
+        /*
         Date fechaActual = new Date();
         if(avatarDTO.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
-        }
+        }*/
     }
 }
