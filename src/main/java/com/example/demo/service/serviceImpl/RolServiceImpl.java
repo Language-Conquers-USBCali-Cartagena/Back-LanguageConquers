@@ -46,7 +46,7 @@ public class RolServiceImpl implements RolService {
             throw new Exception("El id del rol es obligatorio.");
         }
         if(!rolDAO.existsById(idRol)){
-            throw new Exception("No se encontró el avatar con ese id.");
+            throw new Exception("No se encontró el rol con ese id.");
         }
         if(!retoEstudianteDAO.findByIdRol(idRol).isEmpty()){
             throw new Exception("No se puede eliminar el rol porque esta asignado en un reto estudiante.");
@@ -101,7 +101,7 @@ public class RolServiceImpl implements RolService {
             throw new Exception("El nombre del rol no puede superar los 50 caracteres.");
         }
         if(rol.getReto().getIdReto()<0){
-            throw new Exception("Debe ingresar un Id reto válido.");
+            throw new Exception("Debe ingresar un id reto válido.");
         }
         if(retoDAO.findById(rol.getReto().getIdReto()).toString().equals("Optional.empty")){
             throw new Exception("Debe ingresar un id reto válido.");

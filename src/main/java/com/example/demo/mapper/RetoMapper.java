@@ -14,7 +14,6 @@ public interface RetoMapper {
     @Mapping(target = "mision.idMision", source = "idMision")
     @Mapping(target = "estado.idEstado", source = "idEstado")
     @Mapping(target = "curso.idCurso", source = "idCurso")
-    //@Mapping(target = "nrEstudiatesGrupo", source = "nrEstudiatesGrupo")
     Reto toEntity(RetoDTO retoDTO);
     @Mapping(target = "idMision", source = "mision.idMision")
     @Mapping(target = "idEstado", source = "estado.idEstado")

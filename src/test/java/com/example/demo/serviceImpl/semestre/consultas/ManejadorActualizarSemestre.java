@@ -1,15 +1,10 @@
 package com.example.demo.serviceImpl.semestre.consultas;
 
-import com.example.demo.dao.EstudianteDAO;
 import com.example.demo.dao.SemestreDAO;
 import com.example.demo.mapper.SemestreMapper;
-import com.example.demo.model.Articulos;
-import com.example.demo.model.Estudiante;
 import com.example.demo.model.Semestre;
-import com.example.demo.model.dto.ArticulosDTO;
 import com.example.demo.model.dto.SemestreDTO;
 import com.example.demo.service.SemestreService;
-import com.example.demo.serviceImpl.articulos.testDataBuilder.ArticuloTestDataBuilder;
 import com.example.demo.serviceImpl.semestre.testDataBuilder.SemestreTestDataBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,8 +41,8 @@ public class ManejadorActualizarSemestre {
 
 
     @Test
-    @DisplayName("Deberia crear un semestre")
-    void deberiaCrearUnSemestre() throws Exception{
+    @DisplayName("Deberia actualizar un semestre")
+    void deberiaActualizarUnSemestre() throws Exception{
         SemestreDTO semestreDTO = new SemestreTestDataBuilder().conIdSemestre(1L).build();
         Semestre semestre = semestreMapper.toEntity(semestreDTO);
         Mockito.when(semestreDAO.existsById(semestreDTO.getIdSemestre())).thenReturn(true);

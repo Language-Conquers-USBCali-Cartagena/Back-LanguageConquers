@@ -21,4 +21,5 @@ public interface RolMapper {
     @Mapping(source = "reto.idReto", target = "idReto")
     RolDTO toDTO(Rol rol);
     List<RolDTO> toDTOList(List<Rol> rolList);
+    List<Rol> toEntityList(List<RolDTO> rolDTOS);
 }
