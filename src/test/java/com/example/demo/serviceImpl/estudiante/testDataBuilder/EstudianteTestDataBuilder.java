@@ -30,7 +30,7 @@ public class EstudianteTestDataBuilder {
         this.apellido = "Acosta";
         this.nickName = "angela2318";
         this.puntaje = 300;
-        this.monedasObtenidas = 436;
+        this.monedasObtenidas = 0;
         this.fechaNacimiento = new Date(2000,07,31);
         this.correo = "angelamaria731@hotmail.com";
         this.usuarioCreador = "Angela";

@@ -33,7 +33,7 @@ public class CursoTestDataBuilder {
         this.fechaCreacion = new Date();
         this.fechaModificacion = new Date();
         this.idEstado = 87437L;
-        this.idProfesor =87438L;
+        this.idProfesor =838L;
     }
 
     public CursoTestDataBuilder conIdCurso(Long idCurso) {

@@ -44,14 +44,9 @@ public class CursoServiceImpl implements CursoService {
 
     @Override
     public String registrar(Curso curso) throws Exception {
-        try {
-            validacionesCrear(curso);
-            cursoDAO.save(curso);
-            return "Se creo exitosamente el curso.";
-        }catch (Exception e){
-            return e.getMessage().toString();
-        }
-
+        validacionesCrear(curso);
+        cursoDAO.save(curso);
+        return "Se creo exitosamente el curso.";
     }
 
     @Override
@@ -79,7 +74,7 @@ public class CursoServiceImpl implements CursoService {
             throw new Exception("Se debe de ingresar el id del curso.");
         }
         if (!cursoDAO.existsById(idCurso)){
-            throw new Exception("El curso con id: " + idCurso + " no existe.");
+            throw new Exception("El curso con ese id no existe.");
         }
         if(!retoDAO.findByIdCurso(idCurso).isEmpty()){
             throw new Exception("No se puede eliminar el curso porque esta siendo utilizado en un reto.");
@@ -113,7 +108,7 @@ public class CursoServiceImpl implements CursoService {
             throw new Exception("Debe ingresar el id de un curso.");
         }
         if(!cursoDAO.existsById(idCurso)){
-            throw new Exception("El curso con id: " + idCurso + " no existe.");
+            throw new Exception("El curso con ese id no existe.");
         }
         return cursoDAO.findById(idCurso).get();
     }
@@ -124,7 +119,7 @@ public class CursoServiceImpl implements CursoService {
             throw new Exception("Debe ingresar el id del profesor");
         }
         if(!profesorDAO.existsById(idProfesor)){
-            throw new Exception("El profesor con id: " + idProfesor + " no existe.");
+            throw new Exception("El profesor con ese id  no existe.");
         }
         return cursoDAO.findByIdProfesor(idProfesor);
     }
@@ -162,42 +157,43 @@ public class CursoServiceImpl implements CursoService {
         if(curso.getInicioCurso() == null){
             throw new Exception("Debe ingresar una fecha de inicio del curso.");
         }
-        Date fechaActual = new Date();
-        if(curso.getInicioCurso().compareTo(fechaActual)>0){
-            throw new Exception("Digite una fecha de inicio del curso válida.");
-        }
+        /*
+            Date fechaActual = new Date();
+            if(curso.getInicioCurso().compareTo(fechaActual)>0){
+                throw new Exception("Digite una fecha de inicio del curso válida.");
+            }*/
         if(curso.getEstado().getIdEstado() == null){
             throw new Exception("Debe ingresar un id estado.");
         }
         if(curso.getProfesor().getIdProfesor() == null){
             throw new Exception("Debe ingresar un id del profesor.");
         }
-        if(curso.getEstado().getIdEstado()<0 || curso.getEstado().getIdEstado().toString().equals("Optional.empty")){
+        if(!estadoDAO.existsById(curso.getEstado().getIdEstado())){
             throw new Exception("Debe ingresar un id estado válido.");
         }
-        if(curso.getProfesor().getIdProfesor()< 0 || curso.getProfesor().getIdProfesor().toString().equals("Optional.empty")){
+        if(!profesorDAO.existsById(curso.getProfesor().getIdProfesor())){
             throw new Exception("Debe ingresar un id del profesor válido.");
         }
-        if(!estadoDAO.existsById(curso.getEstado().getIdEstado())){
-            throw new Exception("El estado que ingreso no es válido.");
-        }
-        if(!profesorDAO.existsById(curso.getProfesor().getIdProfesor())){
-            throw new Exception("El profesor que ingreso no es válido.");
-        }
-        if(curso.getUsuarioCreador()==null || curso.getUsuarioCreador().equals("")){
+         if(curso.getUsuarioCreador()==null || curso.getUsuarioCreador().equals("")){
             throw new Exception("Debe ingresar el usuario creador.");
         }
         if(Validaciones.isStringLenght(curso.getUsuarioCreador(),50)){
             throw new Exception("El nombre del usuario creador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(curso.getFechaCreacion()==null || curso.getFechaCreacion().toString().equals("")){
+        if(curso.getFechaCreacion()==null){
             throw new Exception("Debe ingresar una fecha de creación.");
         }
     }
 
     private void validacionesActualizar(CursoDTO cursoDTO)throws Exception{
-        if(cursoDTO.getIdCurso() == null || cursoDTO.getIdCurso().toString().equals("")){
+        if(cursoDTO.getIdCurso() == null ){
             throw new Exception("Se debe ingresar el id del curso que desea actualizar.");
+        }
+        if(cursoDTO.getIdEstado() == null){
+            throw new Exception("Debe ingresar un id estado.");
+        }
+        if(cursoDTO.getIdProfesor() == null){
+            throw new Exception("Debe ingresar un id del profesor.");
         }
         if(!cursoDAO.existsById(cursoDTO.getIdCurso())){
             throw new Exception("No se encontró el curso con ese id.");
@@ -230,25 +226,13 @@ public class CursoServiceImpl implements CursoService {
             throw new Exception("Debe ingresar una fecha de inicio del curso.");
         }
         Date fechaActual = new Date();
-        if(cursoDTO.getIdEstado() == null){
-            throw new Exception("Debe ingresar un id estado.");
-        }
-        if(cursoDTO.getIdProfesor() == null){
-            throw new Exception("Debe ingresar un id del profesor.");
-        }
-        if(cursoDTO.getIdEstado()<0 || cursoDTO.getIdEstado().toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id estado válido.");
-        }
-        if(cursoDTO.getIdProfesor()< 0 || cursoDTO.getIdProfesor().toString().equals("Optional.empty")){
-            throw new Exception("Debe ingresar un id del profesor válido.");
-        }
         if(cursoDTO.getUsuarioModificador()==null || cursoDTO.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el usuario modificador.");
         }
         if(Validaciones.isStringLenght(cursoDTO.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario modificador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(cursoDTO.getFechaModificacion()==null || cursoDTO.getFechaModificacion().toString().equals("")){
+        if(cursoDTO.getFechaModificacion()==null){
             throw new Exception("Debe ingresar una fecha de modificación.");
         }
         if(cursoDTO.getFechaModificacion().compareTo(fechaActual)>0){
