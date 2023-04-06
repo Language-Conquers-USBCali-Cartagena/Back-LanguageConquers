@@ -24,9 +24,9 @@ import static org.junit.Assert.assertThrows;
 
 @SpringBootTest
 public class ManejadorListarPorIdRetoRetoEstudiante {
-    public static final String ID_RETO_OBLIGATORIO = "Debe ingresar el id del reto.";
-    public static final String RETOS_ESTUDIANTE_NO_ENCONTRADOS = "No hay estudiantes que hayan realizado ese reto.";
-    public static final String ID_RETO_NO_EXISTE = "No se encontró un reto con ese id.";
+    private static final String ID_RETO_OBLIGATORIO = "Debe ingresar el id del reto.";
+    private static final String RETOS_ESTUDIANTE_NO_ENCONTRADOS = "No hay estudiantes que hayan realizado ese reto.";
+    private static final String ID_RETO_NO_EXISTE = "No se encontró un reto con ese id.";
 
 
     private static final Long ID_RETO = 1L;

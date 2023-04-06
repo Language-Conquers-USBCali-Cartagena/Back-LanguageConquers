@@ -27,21 +27,21 @@ import static org.junit.Assert.assertThrows;
 
 @SpringBootTest
 public class ManejadorActualizarRetoEstudiante {
-    public static final String RETO_ESTUDIANTE_ACTUALIZADO_EXITOSAMENTE = "Se actualizo exitosamente el reto estudiante";
-    public static final String PUNTAJE_NEGATIVO = "No se puede asignar un puntaje negativo al reto estudiante.";
-    public static final String ID_ESTADO_REQUERIDO = "Debe ingresar un idEstado.";
-    public static final String ID_ESTUDIANTE_REQUERIDO = "Debe ingresar un idEstudiante";
-    public static final String ID_RETO_REQUERIDO = "Debe ingresar un idReto.";
-    public static final String ID_ESTADO_INVALIDO = "Debe ingresar un idEstado válido";
-    public static final String ID_ESTUDIANTE_NO_VALIDO = "Debe ingresar un idEstudiante válido.";
-    public static final String NOMBRE_USUARIO_MODIFICACION_LARGO = "El nombre del usuario modificador es muy largo, solo se aceptan 50 caracteres.";
-    public static final String DEBE_INGRESAR_FECHA_MODIFICACION = "Debe ingresar una fecha de modificación.";
-    public static final String ID_RETO_NO_VALIDO = "Debe ingresar un idReto válido.";
-    public static final String FECHA_MODIFICACION_INVALIDA = "No se puede asignar una fecha de modificación que aun no ha sucedido.";
+    private static final String RETO_ESTUDIANTE_ACTUALIZADO_EXITOSAMENTE = "Se actualizo exitosamente el reto estudiante";
+    private static final String PUNTAJE_NEGATIVO = "No se puede asignar un puntaje negativo al reto estudiante.";
+    private static final String ID_ESTADO_REQUERIDO = "Debe ingresar un idEstado.";
+    private static final String ID_ESTUDIANTE_REQUERIDO = "Debe ingresar un idEstudiante";
+    private static final String ID_RETO_REQUERIDO = "Debe ingresar un idReto.";
+    private static final String ID_ESTADO_INVALIDO = "Debe ingresar un idEstado válido";
+    private static final String ID_ESTUDIANTE_NO_VALIDO = "Debe ingresar un idEstudiante válido.";
+    private static final String NOMBRE_USUARIO_MODIFICACION_LARGO = "El nombre del usuario modificador es muy largo, solo se aceptan 50 caracteres.";
+    private static final String DEBE_INGRESAR_FECHA_MODIFICACION = "Debe ingresar una fecha de modificación.";
+    private static final String ID_RETO_NO_VALIDO = "Debe ingresar un idReto válido.";
+    private static final String FECHA_MODIFICACION_INVALIDA = "No se puede asignar una fecha de modificación que aun no ha sucedido.";
     private static final String TEXTO_MAS_CINCUENTA_CARACTERES = "DGSDGSDSDAGSFDGDFGSDFFGDFSGDFGDFGDFGDFGDFGDFGDSGDFDVSDDSBDSBSDBSVDVSDVSDVSDVSDV";
     private static final Date FECHA_FUTURA= new Date(3500, 12, 12);
     private static final String VACIO = "";
-    public static final String DEBE_INGRESAR_NOMBRE_USUARIO_MODIFICADOR = "Debe ingresar el nombre del usuario modificador.";
+    private static final String DEBE_INGRESAR_NOMBRE_USUARIO_MODIFICADOR = "Debe ingresar el nombre del usuario modificador.";
     @Autowired
     RetoEstudianteMapper retoEstudianteMapper;
     @Autowired
