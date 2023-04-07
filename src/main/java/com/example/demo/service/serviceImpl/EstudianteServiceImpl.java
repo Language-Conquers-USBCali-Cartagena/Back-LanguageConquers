@@ -102,14 +102,13 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Override
     public Estudiante findByCorreo(String correo) throws Exception {
 
-
-        if(correo.equals("")){
+        Estudiante estudiante = estudianteDAO.findByCorreo(correo);
+        if(estudiante.getCorreo().equals("")){
             throw new Exception("No existe estudiante registrado con este correo");
         }
-        if(!Validaciones.formatoCorreoValido(correo)){
+        if(!Validaciones.formatoCorreoValido(estudiante.getCorreo())){
             throw new Exception("El formato del correo no es válido.");
         }
-        Estudiante estudiante = estudianteDAO.findByCorreo(correo);
         return estudiante;
     }
 
