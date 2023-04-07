@@ -50,7 +50,8 @@ public class MisionController {
     @PutMapping("/actualizarMision")
     public ResponseEntity<String> modificar(@RequestBody MisionDTO misionDTO){
         try{
-            return new ResponseEntity<>(misionService.actualizar(misionDTO), HttpStatus.OK);
+            Mision mision = misionMapper.toEntity(misionDTO);
+            return new ResponseEntity<>(misionService.actualizar(mision), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);

@@ -355,7 +355,7 @@ public class RetoServiceImpl implements RetoService {
         if(Validaciones.isStringLenght(reto.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario creador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(reto.getFechaModificacion()==null ||reto.getFechaModificacion().toString().equals("")){
+        if(reto.getFechaModificacion()==null){
             throw new Exception("Debe ingresar una fecha de modificación.");
         }
 //        Date fechaActual = new Date();

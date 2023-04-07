@@ -14,7 +14,7 @@ public interface LogroService {
     Page<Logro> pageLogros(Pageable pageable) throws Exception;
     String registrar(Logro logro) throws Exception;
     String eliminar(Long idLogro) throws Exception;
-    String actualizar (LogroDTO logroDTO) throws Exception;
+    String actualizar (Logro logro) throws Exception;
     Logro findById(Long idLogro) throws Exception;
     int logrosRegistrados()throws Exception;
     Integer progresoLogro(Long idEstudiante) throws Exception;

@@ -63,7 +63,8 @@ public class LogroController {
     @PutMapping("/actualizarLogro")
     public ResponseEntity<String> actualizarLogro(@RequestBody LogroDTO logroDTO){
         try{
-            String mensaje = logroService.actualizar(logroDTO);
+            Logro logro = logroMapper.toEntity(logroDTO);
+            String mensaje = logroService.actualizar(logro);
             return new ResponseEntity<>(mensaje, HttpStatus.OK);
         }catch (Exception e){
             return  new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

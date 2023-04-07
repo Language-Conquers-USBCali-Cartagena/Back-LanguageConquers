@@ -33,17 +33,8 @@ public class ProfesorServiceImpl implements ProfesorService {
     }
 
     @Override
-    public String actualizar(ProfesorDTO profesorDTO) throws Exception {
-        validacionesActualizar(profesorDTO);
-        Profesor profesor = null;
-        profesor = profesorDAO.findById(profesorDTO.getIdProfesor()).orElse(null);
-        profesor.setNombre(profesorDTO.getNombre());
-        profesor.setApellido(profesorDTO.getApellido());
-        profesor.setCorreo(profesorDTO.getCorreo());
-        profesor.setFoto(profesorDTO.getFoto());
-        profesor.setGenero(generoDAO.findById(profesorDTO.getIdGenero()).orElse(null));
-        profesor.setUsuarioModificador(profesorDTO.getUsuarioModificador());
-        profesor.setFechaModificacion(profesorDTO.getFechaModificacion());
+    public String actualizar(Profesor profesor) throws Exception {
+        validacionesActualizar(profesor);
         profesorDAO.save(profesor);
         return "Se actualizo el profesor.";
     }
@@ -145,7 +136,7 @@ public class ProfesorServiceImpl implements ProfesorService {
         if(Validaciones.isStringLenght(profesor.getUsuarioCreador(),50)){
             throw new Exception("El usuario creador no debe contener más de 50 caracteres.");
         }
-        if(profesor.getFechaCreacion()==null || profesor.getFechaCreacion().toString().equals("")){
+        if(profesor.getFechaCreacion()==null){
             throw new Exception("Debe ingresar la fecha de creación.");
         }
         Date fechaActual = new Date();
@@ -157,54 +148,54 @@ public class ProfesorServiceImpl implements ProfesorService {
         }
 
     }
-    private void validacionesActualizar(ProfesorDTO profesorDTO) throws Exception{
-        if(profesorDTO.getIdProfesor()==null || profesorDTO.getIdProfesor().toString().equals("")){
+    private void validacionesActualizar(Profesor profesor) throws Exception{
+        if(profesor.getIdProfesor()==null || profesor.getIdProfesor().toString().equals("")){
             throw new Exception("Debe ingresar el id del profesor que desea editar.");
         }
-        if(!generoDAO.existsById(profesorDTO.getIdGenero())){
+        if(!generoDAO.existsById(profesor.getGenero().getIdGenero())){
             throw new Exception("No existe un genero con ese id.");
         }
-        if(profesorDTO.getIdGenero()==null){
+        if(profesor.getGenero().getIdGenero()==null){
             throw new Exception("Debe ingresar el id un genero.");
         }
-        if(profesorDTO.getIdGenero()<0){
+        if(profesor.getGenero().getIdGenero()<0){
             throw new Exception("Debe ingresar un id genero válido.");
         }
-        if(profesorDTO.getNombre()== null || profesorDTO.getNombre().equals("")){
+        if(profesor.getNombre()== null || profesor.getNombre().equals("")){
             throw new Exception("Debe ingresar el nombre del profesor.");
         }
-        if(Validaciones.isStringLenght(profesorDTO.getNombre(),50)){
+        if(Validaciones.isStringLenght(profesor.getNombre(),50)){
             throw new Exception("El nombre del profesor no debe contener más de 50 caracteres.");
         }
-        if(profesorDTO.getApellido()==null || profesorDTO.getApellido().equals("")){
+        if(profesor.getApellido()==null || profesor.getApellido().equals("")){
             throw new Exception("Debe ingresar el apellido del profesor.");
         }
-        if(Validaciones.isStringLenght(profesorDTO.getApellido(),50)){
+        if(Validaciones.isStringLenght(profesor.getApellido(),50)){
             throw new Exception("El apellido no debe contener más de 50 caracteres.");
         }
-        if(profesorDTO.getCorreo()==null || profesorDTO.getCorreo().equals("")){
+        if(profesor.getCorreo()==null || profesor.getCorreo().equals("")){
             throw new Exception("Debe ingresar el correo del profesor.");
         }
-        if(Validaciones.isStringLenght(profesorDTO.getCorreo(),50)){
+        if(Validaciones.isStringLenght(profesor.getCorreo(),50)){
             throw new Exception("El correo no debe contener más de 50 caracteres.");
         }
-        if(!Validaciones.formatoCorreoValido(profesorDTO.getCorreo())){
+        if(!Validaciones.formatoCorreoValido(profesor.getCorreo())){
             throw new Exception("Debe ingresar un correo válido.");
         }
-        if(Validaciones.isStringLenght(profesorDTO.getFoto(),250)){
+        if(Validaciones.isStringLenght(profesor.getFoto(),250)){
             throw new Exception("El nombre de la foto es muy largo, se aceptan máximo 80 caracteres.");
         }
-        if(profesorDTO.getUsuarioModificador()==null|| profesorDTO.getUsuarioModificador().equals("")){
+        if(profesor.getUsuarioModificador()==null|| profesor.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el nombre del usuario modificador.");
         }
-        if(Validaciones.isStringLenght(profesorDTO.getUsuarioModificador(),50)){
+        if(Validaciones.isStringLenght(profesor.getUsuarioModificador(),50)){
             throw new Exception("El usuario modificador no debe contener más de 50 caracteres.");
         }
-        if(profesorDTO.getFechaModificacion()==null || profesorDTO.getFechaModificacion().toString().equals("")){
+        if(profesor.getFechaModificacion()==null ){
             throw new Exception("Debe ingresar la fecha de modificación.");
         }
         Date fechaActual = new Date();
-        if(profesorDTO.getFechaModificacion().compareTo(fechaActual)>0){
+        if(profesor.getFechaModificacion().compareTo(fechaActual)>0){
             throw  new Exception("No se puede ingresar una fecha que aun no ha sucedido.");
         }
 

@@ -53,7 +53,8 @@ public class ProfesorController {
     @PutMapping("/actualizarProfesor")
     public ResponseEntity<String> modificar(@RequestBody ProfesorDTO profesorDTO){
         try{
-            return new ResponseEntity<>(profesorService.actualizar(profesorDTO), HttpStatus.OK);
+            Profesor profesor = profesorMapper.toEntity(profesorDTO);
+            return new ResponseEntity<>(profesorService.actualizar(profesor), HttpStatus.OK);
         }catch (Exception e){
             String mensaje = e.getMessage();
             return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);

@@ -43,14 +43,8 @@ public class MisionServiceImpl implements MisionService {
     }
 
     @Override
-    public String actualizar(MisionDTO misionDTO) throws Exception {
-        Mision mision = null;
-        validacionActualizar(misionDTO);
-        mision = misionDAO.findById(misionDTO.getIdMision()).orElse(null);
-        mision.setNombre(misionDTO.getNombre());
-        mision.setCurso(cursoDAO.findById(misionDTO.getIdCurso()).orElse(null));
-        mision.setUsuarioModificador(misionDTO.getUsuarioModificador());
-        mision.setFechaModificacion(misionDTO.getFechaModificacion());
+    public String actualizar(Mision mision) throws Exception {
+        validacionActualizar(mision);
         misionDAO.save(mision);
         return "Se actualizo la misión correctamente.";
     }
@@ -113,53 +107,53 @@ public class MisionServiceImpl implements MisionService {
         if(Validaciones.isStringLenght(mision.getUsuarioCreador(),50)){
             throw new Exception("El nombre del usuario creador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(mision.getFechaCreacion()==null || mision.getFechaCreacion().toString().equals("")){
+        if(mision.getFechaCreacion()==null){
             throw new Exception("Debe ingresar una fecha de creación.");
         }
     }
-    private void validacionActualizar(MisionDTO misionDTO)throws Exception{
-        if(misionDTO.getIdMision() == null){
+    private void validacionActualizar(Mision mision)throws Exception{
+        if(mision.getIdMision() == null){
             throw new Exception("Debe ingresar un id misión que desea actualizar.");
         }
-        if(!misionDAO.existsById(misionDTO.getIdMision())){
+        if(!misionDAO.existsById(mision.getIdMision())){
             throw new Exception("No se encontró la misión con ese id.");
         }
 
-        if(!cursoDAO.existsById(misionDTO.getIdCurso())){
+        if(!cursoDAO.existsById(mision.getCurso().getIdCurso())){
             throw new Exception("No existe un curso con ese id.");
         }
 
-        if(misionDTO.getNombre() == null || misionDTO.getNombre().trim().equals("")){
+        if(mision.getNombre() == null || mision.getNombre().trim().equals("")){
             throw new Exception("Se debe ingresar el nombre de la misión.");
         }
-        if(Validaciones.isStringLenght(misionDTO.getNombre(), 50)){
+        if(Validaciones.isStringLenght(mision.getNombre(), 50)){
             throw new Exception("El nombre de la misión es muy largo, solo se aceptan 50 caracteres.");
         }
         //TODO: FALTA VALIDACIÓN DE IMAGEN
-        if(Validaciones.isStringLenght(misionDTO.getImagen(), 250)){
+        if(Validaciones.isStringLenght(mision.getImagen(), 250)){
             throw new Exception("La URL de la imagen es muy largo, solo se aceptan 250 caracteres.");
         }
-        if(misionDTO.getIdCurso() == null){
+        if(mision.getCurso().getIdCurso() == null){
             throw new Exception("Se debe ingresar un id del curso.");
         }
-        if(misionDTO.getIdCurso()<0){
+        if(mision.getCurso().getIdCurso()<0){
             throw new Exception("Se debe ingresar un id del curso válido.");
         }
-        if(cursoDAO.findById(misionDTO.getIdCurso()).toString().equals("Optional.empty")){
+        if(cursoDAO.findById(mision.getCurso().getIdCurso()).toString().equals("Optional.empty")){
             throw new Exception("Se debe ingresar un id del curso que exista.");
         }
 
         Date fechaActual = new Date();
-        if(misionDTO.getUsuarioModificador()==null || misionDTO.getUsuarioModificador().equals("")){
+        if(mision.getUsuarioModificador()==null || mision.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el usuario creador.");
         }
-        if(Validaciones.isStringLenght(misionDTO.getUsuarioModificador(),50)){
+        if(Validaciones.isStringLenght(mision.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario creador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(misionDTO.getFechaModificacion()==null || misionDTO.getFechaModificacion().toString().equals("")){
+        if(mision.getFechaModificacion()==null ){
             throw new Exception("Debe ingresar una fecha de creación.");
         }
-        if(misionDTO.getFechaModificacion().compareTo(fechaActual)>0){
+        if(mision.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
     }

@@ -20,4 +20,5 @@ public interface MisionMapper {
     @Mapping(target = "idCurso", source = "curso.idCurso")
     MisionDTO toDTO(Mision mision);
     List<MisionDTO> toDTOList(List<Mision> misionList);
+    List<Mision> toEntityList (List<MisionDTO> misionDTOS);
 }

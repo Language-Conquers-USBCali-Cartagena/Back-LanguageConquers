@@ -73,15 +73,8 @@ public class LogroServiceImpl implements LogroService {
     }
 
     @Override
-    public String actualizar(LogroDTO logroDTO) throws Exception {
-        Logro logro = null;
-        validacionesActualizar(logroDTO);
-        logro = logroDAO.findById(logroDTO.getIdLogro()).orElse(null);
-        logro.setNombre(logroDTO.getNombre());
-        logro.setImagen(logroDTO.getImagen());
-        logro.setDescripcion(logroDTO.getDescripcion());
-        logro.setFechaModificacion(logroDTO.getFechaModificacion());
-        logro.setUsuarioModificador(logroDTO.getUsuarioModificador());
+    public String actualizar(Logro logro) throws Exception {
+        validacionesActualizar(logro);
         logroDAO.save(logro);
         return "Se actualizo correctamente el logro.";
     }
@@ -138,48 +131,48 @@ public class LogroServiceImpl implements LogroService {
         if(Validaciones.isStringLenght(logro.getUsuarioCreador(),50)){
             throw new Exception("El nombre del usuario creador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(logro.getFechaCreacion()==null || logro.getFechaCreacion().toString().equals("")) {
+        if(logro.getFechaCreacion()==null) {
             throw new Exception("Debe ingresar una fecha de creación.");
         }
     }
 
-    private void validacionesActualizar(LogroDTO logroDTO) throws Exception{
+    private void validacionesActualizar(Logro logro) throws Exception{
 
-        if(logroDTO.getIdLogro() == null){
+        if(logro.getIdLogro() == null){
             throw new Exception("Debe ingresar el id del logro que desea actualizar.");
         }
-        if(!logroDAO.existsById(logroDTO.getIdLogro())){
+        if(!logroDAO.existsById(logro.getIdLogro())){
             throw new Exception("No se encontró un logro con ese id.");
         }
-        if(logroDTO.getNombre() == null || logroDTO.getNombre().equals("")){
+        if(logro.getNombre() == null || logro.getNombre().equals("")){
             throw new Exception("Debe ingresar el nombre del logro.");
         }
-        if(Validaciones.isStringLenght(logroDTO.getNombre(),50)){
+        if(Validaciones.isStringLenght(logro.getNombre(),50)){
             throw new Exception("El nombre del logro es muy largo.");
         }
-        if(logroDTO.getDescripcion()== null || logroDTO.getDescripcion().equals("")){
+        if(logro.getDescripcion()== null || logro.getDescripcion().equals("")){
             throw new Exception("Debe ingresar una descripción del logro.");
         }
-        if(Validaciones.isStringLenght(logroDTO.getDescripcion(),300)){
+        if(Validaciones.isStringLenght(logro.getDescripcion(),300)){
             throw new Exception("La descripción es muy larga.");
         }
-        if(logroDTO.getImagen() == null || logroDTO.getImagen().equals("")){
+        if(logro.getImagen() == null || logro.getImagen().equals("")){
             throw new Exception("Debe ingresar una imagen.");
         }
-        if(Validaciones.isStringLenght(logroDTO.getImagen(),250)){
+        if(Validaciones.isStringLenght(logro.getImagen(),250)){
             throw new Exception("El nombre de la imagen o url es muy larga.");
         }
         Date fechaActual = new Date();
-        if(logroDTO.getUsuarioModificador()==null || logroDTO.getUsuarioModificador().equals("")){
+        if(logro.getUsuarioModificador()==null || logro.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el usuario modificador.");
         }
-        if(Validaciones.isStringLenght(logroDTO.getUsuarioModificador(),50)){
+        if(Validaciones.isStringLenght(logro.getUsuarioModificador(),50)){
             throw new Exception("El nombre del usuario modificador es muy largo, solo puede contener 50 caracteres.");
         }
-        if(logroDTO.getFechaModificacion()==null || logroDTO.getFechaModificacion().toString().equals("")){
+        if(logro.getFechaModificacion()==null ){
             throw new Exception("Debe ingresar una fecha de modificación.");
         }
-        if(logroDTO.getFechaModificacion().compareTo(fechaActual)>0){
+        if(logro.getFechaModificacion().compareTo(fechaActual)>0){
             throw new Exception("No puede ingresar una fecha que aun no ha sucedido.");
         }
     }

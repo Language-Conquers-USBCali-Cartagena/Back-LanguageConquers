@@ -11,7 +11,7 @@ public interface MisionService {
     List<Mision> ListarMisiones() throws Exception;
 
     String registrar(Mision mision) throws Exception;
-    String actualizar(MisionDTO misionDTO) throws Exception;
+    String actualizar(Mision mision) throws Exception;
     String eliminar (Long idMision) throws Exception;
     Mision findById(Long idMision) throws Exception;
 
