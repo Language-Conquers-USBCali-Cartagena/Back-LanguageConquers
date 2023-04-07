@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 @SpringBootTest
-public class ManejadorActualizarReto {
+public class ManejadorActualizarRetoTest {
     public static final String RETO_ACTUALIZADO = "Se actualizo el reto.";
     public static final String INGRESO_NOMBRE_RETO = "Se debe ingresar el nombre del reto.";
     public static final String RETO_NO_EXISTE_CON_ID = "No existe un reto con ese id.";
