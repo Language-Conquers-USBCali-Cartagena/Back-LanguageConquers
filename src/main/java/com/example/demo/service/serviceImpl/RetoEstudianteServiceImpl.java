@@ -159,9 +159,7 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
         if(retoEstudiante.getFechaCreacion() == null){
             throw new Exception("Debe ingresar una fecha de creación.");
         }
-        if(retoEstudiante.getFechaCreacion().compareTo(fechaActual)>0){
-            throw new Exception("No se puede asignar una fecha de creación que aun no ha sucedido.");
-        }
+
 
     }
 
@@ -208,9 +206,6 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
         }
         if(retoEstudiante.getFechaModificacion() == null || retoEstudiante.getFechaModificacion().equals("")){
             throw new Exception("Debe ingresar una fecha de modificación.");
-        }
-        if(retoEstudiante.getFechaModificacion().compareTo(fechaActual)>0){
-            throw new Exception("No se puede asignar una fecha de modificación que aun no ha sucedido.");
         }
 
     }
