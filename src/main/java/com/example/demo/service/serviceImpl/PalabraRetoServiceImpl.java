@@ -37,7 +37,7 @@ public class PalabraRetoServiceImpl implements PalabraRetoService {
 
     @Override
     public String editarPalabraReto(PalabraReto palabraReto) throws Exception {
-        if(palabraRetoDAO.existsById(palabraReto.getIdPalabraReto())){
+        if(!palabraRetoDAO.existsById(palabraReto.getIdPalabraReto())){
             throw new Exception("El id de reto palabra no existe");
         }
         validaciones(palabraReto);
@@ -47,7 +47,7 @@ public class PalabraRetoServiceImpl implements PalabraRetoService {
 
     @Override
     public String eliminarPalabraReto(Long idPalabraReto) throws Exception {
-        if(palabraRetoDAO.existsById(idPalabraReto)){
+        if(!palabraRetoDAO.existsById(idPalabraReto)){
             throw new Exception("El id de reto palabra no existe");
         }
         palabraRetoDAO.deleteById(idPalabraReto);

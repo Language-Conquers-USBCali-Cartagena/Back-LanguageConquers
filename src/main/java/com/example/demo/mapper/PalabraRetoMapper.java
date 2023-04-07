@@ -21,4 +21,6 @@ public interface PalabraRetoMapper {
     PalabraRetoDTO toDTO(PalabraReto palabraReto);
 
     List<PalabraRetoDTO> toDTOList(List<PalabraReto> palabraRetoList);
+
+    List<PalabraReto> toEntityList (List<PalabraRetoDTO> palabraRetoDTOList);
 }
