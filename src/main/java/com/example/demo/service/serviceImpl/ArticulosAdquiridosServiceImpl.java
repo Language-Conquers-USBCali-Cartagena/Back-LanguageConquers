@@ -119,6 +119,7 @@ public class ArticulosAdquiridosServiceImpl implements ArticulosAdquiridosServic
         articulosAdquiridos.setFechaCreacion(new Date());
         articulosAdquiridos.setUsuarioCreador(estudiante.getNombre());
         estudiante.setMonedasObtenidas(monedasEstudiante.intValue());
+        estudiante.setUsuarioModificador("admin");
         estudianteService.actualizar(estudiante);
         registrar(articulosAdquiridos);
 

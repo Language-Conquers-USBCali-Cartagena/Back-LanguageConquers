@@ -27,7 +27,7 @@ public interface EstudianteDAO extends JpaRepository<Estudiante,Long> {
 
     Estudiante findByCorreo(String correo) throws Exception;
 
-    @Query(value = "SELECT * FROM estudiante ORDER BY puntaje DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM estudiante ORDER BY puntaje DESC LIMIT 10", nativeQuery = true)
     List<Estudiante> rankingEstudiantes () throws Exception;
     @Query(value = "SELECT COUNT(*) From estudiante", nativeQuery = true)
     int totalEstudiante()throws Exception;

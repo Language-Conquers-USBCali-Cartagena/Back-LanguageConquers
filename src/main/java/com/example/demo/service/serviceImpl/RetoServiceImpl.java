@@ -135,6 +135,7 @@ public class RetoServiceImpl implements RetoService {
             throw new Exception("¡Revisa tu código! Esto es lo que está respondiendo tu código: " + respuestaAl +
                     ". Lo que se espera es: " + reto.getSolucion());
         }
+        intentos = retoEstudiante.getIntentos();
         retoEstudiante.setEstado(estadoDAO.getById(3L));
         Integer puntajeReto = 1000 - (intentos * 50);
         Integer monedas = reto.getMoneda() - (intentos * 5);
