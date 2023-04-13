@@ -21,7 +21,7 @@ public class MetodosPalabras {
         return respuesta;
     }
     public static String escalar (String objeto){
-        String respuesta = "cima del " + objeto;
+        String respuesta = "cima de la " + objeto;
         return respuesta.toLowerCase();
     }
     public static String golpear (String objeto){
@@ -144,7 +144,7 @@ public class MetodosPalabras {
     private static String derivados(String objeto){
         String respuesta = "";
         switch (objeto.toLowerCase()){
-            case "arbol":
+            case "palmera":
                 respuesta = "madera";
                 break;
             case "coco":
