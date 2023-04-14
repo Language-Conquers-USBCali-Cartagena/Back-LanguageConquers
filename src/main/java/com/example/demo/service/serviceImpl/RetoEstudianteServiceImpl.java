@@ -100,7 +100,7 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
 
     @Override
     public RetoEstudiante findByIdRetoAndIdEstudiante(Long idReto, Long idEstudiante) throws Exception {
-        if(!retoDAO.existsById(idReto)){
+            if(!retoDAO.existsById(idReto)){
             throw new Exception("No existe reto con ese id.");
         }
         if(!estudianteDAO.existsById(idEstudiante)){

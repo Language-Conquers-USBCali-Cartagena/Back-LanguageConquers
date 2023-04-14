@@ -81,13 +81,13 @@ public class MetodosPalabras {
                 }
                 break;
             case "piso choza":
-                if(material2.equalsIgnoreCase("paredes")){
+                if(material2.equalsIgnoreCase("pared")){
                     resp = "base choza";
                 }else{
                     throw new Exception("No se pueden juntar los objetos");
                 }
                 break;
-            case "paredes":
+            case "pared":
                 if(material2.equalsIgnoreCase("piso choza")){
                     resp = "base choza";
                 }else {
@@ -115,12 +115,13 @@ public class MetodosPalabras {
                     throw new Exception("No se pueden juntar los objetos");
                 }
                 break;
-            case "pared":
-                if(material2.equalsIgnoreCase("piso")){
-                    resp = "base choza";
-                }else{
-                    throw new Exception("No se pueden juntar los objetos");
-                }
+//            case "pared":
+//                if(material2.equalsIgnoreCase("piso")){
+//                    resp = "base choza";
+//                }else{
+//                    throw new Exception("No se pueden juntar los objetos");
+//                }
+//                break;
             default:
                 throw new Exception("No se pueden juntar los objetos");
         }
@@ -131,7 +132,7 @@ public class MetodosPalabras {
         String resp = "";
         switch (material.toLowerCase()){
             case "madera":
-                resp = "paredes";
+                resp = "pared";
                 break;
             case "hojas de palma":
                 resp = "techo";

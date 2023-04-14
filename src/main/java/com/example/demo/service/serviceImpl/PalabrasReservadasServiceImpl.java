@@ -245,6 +245,12 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
                 resp = MetodosPalabras.juntar(variable, variable2);
                 break;
             case "construir":
+                if(variable.equalsIgnoreCase("piso")){
+                    variable = "piso choza";
+                }
+                if(variable2.equalsIgnoreCase("piso")){
+                    variable2.equalsIgnoreCase("piso choza");
+                }
                 if((!mapMetodos.containsValue(variable) || !mapMetodos.containsValue(variable2) && esBasico)){
                     throw new Exception("Los parametros deben existir para poder construir algo");
                 }
@@ -262,7 +268,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
     private String tipoObjeto(PalabrasReservadasDTO palabraClave, PalabrasReservadasDTO param1) throws Exception{
         String variable = "";
         String resp = "";
-        if(mapVariables.containsKey(param1.getNombre()) && param1.getCategoria().equalsIgnoreCase("variable")){
+        if(mapVariables.containsKey(param1.getNombre()) && param1.getCategoria().equalsIgnoreCase("variablecv")){
             variable = mapVariables.get(param1.getNombre());
         } else if (param1.getCategoria().equalsIgnoreCase("objeto")) {
             variable = param1.getNombre();
