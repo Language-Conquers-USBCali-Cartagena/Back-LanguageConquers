@@ -265,6 +265,9 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         this.respuesta = resp;
         return resp;
     }
+
+
+
     private String tipoObjeto(PalabrasReservadasDTO palabraClave, PalabrasReservadasDTO param1) throws Exception{
         String variable = "";
         String resp = "";
