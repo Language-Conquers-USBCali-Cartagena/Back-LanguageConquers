@@ -275,7 +275,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         }else{
             throw new Exception("Parametro " + param1.getNombre()+ " no valido ");
         }
-
+        param1.setNombre(param1.getNombre().toLowerCase());
         switch (palabraClave.getNombre().toLowerCase()) {
             case "buscar":
                 if(param1.getNombre().equalsIgnoreCase("coco")){
