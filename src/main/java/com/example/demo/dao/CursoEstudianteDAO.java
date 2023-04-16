@@ -17,4 +17,7 @@ public interface CursoEstudianteDAO extends JpaRepository<CursoEstudiante,Long> 
     @Query(value = "SELECT * FROM curso_estudiante WHERE id_curso = ?1 AND id_estudiante = ?2", nativeQuery = true)
     CursoEstudiante findByIdCursoAndIdEstudiante(Long idCurso, Long idEstudiante) throws Exception;
 
+    @Query(value = "select count(*) from curso_estudiante where id_curso = ?1", nativeQuery = true)
+    int estudiantesMatriculados (Long idCurso) throws Exception;
+
 }

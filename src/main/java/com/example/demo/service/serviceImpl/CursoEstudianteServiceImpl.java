@@ -51,6 +51,12 @@ public class CursoEstudianteServiceImpl implements CursoEstudianteService {
 
     }
 
+    @Override
+    public int estudiantesMatriculados(Long idCurso) throws Exception {
+        int estudiantesMatriculadosCurso = cursoEstudianteDAO.estudiantesMatriculados(idCurso);
+        return estudiantesMatriculadosCurso;
+    }
+
     private void validacionesCursoEstudiante(CursoEstudiante cursoEstudiante) throws Exception{
 
         if(!estudianteDAO.existsById(cursoEstudiante.getEstudiante().getIdEstudiante())){
