@@ -23,6 +23,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
     Map<String, String> mapVariables = new HashMap<>();
     Map<String, String> mapMetodos = new HashMap<>();
     String respuesta = new String();
+    Integer posicion = 0;
     Boolean esBasico = false;
     @Autowired
     PalabrasReservadasDAO palabrasReservadasDAO;
@@ -51,8 +52,11 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         inicializar();
         //Agrupa las listas segun su orden
         agrupar(palabrasReservadasDTOs);
+        // Reinicia la posicion a 0
+        this.posicion = 0;
         //Procesa las listas para ejecutar la accion esperada
         for(List<PalabrasReservadasDTO> grupo: grupos){
+            this.posicion = this.posicion + 1;
             procesarCategoria(grupo);
         }
         //Limpia las listas
@@ -133,7 +137,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
             switch (grupo.get(0).getCategoria().toLowerCase()){
                 case "variable":
                     if(grupo.size() < 3){
-                        throw new Exception("La estructura para asignar una variable es la siguiente: Variable = Objeto");
+                        throw new Exception("Error en la linea "+this.posicion +": La estructura para asignar una variable es la siguiente: Variable = Objeto");
                     }
                     procesarGrupoVariables(grupo);
                     break;
@@ -144,10 +148,13 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
                     //TODO: Metodo condicional
                     break;
                 case "metodo":
+                    if(grupo.size() < 2){
+                        throw new Exception("Error en la linea "+this.posicion +": La estructura para ejecutar una acción es la siguiente: Acción + Objeto/Variable con valor.");
+                    }
                     procesarGrupoMetodos(grupo);
                     break;
                 default:
-                    throw new Exception("No puede inciar una linea con un " + grupo.get(0).getCategoria());
+                    throw new Exception("Error en la linea "+this.posicion +": No puede inciar una linea con un " + grupo.get(0).getCategoria());
             }
         }
     }
@@ -157,7 +164,10 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         PalabrasReservadasDTO param1 = palabrasReservadasDTOS.get(1);
         PalabrasReservadasDTO param2 = palabrasReservadasDTOS.get(2);
         if(!param1.getCategoria().equalsIgnoreCase("logica")){
-            throw new Exception("Para asignar un valor a una variable debe utilizar un =");
+            throw new Exception("Error en la linea "+this.posicion +": Para asignar un valor a una variable debe utilizar un =.");
+        }
+        if(param2.getCategoria().equalsIgnoreCase("objeto")){
+            throw new Exception("Error en la linea "+this.posicion +": Para asignar un valor a una variable debe ejecutar una acción.");
         }
 
         if(param2.getCategoria().equalsIgnoreCase("metodo")){
@@ -213,14 +223,14 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         } else if (param1.getCategoria().equalsIgnoreCase("objeto")) {
             variable = param1.getNombre();
         }else{
-            throw new Exception("Parametro " + param1.getNombre()+ " no valido ");
+            throw new Exception("Error en la linea "+this.posicion +": Parametro " + param1.getNombre()+ " no valido ");
         }
         if (mapVariables.containsKey(param2.getNombre()) && param2.getCategoria().equalsIgnoreCase("variablecv")) {
             variable2 = mapVariables.get(param2.getNombre());
         } else if (param2.getCategoria().equalsIgnoreCase("objeto")) {
             variable2 = param2.getNombre();
         }else{
-            throw new Exception("Parametro " + param2.getNombre()+ " no valido ");
+            throw new Exception("Error en la linea "+this.posicion +": Parametro " + param2.getNombre()+ " no valido ");
         }
         variable = variable.toLowerCase();
         variable2 = variable2.toLowerCase();
@@ -228,19 +238,19 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
 
             case "encender":
                 if((!mapMetodos.containsValue(variable) || !mapMetodos.containsValue(variable2) && esBasico)){
-                    throw new Exception("Los parametros deben existir para poder encender fuego");
+                    throw new Exception("Error en la linea "+this.posicion +": Los parametros deben existir para poder encender fuego");
                 }
                 if((!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)) && !esBasico){
-                    throw new Exception("Los parametros deben existir para poder encender fuego");
+                    throw new Exception("Error en la linea "+this.posicion +": Los parametros deben existir para poder encender fuego");
                 }
                 resp = MetodosPalabras.encender(variable, variable2);
                 break;
             case "juntar":
                 if((!mapMetodos.containsValue(variable) || !mapMetodos.containsValue(variable2) && esBasico)){
-                    throw new Exception("Los parametros deben existir para poder juntarlos");
+                    throw new Exception("Error en la linea "+this.posicion +": Los parametros deben existir para poder juntarlos");
                 }
                 if((!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)) && !esBasico){
-                    throw new Exception("Los parametros deben existir para poder juntarlos");
+                    throw new Exception("Error en la linea "+this.posicion +": Los parametros deben existir para poder juntarlos");
                 }
                 resp = MetodosPalabras.juntar(variable, variable2);
                 break;
@@ -252,15 +262,15 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
                     variable2.equalsIgnoreCase("piso choza");
                 }
                 if((!mapMetodos.containsValue(variable) || !mapMetodos.containsValue(variable2) && esBasico)){
-                    throw new Exception("Los parametros deben existir para poder construir algo");
+                    throw new Exception("Error en la linea "+this.posicion +": Los parametros deben existir para poder construir algo");
                 }
                 if((!mapVariables.containsValue(variable) || !mapVariables.containsValue(variable2)) && !esBasico){
-                    throw new Exception("Los parametros deben existir para poder construir algo");
+                    throw new Exception("Error en la linea "+this.posicion +": Los parametros deben existir para poder construir algo");
                 }
                 resp = MetodosPalabras.construir(variable, variable2);
                 break;
             default:
-                throw new Exception("La palabra " +palabraCalve.getNombre() + " no corresponde a ningun metodo");
+                throw new Exception("Error en la linea "+this.posicion +": La palabra " +palabraCalve.getNombre() + " no corresponde a ninguna acción");
         }
         this.respuesta = resp;
         return resp;
@@ -276,7 +286,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
         } else if (param1.getCategoria().equalsIgnoreCase("objeto")) {
             variable = param1.getNombre();
         }else{
-            throw new Exception("Parametro " + param1.getNombre()+ " no valido ");
+            throw new Exception("Error en la linea "+this.posicion +": Parametro " + param1.getNombre()+ " no valido ");
         }
         param1.setNombre(param1.getNombre().toLowerCase());
         switch (palabraClave.getNombre().toLowerCase()) {
@@ -284,7 +294,7 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
                 if(param1.getNombre().equalsIgnoreCase("coco")){
 
                     if(mapMetodos.get("palmera") == null || !mapMetodos.get("palmera").equalsIgnoreCase("cima de la palmera")){
-                        throw new Exception("Para buscar un " + param1.getNombre() + " debe subir a una palmera");
+                        throw new Exception("Error en la linea "+this.posicion +": Para buscar un " + param1.getNombre() + " debe subir a una palmera");
                     }
                 }
                 resp = MetodosPalabras.buscar(variable);
@@ -292,42 +302,42 @@ public class PalabrasReservadasServiceImpl implements PalabrasReservadasService 
                 break;
             case "cortar":
                 if(!mapMetodos.containsValue(param1.getNombre().toLowerCase()) && esBasico){
-                    throw new Exception("Debe haber encontrado el/la "+param1.getNombre() +" para poder cortarlo");
+                    throw new Exception("Error en la linea "+this.posicion +": Debe haber encontrado el/la "+param1.getNombre() +" para poder cortarlo");
                 }
                 if(!mapVariables.containsValue(param1.getNombre().toLowerCase()) && !esBasico){
-                    throw new Exception("El " + param1.getNombre()+" debe existir para poder cortarlo");
+                    throw new Exception("Error en la linea "+this.posicion +": El " + param1.getNombre()+" debe existir para poder cortarlo");
                 }
                 resp = MetodosPalabras.cortar(variable);
                 break;
             case "escalar":
                 if(!mapMetodos.containsValue(param1.getNombre().toLowerCase()) && esBasico){
-                    throw new Exception("Debe haber encontrado el/la " +param1.getNombre() +" para poder escalarlo");
+                    throw new Exception("Error en la linea "+this.posicion +": Debe haber encontrado el/la " +param1.getNombre() +" para poder escalarlo");
                 }
                 if(!mapVariables.containsValue(param1.getNombre().toLowerCase()) && !esBasico){
-                    throw new Exception("El "+param1.getNombre() +" debe existir para poder escalarlo");
+                    throw new Exception("Error en la linea "+this.posicion +": El "+param1.getNombre() +" debe existir para poder escalarlo");
                 }
                 resp = MetodosPalabras.escalar(variable);
                 break;
             case "golpear":
                 if(!mapMetodos.containsValue(param1.getNombre().toLowerCase()) && esBasico){
-                    throw new Exception("Debe haber encontrado el/la "+param1.getNombre()+" para poder golpearlo");
+                    throw new Exception("Error en la linea "+this.posicion +": Debe haber encontrado el/la "+param1.getNombre()+" para poder golpearlo");
                 }
                 if(!mapVariables.containsValue(param1.getNombre().toLowerCase()) && !esBasico){
-                    throw new Exception("El "+param1.getNombre()+" debe existir para poder escalarlo");
+                    throw new Exception("Error en la linea "+this.posicion +": El "+param1.getNombre()+" debe existir para poder escalarlo");
                 }
                 resp = MetodosPalabras.golpear(variable);
                 break;
             case "construir":
                 if(!mapMetodos.containsValue(param1.getNombre().toLowerCase()) && esBasico){
-                    throw new Exception("Debe haber encontrado el/la "+ param1.getNombre()+" para poder construir");
+                    throw new Exception("Error en la linea "+this.posicion +": Debe haber encontrado el/la "+ param1.getNombre()+" para poder construir");
                 }
                 if(!mapVariables.containsValue(param1.getNombre().toLowerCase()) && !esBasico){
-                    throw new Exception("El "+param1.getNombre()+" debe existir para poder construir algo");
+                    throw new Exception("Error en la linea "+this.posicion +": El "+param1.getNombre()+" debe existir para poder construir algo");
                 }
                 resp = MetodosPalabras.construir(variable);
                 break;
             default:
-                throw new Exception("La palabra " + palabraClave.getNombre() + " no corresponde a ningun metodo");
+                throw new Exception("Error en la linea "+this.posicion +": La palabra " + palabraClave.getNombre() + " no corresponde a ninguna acción");
         }
         this.respuesta = resp;
         return resp;
