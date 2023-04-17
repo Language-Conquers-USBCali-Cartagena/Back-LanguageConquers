@@ -12,6 +12,8 @@ import org.apache.commons.validator.routines.UrlValidator;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,6 +53,28 @@ public class Validaciones {
         return defaultValidator.isValid(url);
     }
 
+    public static boolean validarCadena(String cadena) {
+        return cadena.matches("[a-zA-Z ]+");
+    }
+    public static boolean validarCadenaConNumeros(String cadena) {
+        return cadena.matches("[a-zA-Z0-9]+");
+    }
+
+    public static boolean validarFechaNacimiento(Date fechaNacimiento) {
+        // Definir la fecha mínima y máxima
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaMinima = null;
+        Date fechaMaxima = null;
+        try {
+            fechaMinima = sdf.parse("01/01/1950");
+            fechaMaxima = sdf.parse("31/12/2013");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Comparar la fecha de nacimiento con la fecha mínima y máxima
+        return fechaNacimiento.after(fechaMinima) && fechaNacimiento.before(fechaMaxima);
+    }
     public static int tiempoEntreFechas(Date fecha1, Date fecha2){
         return fecha2.getMonth() - fecha1.getMonth();
     }

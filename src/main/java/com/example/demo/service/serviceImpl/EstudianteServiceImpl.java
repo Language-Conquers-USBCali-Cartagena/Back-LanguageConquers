@@ -196,17 +196,26 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(Validaciones.isStringLenght(estudiante.getNombre(),80)){
             throw new Exception("El nombre del estudiante es muy largo.");
         }
+        if(!Validaciones.validarCadena(estudiante.getNombre())){
+            throw new Exception("El nombre del estudiante solo debe contener letras.");
+        }
         if(estudiante.getApellido() == null || estudiante.getApellido().equals("")){
             throw new Exception("Debe ingresar el apellido del estudiante.");
         }
         if(Validaciones.isStringLenght(estudiante.getApellido(),80)){
             throw new Exception("El apellido del estudiante es muy largo.");
         }
+        if(!Validaciones.validarCadena(estudiante.getApellido())){
+            throw new Exception("El apellido del estudiante solo debe contener letras.");
+        }
         if(estudiante.getNickName() == null || estudiante.getNickName().equals("")){
             throw new Exception("Debe ingresar un nickname para el estudiante.");
         }
         if(Validaciones.isStringLenght(estudiante.getNickName(),80)){
             throw new Exception("Debe ingresar un nickname para el estudiante, no mayor a 80 caracteres.");
+        }
+        if(!Validaciones.validarCadenaConNumeros(estudiante.getNickName())){
+            throw new Exception("El NickName del estudiante solo debe contener letras y números y no puede contener espacios.");
         }
         if(estudiante.getPuntaje()<0){
             throw new Exception("El puntaje no debe ser negativo.");
@@ -226,12 +235,9 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudiante.getFechaNacimiento() == null){
             throw new Exception("Debe ingresar una fecha de nacimiento.");
         }
-        LocalDate fechaNamientoLocalDate = estudiante.getFechaNacimiento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate ahora = LocalDate.now();
-        Period periodo = Period.between(fechaNamientoLocalDate, ahora);
-        int edad = periodo.getYears();
-
-
+        if(!Validaciones.validarFechaNacimiento(estudiante.getFechaNacimiento())){
+            throw new Exception("La edad minima es 10 años y la edad máxima son 73 años.");
+        }
         if(estudiante.getUsuarioCreador()==null || estudiante.getUsuarioCreador().equals("")){
             throw new Exception("Debe ingresar el usuario creador.");
         }
@@ -292,17 +298,26 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudiante.getNombre().length()>80){
             throw new Exception("El nombre del estudiante es muy largo.");
         }
+        if(!Validaciones.validarCadena(estudiante.getNombre())){
+            throw new Exception("El nombre del estudiante solo debe contener letras.");
+        }
         if(estudiante.getApellido() == null || estudiante.getApellido().trim().equals("")){
             throw new Exception("Debe ingresar el apellido del estudiante.");
         }
         if(estudiante.getApellido().length()>80){
             throw new Exception("El apellido del estudiante es muy largo.");
         }
+        if(!Validaciones.validarCadena(estudiante.getApellido())){
+            throw new Exception("El apellido del estudiante solo debe contener letras.");
+        }
         if(estudiante.getNickName() == null || estudiante.getNickName().trim().equals("")){
             throw new Exception("Debe ingresar un nickname para el estudiante.");
         }
         if(estudiante.getNickName().length()>80){
             throw new Exception("Debe ingresar un nickname para el estudiante, no debe contener más de 80 caracteres.");
+        }
+        if(!Validaciones.validarCadenaConNumeros(estudiante.getNickName())){
+            throw new Exception("El NickName del estudiante solo debe contener letras y números y no puede contener espacios.");
         }
         if(estudiante.getPuntaje()<0){
             throw new Exception("El puntaje no debe ser negativo.");
@@ -319,15 +334,13 @@ public class EstudianteServiceImpl implements EstudianteService {
         if(estudiante.getFechaNacimiento() == null){
             throw new Exception("Debe ingresar una fecha de nacimiento.");
         }
-        Date fechaActual = new Date();
-        LocalDate fechaNamientoLocalDate = estudiante.getFechaNacimiento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate ahora = LocalDate.now();
-        Period periodo = Period.between(fechaNamientoLocalDate, ahora);
-        int edad = periodo.getYears();
-/*
-        if(edad < 15){
-            throw new Exception("Digite una fecha de nacimiento válida, debe ser mayor de 15 años para poder registrarse.");
+
+        /*if(estudiante.getFechaNacimiento().compareTo(fechaActual)>=0){
+            throw new Exception("No puede ingresar una fecha de nacimiento que aun no ha sucedido.");
         }*/
+        if(!Validaciones.validarFechaNacimiento(estudiante.getFechaNacimiento())){
+            throw new Exception("La edad minima es 10 años y la edad máxima son 73 años.");
+        }
         if(estudiante.getUsuarioModificador()==null || estudiante.getUsuarioModificador().equals("")){
             throw new Exception("Debe ingresar el usuario modificador.");
         }

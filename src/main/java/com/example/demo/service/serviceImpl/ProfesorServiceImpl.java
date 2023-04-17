@@ -112,11 +112,17 @@ public class ProfesorServiceImpl implements ProfesorService {
         if(Validaciones.isStringLenght(profesor.getNombre(),50)){
             throw new Exception("El nombre del profesor no debe contener más de 50 caracteres.");
         }
+        if(!Validaciones.validarCadena(profesor.getNombre())){
+            throw new Exception("El nombre del docente solo debe contener letras.");
+        }
         if(profesor.getApellido()==null || profesor.getApellido().equals("")){
             throw new Exception("Debe ingresar el apellido del profesor.");
         }
         if(Validaciones.isStringLenght(profesor.getApellido(),50)){
             throw new Exception("El apellido no debe contener más de 50 caracteres.");
+        }
+        if(!Validaciones.validarCadena(profesor.getApellido())){
+            throw new Exception("El apellido del docente solo debe contener letras.");
         }
         if(profesor.getCorreo()==null || profesor.getCorreo().equals("")){
             throw new Exception("Debe ingresar el correo del profesor");
@@ -167,11 +173,17 @@ public class ProfesorServiceImpl implements ProfesorService {
         if(Validaciones.isStringLenght(profesor.getNombre(),50)){
             throw new Exception("El nombre del profesor no debe contener más de 50 caracteres.");
         }
+        if(!Validaciones.validarCadena(profesor.getNombre())){
+            throw new Exception("El nombre del docente solo debe contener letras.");
+        }
         if(profesor.getApellido()==null || profesor.getApellido().equals("")){
             throw new Exception("Debe ingresar el apellido del profesor.");
         }
         if(Validaciones.isStringLenght(profesor.getApellido(),50)){
             throw new Exception("El apellido no debe contener más de 50 caracteres.");
+        }
+        if(!Validaciones.validarCadena(profesor.getApellido())){
+            throw new Exception("El apellido del docente solo debe contener letras.");
         }
         if(profesor.getCorreo()==null || profesor.getCorreo().equals("")){
             throw new Exception("Debe ingresar el correo del profesor.");

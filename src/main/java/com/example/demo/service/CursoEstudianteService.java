@@ -10,4 +10,6 @@ public interface CursoEstudianteService {
     List<CursoEstudiante> listarCursoEstudiante() throws Exception;
 
     CursoEstudiante findByIdEstudianteAndIdCurso(Long idCurso, Long idEstudiante) throws Exception;
+
+    int estudiantesMatriculados (Long idCurso) throws Exception;
 }
