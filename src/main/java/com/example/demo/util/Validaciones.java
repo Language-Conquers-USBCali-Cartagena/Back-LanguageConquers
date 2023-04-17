@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,14 +64,13 @@ public class Validaciones {
     public static boolean validarFechaNacimiento(Date fechaNacimiento) {
         // Definir la fecha mínima y máxima
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date fechaMinima = null;
-        Date fechaMaxima = null;
-        try {
-            fechaMinima = sdf.parse("01/01/1950");
-            fechaMaxima = sdf.parse("31/12/2013");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date());
+            cal.add(Calendar.YEAR, -10); // Restar 10 años
+            Date fechaMinima = cal.getTime();
+            cal.add(Calendar.YEAR, 70); // Sumar 70 años en total (10 más que lo anterior)
+            Date fechaMaxima = cal.getTime();
 
         // Comparar la fecha de nacimiento con la fecha mínima y máxima
         return fechaNacimiento.after(fechaMinima) && fechaNacimiento.before(fechaMaxima);
