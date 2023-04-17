@@ -69,11 +69,11 @@ public class Validaciones {
             cal.setTime(new Date());
             cal.add(Calendar.YEAR, -10); // Restar 10 años
             Date fechaMinima = cal.getTime();
-            cal.add(Calendar.YEAR, 70); // Sumar 70 años en total (10 más que lo anterior)
+            cal.add(Calendar.YEAR, -73); // Restar 73 años en total (10 más que lo anterior)
             Date fechaMaxima = cal.getTime();
 
         // Comparar la fecha de nacimiento con la fecha mínima y máxima
-        return fechaNacimiento.after(fechaMinima) && fechaNacimiento.before(fechaMaxima);
+        return fechaNacimiento.after(fechaMaxima) && fechaNacimiento.before(fechaMinima);
     }
     public static int tiempoEntreFechas(Date fecha1, Date fecha2){
         return fecha2.getMonth() - fecha1.getMonth();
