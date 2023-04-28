@@ -119,6 +119,9 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
     private void validacionesCrear(RetoEstudiante retoEstudiante)throws Exception{
         Date fechaActual = new Date();
 
+        if(retoEstudianteDAO.findByIdRetoAndIdEstuduante(retoEstudiante.getReto().getIdReto(), retoEstudiante.getEstudiante().getIdEstudiante()).equals(null)){
+            throw new Exception("El estudiante ya cuenta con el reto.");
+        }
         //TODO: REVISAR LO DEL PUNTAJE
         if(retoEstudiante.getPuntaje() <0){
             throw new Exception("No se puede asignar un puntaje negativo al reto estudiante.");
