@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 
 @Scope("singleton")
 @Service
@@ -118,8 +120,8 @@ public class RetoEstudianteServiceImpl implements RetoEstudianteService {
 
     private void validacionesCrear(RetoEstudiante retoEstudiante)throws Exception{
         Date fechaActual = new Date();
-
-        if(retoEstudianteDAO.findByIdRetoAndIdEstuduante(retoEstudiante.getReto().getIdReto(), retoEstudiante.getEstudiante().getIdEstudiante()).equals(null)){
+        Optional<RetoEstudiante> retoEstudianteOpt = retoEstudianteDAO.findByIdRetoAndIdEstuduantee(retoEstudiante.getReto().getIdReto(), retoEstudiante.getEstudiante().getIdEstudiante());
+        if (!retoEstudianteOpt.isEmpty()) {
             throw new Exception("El estudiante ya cuenta con el reto.");
         }
         //TODO: REVISAR LO DEL PUNTAJE

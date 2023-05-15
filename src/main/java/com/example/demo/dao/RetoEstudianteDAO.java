@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
+
 
 public interface RetoEstudianteDAO extends JpaRepository<RetoEstudiante,Long> {
 
@@ -30,5 +32,7 @@ public interface RetoEstudianteDAO extends JpaRepository<RetoEstudiante,Long> {
     @Query(value = "SELECT * FROM reto_estudiante WHERE id_reto = ?1 AND id_estudiante = ?2", nativeQuery = true)
     RetoEstudiante findByIdRetoAndIdEstuduante(Long idREto, Long idEstudiante) throws Exception;
 
+    @Query(value = "SELECT * FROM reto_estudiante WHERE id_reto = ?1 AND id_estudiante = ?2", nativeQuery = true)
+    Optional<RetoEstudiante> findByIdRetoAndIdEstuduantee(Long idREto, Long idEstudiante) throws Exception;
 
 }
